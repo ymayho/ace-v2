@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 class ResultCube extends React.Component{
   constructor(props) {
@@ -55,8 +56,11 @@ class ResultCube extends React.Component{
       this.setState({aaa: 0, aa: 0}, this.displayResult);
     }
   }
+  componentDidUpdate(){
+    //console.log("ResultUpdate", this.props.contrastRatio, this.props.contrastRatios);
+  }
   componentDidMount(){
-    //console.log(this.props.contrastRatio);
+    //console.log("ResultMount", this.props.contrastRatio, this.props.contrastRatios);
     this.compareToWcag(this.props.contrastRatio);
   }
   render(){
@@ -69,5 +73,11 @@ class ResultCube extends React.Component{
   }
 }
 
+// Add this function:
+function mapStateToProps(state) {
+  return ({
+    contrastRatios: state.contrastRatios
+  });
+}
 
-export default ResultCube;
+export default connect(mapStateToProps)(ResultCube);

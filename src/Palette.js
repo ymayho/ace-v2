@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './scss/palette.scss';
 //import { PhotoshopPicker } from 'react-color';
 import ColorCube from './ColorCube';
@@ -7,6 +8,7 @@ import ProtanImg from './img/lut_protan_medium.png';
 import DeutanImg from './img/lut_deutan_medium.png';
 import TritanImg from './img/lut_tritan_medium.png';
 
+let counter = 0;
 class Palette extends React.Component{
   constructor(props) {
     super(props);
@@ -20,7 +22,7 @@ class Palette extends React.Component{
       foregroundColorArr: [],
       backgroundColorArr: [],
       result: [],
-      contrastRatios: [[0, 1, 2, 3, 4, 5]]
+      contrastRatios: [[0, 0.1, 0.2, 0.3, 0.4, 0.5], [0, 0.1, 0.2, 0.3, 0.4, 0.5], [0, 0.1, 0.2, 0.3, 0.4, 0.5]]
     }
     this.calculateContrastRatio = this.calculateContrastRatio.bind(this);
     this.calculateLuminance = this.calculateLuminance.bind(this);
@@ -31,53 +33,21 @@ class Palette extends React.Component{
     this.handleCVD = this.handleCVD.bind(this);
     this.handleClickToggle = this.handleClickToggle.bind(this);
   }
-  displayContrastResult(contrastArr){
-    console.log(contrastArr);
-    let foreNum = this.state.foregroundColorArr.length;
-    let backNum = this.state.backgroundColorArr.length;
-    console.log(contrastArr);
-    // let resultCubeList = document.querySelectorAll('[data-result-id]');
-    // console.log(resultCubeList);
-    // for(){
-    //
-    // }
-    //let resultWrapper = document.getElementsByClassName("result-wrapper");
-    //console.log(resultWrapper);
-    // let temp = [];
-    // for(let i = 0; i<backNum; i++){
-    //   for(let j=0; j<foreNum; j++){
-    //     temp.push(
-    //       <ResultCube backId={i} foreId={j} contrastRatio={contrastArr[i][j]} />
-    //     );
-    //   }
-    // }
-    // this.setState({result: temp});
 
-    // for(let i = 0; i<backNum; i++){
-    //   for(let j=0; j<foreNum; j++){
-    //     this.state.result.push(
-    //       <ResultCube backId={i} foreId={j} contrastRatio={contrastArr[i][j]} />
-    //     );
-    //   }
-    //
-    // }
-
-  }
-  calculateContrastRatio(foreArr, backArr){
+  calculateContrastRatio(foreData, backData){
+    console.log("calculateContrastRatio");
     let foreRGB = [];
     let backRGB = [];
     let foreLuminance = [];
     let backLuminance = [];
-    // foreArr.forEach((rgb, index)=> {foreRGB[index] = this.convertHextoRGB(rgb);});
-    // backArr.forEach((rgb, index)=> {backRGB[index] = this.convertHextoRGB(rgb);});
-    foreRGB = foreArr.map((color)=> this.convertHextoRGB(color));
-    backRGB = backArr.map((color)=> this.convertHextoRGB(color));
+    foreRGB = foreData.map((item)=> this.convertHextoRGB(item.color));
+    backRGB = backData.map((item)=> this.convertHextoRGB(item.color));
     foreRGB.forEach((rgb, index) => foreLuminance[index] = this.calculateLuminance(rgb));
     backRGB.forEach((rgb, index) => backLuminance[index] = this.calculateLuminance(rgb));
     let contrastArr = [];
-    backLuminance.forEach((back, i) => {
+    foreLuminance.forEach((fore, i) => {
       contrastArr[i] = [];
-      foreLuminance.forEach((fore, j) => {
+      backLuminance.forEach((back, j) => {
           if(fore > back){
             contrastArr[i][j] = ((fore+0.05) / (back+0.05)).toFixed(2);
           }else{
@@ -86,9 +56,10 @@ class Palette extends React.Component{
       });
     });
     //console.log(contrastArr);
-    this.displayContrastResult(contrastArr);
+    this.props.dispatch({type: "UPDATE_CONTRAST_RATIO", contrastRatioArr: contrastArr});
   }
   convertHextoRGB(hexCode){
+    //console.log(hexCode);
     let rgb = {
       r: parseInt(hexCode.substring(1,3) ,16),
       g: parseInt(hexCode.substring(3,5) ,16),
@@ -120,7 +91,17 @@ class Palette extends React.Component{
       //this.setState({backgroundColorArr: tempArr});
       //localStorage.setItem("backgroundColor" + no, color);
     }
-    //console.log("CALLBACK");
+    console.log("CALLBACK");
+    console.log(this.props.foregroundColors[no], color);
+    if((type === "foreground" && this.props.foregroundColors[no].color === color) || (type === "background" && this.props.backgroundColors[no].color === color)){
+      console.log("No");
+      console.log("\n\n\n\n\n", counter++, "\n\n\n\n\n");
+      return
+    }else{
+      console.log("Yes");
+      this.calculateContrastRatio(this.props.foregroundColors, this.props.backgroundColors);
+    }
+
   }
   createColorPaletteObj(type, inputImg){
     let imgObj = new Image();
@@ -158,7 +139,6 @@ class Palette extends React.Component{
         for(let i = 0; i < this.state.colorNum; i++){
           document.getElementsByClassName("cvd-simulation-color-row")[i].classList.remove("noCVD");
         }
-        console.log("True");
       });
     }else{
       this.setState({hasCVD: false}, ()=>{
@@ -172,7 +152,6 @@ class Palette extends React.Component{
     }
   }
   handleClickToggle(){
-    console.log("Clicked!", this.state.fullScreen);
     if(this.state.fullScreen){
       this.setState({fullScreen: false}, () => {
         document.querySelector(".palette-container").classList.remove("full-screen");
@@ -185,23 +164,22 @@ class Palette extends React.Component{
       });
     }
   }
-  componentDidUpdate(){
-    console.log("Update");
-    //console.log(this.state.foregroundColorArr, this.state.backgroundColorArr);
-    this.calculateContrastRatio(this.state.foregroundColorArr, this.state.backgroundColorArr);
-    // localStorage.setItem("foregroundColor0", this.state.foregroundColorArr[0]);
-    // localStorage.setItem("foregroundColor1", this.state.foregroundColorArr[1]);
-    // localStorage.setItem("foregroundColor2", this.state.foregroundColorArr[2]);
-    // localStorage.setItem("foregroundColor3", this.state.foregroundColorArr[3]);
-    // localStorage.setItem("backgroundColor0", this.state.backgroundColorArr[0]);
-    // localStorage.setItem("backgroundColor1", this.state.backgroundColorArr[1]);
-    // localStorage.setItem("backgroundColor2", this.state.backgroundColorArr[2]);
+  componentDidUpdate(prevProps){
+    console.log("Palette update");
+    console.log(this.props.foregroundColors, prevProps.foregroundColors)
+    if(this.props.foregroundColors !== prevProps.foregroundColors &&
+      this.props.backgroundColors !== prevProps.backgroundColors){
+      console.log("TRUE");
+      this.calculateContrastRatio(this.props.foregroundColors, this.props.backgroundColors);
+    }
   }
   componentDidMount(){
     console.log("Mount");
+    console.log(this.props.foregroundColors);
     this.createColorPaletteObj("pro", ProtanImg);
     this.createColorPaletteObj("deu", DeutanImg);
     this.createColorPaletteObj("tri", TritanImg);
+    this.calculateContrastRatio(this.props.foregroundColors, this.props.backgroundColors);
   }
   render(){
     return (
@@ -213,7 +191,7 @@ class Palette extends React.Component{
         <div className="palette-options-container">
           <div className="palette-function-settings">
             <div className="cvd-options palette-options">
-              <span className="option-switch" ref={span => this.cvdSwitch = span}>CVD Simulation</span>
+              <span className="option-switch" ref={span => this.cvdSwitch = span}>CVD Simulation: Yes</span>
               <div className="cvd-inputs dropdown-inputs">
                 <label><input type="radio" name="cvd" value="cvd-true" onChange={this.handleCVD}
                 ref={(input)=>{this.cvdTrue = input}} defaultChecked />Yes
@@ -239,7 +217,7 @@ class Palette extends React.Component{
           <div className="color-row">
             <div className="color-placeholder">QAQ</div>
             <div className="foreground-color-wrapper">
-              <ColorCube handleColorUpdated={this.callBackColorUpdated}
+              <ColorCube  handleColorUpdated={this.callBackColorUpdated}
               canvasProtan={this.state.canvasProtan}
               canvasDeutan={this.state.canvasDeutan}
               canvasTritan={this.state.canvasTritan}
@@ -276,7 +254,7 @@ class Palette extends React.Component{
               canvasDeutan={this.state.canvasDeutan}
               canvasTritan={this.state.canvasTritan}
               colorType={"foreground"} colorName={"clicked-url-text"}
-              colorNo={3} />
+              colorNo={4} />
             </div>
             <div className="foreground-color-wrapper">
               <ColorCube handleColorUpdated={this.callBackColorUpdated}
@@ -284,7 +262,7 @@ class Palette extends React.Component{
               canvasDeutan={this.state.canvasDeutan}
               canvasTritan={this.state.canvasTritan}
               colorType={"foreground"} colorName={"clicked-url-text"}
-              colorNo={3} />
+              colorNo={5} />
             </div>
           </div>
           <div className="color-row">
@@ -297,12 +275,12 @@ class Palette extends React.Component{
               colorNo={0} />
             </div>
             <div className="result-wrapper">
-              <ResultCube resultId={"0-0"} contrastRatio={this.state.contrastRatio[0][0]} />
-              <ResultCube resultId={"0-1"} contrastRatio={this.state.contrastRatio[0][1]} />
-              <ResultCube resultId={"0-2"} contrastRatio={this.state.contrastRatio[0][2]} />
-              <ResultCube resultId={"0-3"} contrastRatio={this.state.contrastRatio[0][3]} />
-              <ResultCube resultId={"0-4"} contrastRatio={this.state.contrastRatio[0][4]} />
-              <ResultCube resultId={"0-5"} contrastRatio={this.state.contrastRatio[0][5]} />
+              <ResultCube resultId={"0-0"} contrastRatio={this.props.contrastRatios[0].ratio} />
+              <ResultCube resultId={"0-1"} contrastRatio={this.props.contrastRatios[4].ratio} />
+              <ResultCube resultId={"0-2"} contrastRatio={this.props.contrastRatios[8].ratio} />
+              <ResultCube resultId={"0-3"} contrastRatio={this.props.contrastRatios[12].ratio} />
+              <ResultCube resultId={"0-4"} contrastRatio={this.props.contrastRatios[16].ratio} />
+              <ResultCube resultId={"0-5"} contrastRatio={this.props.contrastRatios[20].ratio} />
             </div>
           </div>
           <div className="color-row">
@@ -315,12 +293,12 @@ class Palette extends React.Component{
               colorNo={1} />
             </div>
             <div className="result-wrapper">
-              <ResultCube resultId={"1-0"} contrastRatio={this.state.contrastRatio[1][0]} />
-              <ResultCube resultId={"1-1"} contrastRatio={this.state.contrastRatio[1][1]} />
-              <ResultCube resultId={"1-2"} contrastRatio={this.state.contrastRatio[1][2]} />
-              <ResultCube resultId={"1-3"} contrastRatio={this.state.contrastRatio[1][3]} />
-              <ResultCube resultId={"1-4"} contrastRatio={this.state.contrastRatio[1][4]} />
-              <ResultCube resultId={"1-5"} contrastRatio={this.state.contrastRatio[1][5]} />
+              <ResultCube resultId={"1-0"} contrastRatio={this.props.contrastRatios[1].ratio} />
+              <ResultCube resultId={"1-1"} contrastRatio={this.props.contrastRatios[5].ratio} />
+              <ResultCube resultId={"1-2"} contrastRatio={this.props.contrastRatios[9].ratio} />
+              <ResultCube resultId={"1-3"} contrastRatio={this.props.contrastRatios[13].ratio} />
+              <ResultCube resultId={"1-4"} contrastRatio={this.props.contrastRatios[17].ratio} />
+              <ResultCube resultId={"1-5"} contrastRatio={this.props.contrastRatios[21].ratio} />
             </div>
           </div>
           <div className="color-row">
@@ -333,12 +311,30 @@ class Palette extends React.Component{
               colorNo={2} />
             </div>
             <div className="result-wrapper">
-              <ResultCube resultId={"2-0"} contrastRatio={this.state.contrastRatio[2][0]} />
-              <ResultCube resultId={"2-1"} contrastRatio={this.state.contrastRatio[2][1]} />
-              <ResultCube resultId={"2-2"} contrastRatio={this.state.contrastRatio[2][2]} />
-              <ResultCube resultId={"2-3"} contrastRatio={this.state.contrastRatio[2][3]} />
-              <ResultCube resultId={"2-4"} contrastRatio={this.state.contrastRatio[2][4]} />
-              <ResultCube resultId={"2-5"} contrastRatio={this.state.contrastRatio[2][5]} />
+              <ResultCube resultId={"2-0"} contrastRatio={this.props.contrastRatios[2].ratio} />
+              <ResultCube resultId={"2-1"} contrastRatio={this.props.contrastRatios[6].ratio} />
+              <ResultCube resultId={"2-2"} contrastRatio={this.props.contrastRatios[10].ratio} />
+              <ResultCube resultId={"2-3"} contrastRatio={this.props.contrastRatios[14].ratio} />
+              <ResultCube resultId={"2-4"} contrastRatio={this.props.contrastRatios[18].ratio} />
+              <ResultCube resultId={"2-5"} contrastRatio={this.props.contrastRatios[22].ratio} />
+            </div>
+          </div>
+          <div className="color-row">
+            <div className="background-color-wrapper">
+              <ColorCube handleColorUpdated={this.callBackColorUpdated}
+              canvasProtan={this.state.canvasProtan}
+              canvasDeutan={this.state.canvasDeutan}
+              canvasTritan={this.state.canvasTritan}
+              colorType={"background"} colorName={"body-background"}
+              colorNo={3} />
+            </div>
+            <div className="result-wrapper">
+              <ResultCube resultId={"3-0"} contrastRatio={this.props.contrastRatios[3].ratio} />
+              <ResultCube resultId={"3-1"} contrastRatio={this.props.contrastRatios[7].ratio} />
+              <ResultCube resultId={"3-2"} contrastRatio={this.props.contrastRatios[11].ratio} />
+              <ResultCube resultId={"3-3"} contrastRatio={this.props.contrastRatios[15].ratio} />
+              <ResultCube resultId={"3-4"} contrastRatio={this.props.contrastRatios[19].ratio} />
+              <ResultCube resultId={"3-5"} contrastRatio={this.props.contrastRatios[23].ratio} />
             </div>
           </div>
         </div>
@@ -354,4 +350,12 @@ class Palette extends React.Component{
   }
 }
 
-export default Palette;
+// Add this function:
+function mapStateToProps(state) {
+  return ({
+    foregroundColors: state.foregroundColors,
+    backgroundColors: state.backgroundColors,
+    contrastRatios: state.contrastRatios
+  });
+}
+export default connect(mapStateToProps)(Palette);
