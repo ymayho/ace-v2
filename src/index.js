@@ -135,29 +135,31 @@ function reducer(state = initialState, action){
       
       return state;
     case "EDIT_FOREGROUND_COLOR":
+      console.log(action.type);
       tempColorArr = [...state.foregroundColors];
       tempColorArr[action.index].color = action.newColor;
       return {...state, foregroundColors: tempColorArr};
     case "EDIT_BACKGROUND_COLOR":
+      console.log(action.type);
       tempColorArr = [...state.backgroundColors];
       tempColorArr[action.index].color = action.newColor;
       return {...state, backgroundColors: tempColorArr};
     case "UPDATE_FOREGROUND_CVD":
-      console.log("UPDATE_FOREGROUND_CVD");
+      console.log(action.type);
       tempCVDArr = [...state.foregroundCVDs];
       tempCVDArr[action.index].protan = action.cvdColors.protan;
       tempCVDArr[action.index].deutan = action.cvdColors.deutan;
       tempCVDArr[action.index].tritan = action.cvdColors.tritan;
       return {...state, foregroundCVDs: tempCVDArr}
     case "UPDATE_BACKGROUND_CVD":
-      console.log("UPDATE_BACKGROUND_CVD");
+      console.log(action.type);
       tempCVDArr = [...state.backgroundCVDs];
       tempCVDArr[action.index].protan = action.cvdColors.protan;
       tempCVDArr[action.index].deutan = action.cvdColors.deutan;
       tempCVDArr[action.index].tritan = action.cvdColors.tritan;
       return {...state, backgroundCVDs: tempCVDArr}
     case "UPDATE_CONTRAST_RATIO":
-      console.log("UPDATE_CONTRAST_RATIO");
+      console.log(action.type);
       console.log(state.foregroundColors[0].color)
       tempContrastRatio = state.contrastRatios;
       let counter = 0;

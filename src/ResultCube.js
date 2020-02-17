@@ -1,41 +1,39 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-class ResultCube extends React.Component{
+class ResultCube extends React.PureComponent{
   constructor(props) {
     super(props);
     this.state = {
       aa: 1,
       aaa: 1,
-      resultMark: [],
+      contrast: 1,
     }
-    this.compareToWcag = this.compareToWcag.bind(this);
-    this.displayResult = this.displayResult.bind(this);
+    this.displayContrastRatio = this.displayContrastRatio.bind(this);
+    this.convertHextoRGB = this.convertHextoRGB.bind(this);
+    this.displayWCAGResult = this.displayWCAGResult.bind(this);
   }
-  displayResult(){
+  displayWCAGResult(contrast){
     let obj;
-    if(this.state.aaa === 1){
+    if(contrast>=7){
       obj = (<div className="wcag-comparison">
         <div className="wcag-2a pass">AA</div>
         <div className="wcag-3a pass">AAA</div>
       </div>);
-    }
-    else if(this.state.aaa === (-1)){
+    }else if(contrast < 7 && contrast >=4.5){
       obj =  (
         <div className="wcag-comparison">
           <div className="wcag-2a pass">AA</div>
           <div className="wcag-3a half">AAA</div>
-        </div>);
-    }
-    else if(this.state.aa === (-1)){
+        </div>);;
+    }else if(contrast < 4.5 && contrast > 3){
       obj =  (
         <div className="wcag-comparison">
           <div className="wcag-2a half">AA</div>
           <div className="wcag-3a fail">AAA</div>
         </div>
       );
-    }
-    else{
+    }else{
       obj =  (
         <div className="wcag-comparison">
           <div className="wcag-2a fail">AA</div>
@@ -43,40 +41,57 @@ class ResultCube extends React.Component{
         </div>
       );
     }
-    this.setState({resultMark: obj});
+    return obj;
   }
-  compareToWcag(contrast){
-    if(contrast>=4.5){
-      this.setState({aaa: 1, aa: 1}, this.displayResult);
-    }else if(contrast < 7 && contrast >=4.5){
-      this.setState({aaa: -1, aa: 1}, this.displayResult);
-    }else if(contrast < 4.5 && contrast > 3){
-      this.setState({aaa: 0, aa: -1}, this.displayResult);
+  displayContrastRatio(fore, back){
+    let foreLumi = this.calculateLuminance(this.convertHextoRGB(fore));
+    let backLumi = this.calculateLuminance(this.convertHextoRGB(back));
+    let contrastRatio = 0;
+    if(foreLumi > backLumi){
+      contrastRatio = ((foreLumi+0.05) / (backLumi+0.05)).toFixed(2);
     }else{
-      this.setState({aaa: 0, aa: 0}, this.displayResult);
+      contrastRatio = ((backLumi+0.05) / (foreLumi+0.05)).toFixed(2);
     }
+    this.setState({contrast: contrastRatio});
+  }
+  calculateLuminance(rgb){
+    let processedRGB = rgb.map((item, index) => {
+      let temp = item / 255;
+      if (temp <= 0.03928) {
+        temp = (temp / 12.92);
+      } else {
+        temp = Math.pow(((temp + 0.055) / 1.055), 2.4);
+      }
+      return temp;
+    });
+    return ((0.2126 * processedRGB[0]) + (0.7152 * processedRGB[1]) + (0.0722 * processedRGB[2]));
+  }
+  convertHextoRGB(hexCode){
+    let rgb = [parseInt(hexCode.substring(1,3) ,16), parseInt(hexCode.substring(3,5) ,16), parseInt(hexCode.substring(5) ,16)];
+    return rgb;
   }
   componentDidUpdate(){
-    //console.log("ResultUpdate", this.props.contrastRatio, this.props.contrastRatios);
+    //console.log("ResultUpdate", this.props.foregroundId, this.props.backgroundId);
+    this.displayContrastRatio(this.props.foregroundColors[this.props.foregroundId].color, this.props.backgroundColors[this.props.backgroundId].color);
   }
   componentDidMount(){
-    //console.log("ResultMount", this.props.contrastRatio, this.props.contrastRatios);
-    this.compareToWcag(this.props.contrastRatio);
+    //console.log("ResultUpdate", this.props.foregroundId, this.props.backgroundId);
+    this.displayContrastRatio(this.props.foregroundColors[this.props.foregroundId].color, this.props.backgroundColors[this.props.backgroundId].color);
   }
   render(){
     return (
       <div className="result-cube" data-result-id={this.props.resultId} >
-        <div className="contrast-ratio">{this.props.contrastRatio}</div>
-        {this.state.resultMark}
+        <div className="contrast-ratio">{this.state.contrast}</div>
+        {this.displayWCAGResult(this.state.contrast)}
       </div>
     );
   }
 }
 
-// Add this function:
 function mapStateToProps(state) {
   return ({
-    contrastRatios: state.contrastRatios
+    foregroundColors: state.foregroundColors,
+    backgroundColors: state.backgroundColors
   });
 }
 

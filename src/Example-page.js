@@ -1,16 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './scss/example-page.scss';
 
 class ExamplePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      foregroundColor0: "",
-      foregroundColor1: "",
-      backgroundColor0: "",
-      backgroundColor1: "",
+      pageBodyText: "",
+      headerText: "",
+      hyperlinkText: "",
+      visitedLinkText: "",
     }
     this.localStorageUpdated = this.localStorageUpdated.bind(this);
+    this.handleModeSwitch = this.handleModeSwitch.bind(this)
   }
   localStorageUpdated(){
     console.log("LOCALSTORAGE UPDATED!");
@@ -30,11 +32,14 @@ class ExamplePage extends React.Component {
     });
     console.log("CHANGE!");
   }
+  handleModeSwitch(mode){
+    if(mode === "grayscale"){
+    //document.getElementsByClassName("example-container")[0].classList.add("grayscale");
+    }
+  }
   componentDidUpdate(){
     console.log("Example Update");
-    // console.log(localStorage["foregroundColors"]);
-    // console.log(localStorage["backgroundColors"]);
-    // console.log(localStorage["backgroundColors"][0]);
+    console.log(this.props.foregroundCVDs);
     // document.getElementsByClassName("example-body-container")[0].style.backgroundColor = localStorage["backgroundColors"][0];
   }
   componentDidMount(){
@@ -49,14 +54,17 @@ class ExamplePage extends React.Component {
 
   }
   render(){
+    const paragraphStyle = {
+      //color: this.props.foregroundCVDs[2].tritan
+    }
     return (
       <div className="example-page-wrapper">
         <nav className="simulation-options">
-          <button>No CVD</button>
-          <button>Protan</button>
-          <button>Deuton</button>
-          <button>Tritan</button>
-          <button>Grayscale</button>
+          <button onClick={this.handleModeSwitch("regular")}>No CVD</button>
+          <button onClick={this.handleModeSwitch("protan")}>Protan</button>
+          <button onClick={this.handleModeSwitch("deutan")}>Deutan</button>
+          <button onClick={this.handleModeSwitch("tritan")}>Tritan</button>
+          <button onClick={this.handleModeSwitch("grayscale")}>Grayscale</button>
           <button>NewTab</button>
         </nav>
 
@@ -70,7 +78,7 @@ class ExamplePage extends React.Component {
             </nav>
           </header>
           <div className="example-body-container">
-            <p className="text-18pt">
+            <p style={paragraphStyle} className="text-18pt">
               This is 18 point text and it is considered large scale by WCAG 2.0. At the AA level it (or larger font sizes) can be used with a minimum contrast ratio 3:1 or greater to ensure it is legible by people with CVD or other vision impairments as well as people with typical colour vision. To achieve a pass at AAA enhanced contrast the contrast ratio would need to be at least 4.5:1
             </p>
             <p className="text-14pt">
@@ -98,10 +106,18 @@ class ExamplePage extends React.Component {
             Copyrights, other info.
           </footer>
         </div>
-
       </div>
     );
   }
 }
 
-export default ExamplePage;
+
+function mapStateToProps(state) {
+  return ({
+    foregroundColors: state.foregroundColors,
+    backgroundColors: state.backgroundColors,
+    foregroundCVDs: state.foregroundCVDs,
+    backgroundCVDs: state.backgroundCVDs
+  });
+}
+export default connect(mapStateToProps)(ExamplePage);

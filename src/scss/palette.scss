@@ -115,6 +115,7 @@
         .photoshop-picker{
           position: absolute;
           right: -450px;
+          bottom: -260px;
           width: 400px;
           height: auto;
           transform: scale(.75);
@@ -169,6 +170,7 @@
             text-align: center;
             flex: 1;
             display: flex;
+            justify-content: space-around;
             .wcag-2a, .wcag-3a{
               min-width: 50%;
               text-align: center;
