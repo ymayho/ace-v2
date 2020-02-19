@@ -17,7 +17,7 @@ class ExamplePage extends React.Component {
         fore5: "#ffffff",
         pageBack: "#ffffff",
         headerBack: "#000000",
-        hoverBack: "#ffffff",
+        hoverBack: "#aaaaaa",
         back3: "#000000"
       },
       regularColorSet: {},
@@ -28,11 +28,22 @@ class ExamplePage extends React.Component {
     }
     this.setColorState = this.setColorState.bind(this);
     this.resetMode = this.resetMode.bind(this);
+    this.handleHoverNav = this.handleHoverNav.bind(this);
     this.handleModeSwitch = this.handleModeSwitch.bind(this)
   }
- resetMode(){
-  this.container.classList.remove("grayscale");
- }
+  handleHoverNav(id, action){
+    console.log(id);
+    let menu = document.getElementsByClassName("example-menu")[id-1];
+    if(action==="in"){
+      menu.style.backgroundColor = this.state.currentColorSet.hoverBack;
+    }else{
+      menu.style.backgroundColor = this.state.currentColorSet.headerBack;
+    }
+
+  }
+  resetMode(){
+    this.container.classList.remove("grayscale");
+  }
   handleModeSwitch(mode){
     console.log(mode);
     this.resetMode();
@@ -189,8 +200,16 @@ class ExamplePage extends React.Component {
   }
   componentDidUpdate(prevProps, prevState){
     console.log("Example Update");
-    //console.log(this.state.regularColorSet, this.state.protanColorSet);
-    //this.resetMode();
+    let css = '.example-header nav a:hover{background-color: ' + this.state.currentColorSet.hoverBack + ';}';
+    var style = document.createElement('style');
+    if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+    } else {
+        style.appendChild(document.createTextNode(css));
+    }
+
+    document.getElementsByTagName('head')[0].appendChild(style);
+
   }
   componentDidMount(){
     console.log("Example Mount");
@@ -212,9 +231,12 @@ class ExamplePage extends React.Component {
           <header className="example-header" ref={(header) => this.header = header} style={{backgroundColor: this.state.currentColorSet.headerBack}}>
             <h1 className="example-title">Example Page</h1>
             <nav>
-              <a href="." className="example-menu">Menu 1</a>
-              <a href="." className="example-menu">Menu 2</a>
-              <a href="." className="example-menu">Menu 3</a>
+              <a href="." className="example-menu" onMouseOver={() => {this.handleHoverNav(1, "in")}}
+              onMouseOut={() => {this.handleHoverNav(1, "out")}}>Menu 1</a>
+              <a href="." className="example-menu" onMouseOver={() => {this.handleHoverNav(2, "in")}}
+              onMouseOut={() => {this.handleHoverNav(2, "out")}}>Menu 2</a>
+              <a href="." className="example-menu" onMouseOver={() => {this.handleHoverNav(3, "in")}}
+              onMouseOut={() => {this.handleHoverNav(3, "out")}}>Menu 3</a>
             </nav>
           </header>
           <div className="example-body-container" ref={(div) => this.body = div} style={{backgroundColor: this.state.currentColorSet.pageBack}}>

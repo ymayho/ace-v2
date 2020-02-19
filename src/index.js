@@ -45,7 +45,7 @@ const initialState = {
     colorName: "Header/footer background"
   },{
     index: 2,
-    color: "#ffffff",
+    color: "#aaaaaa",
     colorName: "Accent/hover background"
   },{
     index: 3,
