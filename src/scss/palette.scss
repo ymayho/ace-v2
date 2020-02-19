@@ -97,6 +97,9 @@
       }
       .foreground-color, .background-color{
         cursor: pointer;
+        position: relative;
+
+        //z-index: 90;
         .color-name{
           position: absolute;
           top: -2.5em;
@@ -107,20 +110,15 @@
           text-align: center;
           line-height: 1.1em;
         }
-        // .sketch-picker {
-        //   position: absolute;
-        //   right: -220px;
-        //   width: 400px;
-        //   z-index: 99;
-        // }
         .photoshop-picker{
+          //overflow: visible;
           position: absolute;
           right: -450px;
           bottom: -260px;
           width: 400px;
           height: auto;
           transform: scale(.75);
-          z-index: 99;
+          z-index: 5;
         }
         .main-color{
           width: 100%;
@@ -139,7 +137,6 @@
           }
           div{
             min-width: 33%;
-            //height: 30px;
             border-right: 1px black solid;
             flex: 1;
             display: inline-block;
@@ -210,7 +207,7 @@
       height: 100%;
       .example-page-toggle{
         position: absolute;
-        top: calc(50% - 80px / 2);
+        top: calc(50vh - 80px / 2);
         right: -25px;
         width: 80px;
         height: 25px;

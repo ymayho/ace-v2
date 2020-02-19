@@ -7,6 +7,7 @@ class ExamplePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      mode: "regular",
       currentColorSet: {
         pageBodyText1: "#000000",
         headerText: "#ffffff",
@@ -36,14 +37,14 @@ class ExamplePage extends React.Component {
     console.log(mode);
     this.resetMode();
     if(mode === "regular"){
-      this.setState({currentColorSet: {...this.state.regularColorSet}}, () => console.log(this.state.currentColorSet));
+      this.setState({});
+      this.setState({currentColorSet: {...this.state.regularColorSet}, mode: "regular"}, () => console.log(this.state.currentColorSet));
     }else if(mode === "protan"){
-      //this.header.style.backgroundColor = this.state.protanColorSet.headerBack;
-      this.setState({currentColorSet: {...this.state.protanColorSet}}, () => console.log(this.state.currentColorSet));
+      this.setState({currentColorSet: {...this.state.protanColorSet}, mode: "protan"}, () => console.log(this.state.currentColorSet));
     }else if(mode === "deutan"){
-      this.setState({currentColorSet: {...this.state.deutanColorSet}}, () => console.log(this.state.currentColorSet));
+      this.setState({currentColorSet: {...this.state.deutanColorSet}, mode: "deutan"}, () => console.log(this.state.currentColorSet));
     }else if(mode === "tritan"){
-      this.setState({currentColorSet: {...this.state.tritanColorSet}}, () => console.log(this.state.currentColorSet));
+      this.setState({currentColorSet: {...this.state.tritanColorSet}, mode: "tritan"}, () => console.log(this.state.currentColorSet));
     }else if(mode === "grayscale"){
       console.log(this.body.classList);
       this.container.classList.add("grayscale");
@@ -129,18 +130,6 @@ class ExamplePage extends React.Component {
       hoverBack: props.backgroundColors[2].color,
       back3: props.backgroundColors[3].color,
     }};
-    let current = {currentColorSet: {
-      pageBodyText1: props.foregroundColors[0].color,
-      headerText: props.foregroundColors[1].color,
-      hyperlinkText: props.foregroundColors[2].color,
-      visitedHyperlinkText: props.foregroundColors[3].color,
-      fore4: props.foregroundColors[4].color,
-      fore5: props.foregroundColors[5].color,
-      pageBack: props.backgroundColors[0].color,
-      headerBack: props.backgroundColors[1].color,
-      hoverBack: props.backgroundColors[2].color,
-      back3: props.backgroundColors[3].color,
-    }};
     let cvd = {protanColorSet: {
       pageBodyText1: props.foregroundCVDs[0].protan,
       headerText: props.foregroundCVDs[1].protan,
@@ -177,6 +166,18 @@ class ExamplePage extends React.Component {
       hoverBack: props.backgroundCVDs[2].tritan,
       back3: props.backgroundCVDs[3].tritan,
     }}
+    let current = {};
+    if(state.mode === "regular"){
+      current = {currentColorSet: {...regular.regularColorSet}};
+    }else if(state.mode === "protan"){
+      current = {currentColorSet: {...cvd.protanColorSet}};
+    }else if(state.mode === "deutan"){
+      current = {currentColorSet: {...cvd.deutanColorSet}};
+    }else{
+      current = {currentColorSet: {...cvd.tritanColorSet}};
+    }
+
+    console.log(current);
     let regex = /^rgb/;
     if(regex.test(props.foregroundCVDs[0].protan)){
       result = {...regular, ...current, ...cvd};
@@ -188,7 +189,8 @@ class ExamplePage extends React.Component {
   }
   componentDidUpdate(prevProps, prevState){
     console.log("Example Update");
-    console.log(this.state.regularColorSet, this.state.protanColorSet);
+    //console.log(this.state.regularColorSet, this.state.protanColorSet);
+    //this.resetMode();
   }
   componentDidMount(){
     console.log("Example Mount");

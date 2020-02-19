@@ -99,13 +99,18 @@ class ColorCube extends React.Component{
           index: this.props.colorNo,
           cvdColors: {protan: proColor, deutan: deuColor, tritan: triColor}});
       }
-    }else{
-      //console.log("null");
     }
   }
   handleCancelColorChange(e){
     this.mainColor.style.backgroundColor = this.state.colorSelection;
     this.setState({pickerColor: this.state.colorSelection, displayPicker: false});
+    if(this.props.colorType === "foreground"){
+      this.props.dispatch({type: "EDIT_FOREGROUND_COLOR", newColor: this.state.colorSelection, index: this.props.colorNo});
+
+    }else{
+      this.props.dispatch({type: "EDIT_BACKGROUND_COLOR", newColor: this.state.colorSelection, index: this.props.colorNo});
+    }
+    this.simulateCVD();
   }
   handleAcceptColorChange(){
     this.setState({colorSelection: this.state.pickerColor});
