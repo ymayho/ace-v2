@@ -14,6 +14,8 @@ class Palette extends React.Component{
     this.state = {
       fullScreen: false,
       hasCVD: true,
+      wcag2a: true,
+      wcag3a: true,
       canvasProtan: [],
       canvasDeutan: [],
       canvasTritan: [],
@@ -21,11 +23,11 @@ class Palette extends React.Component{
       foregroundColorArr: [],
       backgroundColorArr: [],
       result: [],
-      contrastRatios: [[0, 0.1, 0.2, 0.3, 0.4, 0.5], [0, 0.1, 0.2, 0.3, 0.4, 0.5], [0, 0.1, 0.2, 0.3, 0.4, 0.5]]
     }
     this.callBackColorUpdated = this.callBackColorUpdated.bind(this);
     this.storeSimulationData = this.storeSimulationData.bind(this);
     this.createColorPaletteObj = this.createColorPaletteObj.bind(this);
+    this.handleWCAG = this.handleWCAG.bind(this);
     this.handleCVD = this.handleCVD.bind(this);
     this.handleClickToggle = this.handleClickToggle.bind(this);
   }
@@ -70,6 +72,25 @@ class Palette extends React.Component{
     else{
       this.setState({canvasTritan: pixels});
     }
+  }
+  handleWCAG(){
+    let wcagType = document.querySelectorAll('input[name="wcag"]');
+    console.log(wcagType);
+    wcagType.forEach((item, key) => {
+      if(item.checked === true){
+        this.props.dispatch({type: "UPDATE_WCAG_CHECK",
+          standard: item.value,
+          bool: true,
+        });
+      }
+      else{//false
+        this.props.dispatch({type: "UPDATE_WCAG_CHECK",
+          standard: item.value,
+          bool: false,
+        });
+      }
+    });
+
   }
   handleCVD(){
     let cvdValue = document.querySelector('input[name="cvd"]:checked').value;
@@ -126,19 +147,22 @@ class Palette extends React.Component{
             <div className="cvd-options palette-options">
               <span className="option-switch" ref={span => this.cvdSwitch = span}>CVD Simulation: Yes</span>
               <div className="cvd-inputs dropdown-inputs">
-                <label><input type="radio" name="cvd" value="cvd-true" onChange={this.handleCVD}
-                ref={(input)=>{this.cvdTrue = input}} defaultChecked />Yes
-                </label>
-                <label><input type="radio" name="cvd" value="cvd-false"  onChange={this.handleCVD}
-                ref={(input)=>{this.cvdFalse = input}} />No
-                </label>
+              <input id="yesCVD" type="radio" name="cvd" value="cvd-true" onChange={this.handleCVD}
+               defaultChecked /><label htmlFor="yesCVD">Yes</label>
+              <input id="noCVD" type="radio" name="cvd" value="cvd-false"  onChange={this.handleCVD}
+               /><label htmlFor="noCVD">No</label>
               </div>
             </div>
             <div className="wcag-options palette-options">
-              <span className="option-switch">WCAG</span>
+              <span className="option-switch" ref={span => this.wcagSwitch = span}>
+                WCAG: {this.props.wcag2a ? "AA" : ""} {this.props.wcag3a ? "AAA" : ""}
+                {this.props.wcag2a===false && this.props.wcag3a===false ? "No" : ""}
+              </span>
               <div className="wcag-inputs dropdown-inputs">
-                <label><input type="radio" name="wcag" value="2A" />AA</label>
-                <label><input type="radio" name="wcag" value="3A" />AAA</label>
+                <input id="wcag-2a" type="checkbox" name="wcag" value="2A" onChange={this.handleWCAG} defaultChecked />
+                <label htmlFor="wcag-2a">AA</label>
+                <input id="wcag-3a" type="checkbox" name="wcag" value="3A" onChange={this.handleWCAG} defaultChecked />
+                <label htmlFor="wcag-3a">AAA</label>
               </div>
             </div>
           </div>{/*End div.palette-function-setting*/}
@@ -292,7 +316,8 @@ function mapStateToProps(state) {
   return ({
     foregroundColors: state.foregroundColors,
     backgroundColors: state.backgroundColors,
-    contrastRatios: state.contrastRatios
+    wcag2a: state.wcag2a,
+    wcag3a: state.wcag3a
   });
 }
 export default connect(mapStateToProps)(Palette);

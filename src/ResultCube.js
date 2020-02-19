@@ -8,6 +8,8 @@ class ResultCube extends React.PureComponent{
       aa: 1,
       aaa: 1,
       contrast: 1,
+      with2a: "",
+      with3a: ""
     }
     this.displayContrastRatio = this.displayContrastRatio.bind(this);
     this.convertHextoRGB = this.convertHextoRGB.bind(this);
@@ -70,6 +72,30 @@ class ResultCube extends React.PureComponent{
     let rgb = [parseInt(hexCode.substring(1,3) ,16), parseInt(hexCode.substring(3,5) ,16), parseInt(hexCode.substring(5) ,16)];
     return rgb;
   }
+  static getDerivedStateFromProps(props, state){
+    let result = null;
+    switch(props.wcag2a){
+      case true:
+        result = {with2a: "with2a"};
+        break;
+      case false:
+        result = {with2a: "without2a"};
+        break;
+      default:
+        break;
+    }
+    switch(props.wcag3a){
+      case true:
+        result = {...result, with3a: "with3a"};
+        break;
+      case false:
+        result = {...result, with3a: "without3a"};
+        break;
+      default:
+        break;
+    }
+    return result;
+  }
   componentDidUpdate(){
     //console.log("ResultUpdate", this.props.foregroundId, this.props.backgroundId);
     this.displayContrastRatio(this.props.foregroundColors[this.props.foregroundId].color, this.props.backgroundColors[this.props.backgroundId].color);
@@ -80,7 +106,7 @@ class ResultCube extends React.PureComponent{
   }
   render(){
     return (
-      <div className="result-cube" data-result-id={this.props.resultId} >
+      <div className={this.state.with2a + " result-cube " + this.state.with3a}>
         <div className="contrast-ratio">{this.state.contrast}</div>
         {this.displayWCAGResult(this.state.contrast)}
       </div>
@@ -91,7 +117,9 @@ class ResultCube extends React.PureComponent{
 function mapStateToProps(state) {
   return ({
     foregroundColors: state.foregroundColors,
-    backgroundColors: state.backgroundColors
+    backgroundColors: state.backgroundColors,
+    wcag2a: state.wcag2a,
+    wcag3a: state.wcag3a
   });
 }
 

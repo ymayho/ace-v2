@@ -37,7 +37,6 @@
           background-color: white;
           display: inline-block;
           cursor: pointer;
-
         }
         .dropdown-inputs{
           display: none;
@@ -47,15 +46,22 @@
             display: block;
             min-width: 100%;
             padding: 5px 10px;
-            background-color: gray;
+            border: 1px #aaa solid;
+            border-radius: 5px;
+            background-color: white;
             cursor: pointer;
             &:hover{
               color: white;
-              background-color: black;
+              background-color: #aaa;
             }
           }
           input{
             display: none;
+            &:checked+label{
+              color: white;
+              border-color: black;
+              background-color: black;
+            }
           }
         }
       }
@@ -115,7 +121,7 @@
           position: absolute;
           right: -450px;
           bottom: -260px;
-          width: 400px;
+          //width: 400px;
           height: auto;
           transform: scale(.75);
           z-index: 5;
@@ -158,6 +164,16 @@
         .result-cube{
           display: flex;
           flex-direction: column;
+          &.without2a{
+            .wcag-2a{
+              display: none;
+            }
+          }
+          &.without3a{
+            .wcag-3a{
+              display: none;
+            }
+          }
           .contrast-ratio{
             padding: 10px 0;
             font-size: 18px;

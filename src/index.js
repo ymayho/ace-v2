@@ -8,6 +8,8 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 
 const initialState = {
+  wcag2a: true,
+  wcag3a: true,
   foregroundColors: [{
     index: 0,
     color: "#000000",
@@ -79,7 +81,7 @@ function reducer(state = initialState, action){
   let tempCVDArr;
   switch(action.type){
     case "UPDATE_CANVAS":
-      
+
       return state;
     case "EDIT_FOREGROUND_COLOR":
       console.log(action.type);
@@ -105,6 +107,14 @@ function reducer(state = initialState, action){
       tempCVDArr[action.index].deutan = action.cvdColors.deutan;
       tempCVDArr[action.index].tritan = action.cvdColors.tritan;
       return {...state, backgroundCVDs: tempCVDArr}
+    case "UPDATE_WCAG_CHECK":
+      console.log(action.type);
+      console.log(action.standard, action.bool);
+      if(action.standard === "2A"){
+        return {...state, wcag2a: action.bool}
+      }else{
+        return {...state, wcag3a: action.bool}
+      }
     default:
       return state;
   }
