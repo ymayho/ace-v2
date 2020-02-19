@@ -143,7 +143,7 @@ class ColorCube extends React.Component{
   colorPickerHolder(){
     return this.state.displayPicker ? (
       <PhotoshopPicker  ref={(picker) => this.colorPicker = picker}
-      color={this.state.pickerColor} onChange={this.handlePickerColorChange}
+      color={this.state.colorSelection} onChange={this.handlePickerColorChange}
       onAccept={this.handleAcceptColorChange} onCancel={this.handleCancelColorChange} />
     ) : null;
   }
