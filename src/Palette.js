@@ -138,6 +138,7 @@ class Palette extends React.Component{
   render(){
     return (
       <div className="palette-wrapper" ref={(div)=>this.paletteWrapper = div}>
+        <div className="palette-content-wrapper">
         <nav className="palette-nav">
           <button>Palette</button>
           <button>CVD Info</button>
@@ -294,10 +295,11 @@ class Palette extends React.Component{
               <ResultCube foregroundId={5} backgroundId={3} />
             </div>
           </div>
+        </div>{/*End div.palette*/}
         </div>
         <div className="palette-border">
-          <div className="toggle-wrapper">
-            <button className="example-page-toggle" onClick={this.handleClickToggle}>{this.state.fullScreen ? "Open" : "Collapse"}</button>
+          <div className="toggle-wrapper" onClick={this.handleClickToggle}>
+            <button className="example-page-toggle">{this.state.fullScreen ? "Open" : "Collapse"}</button>
           </div>
         </div>
 

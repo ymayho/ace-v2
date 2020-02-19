@@ -2,7 +2,10 @@
   $palette-border: 10px;
   position: relative;
   height: 100%;
-  overflow: scroll;
+  .palette-content-wrapper{
+    height: 100%;
+    overflow: scroll;
+  }
   .palette-nav{
     height: 35px;
     display: flex;
@@ -15,7 +18,7 @@
   }
   .palette-options-container{
     width: 100%;
-    margin-bottom: 60px;
+    margin-bottom: 30px;
     padding: 15px calc( 10px + #{$palette-border}) 5px 20px;
     display: flex;
     justify-content: space-between;
@@ -42,6 +45,7 @@
           display: none;
           min-width: 100%;
           position: absolute;
+          z-index: 5;
           label{
             display: block;
             min-width: 100%;
@@ -80,10 +84,9 @@
 
   }//End .palette-options-container
   .palette{
+    margin: 0 auto;
+    padding: 30px 10px 50px;
     $color-width: 80px;
-    margin: 5px 25px 5px 10px;
-    padding: 10px 10px 50px 10px;
-    height: 100%;
     font-size: 14px;
     .color-row{
       display: flex;
@@ -104,8 +107,6 @@
       .foreground-color, .background-color{
         cursor: pointer;
         position: relative;
-
-        //z-index: 90;
         .color-name{
           position: absolute;
           top: -2.5em;
@@ -117,14 +118,17 @@
           line-height: 1.1em;
         }
         .photoshop-picker{
-          //overflow: visible;
           position: absolute;
-          right: -450px;
-          bottom: -260px;
-          //width: 400px;
-          height: auto;
+          right: -380px;
+          bottom: -10px;
+          width: 450px !important;
+          height: 300px;
           transform: scale(.75);
           z-index: 5;
+          // position: fixed;
+          // top: -20px;
+          // left: -20px;
+
         }
         .main-color{
           width: 100%;
@@ -147,7 +151,7 @@
             flex: 1;
             display: inline-block;
             background-color: white;
-            &:nth-of-type(n+3){
+            &:nth-of-type(3){
               border-right: none;
             }
           }
@@ -157,6 +161,20 @@
           bottom: -20px;
           width: 100%;
           text-align: center;
+        }
+      }
+      .foreground-color-wrapper{
+        &:nth-of-type(4), &:nth-of-type(5), &:nth-of-type(6), &:nth-of-type(7){
+          .photoshop-picker{
+            right: 0;
+            left: -380px;
+          }
+        }
+      }
+      .background-color-wrapper{
+        .photoshop-picker{
+          //right: 0;
+          top: -270px;
         }
       }
       .result-wrapper{
@@ -221,6 +239,7 @@
       position: relative;
       //overflow: hidden;
       height: 100%;
+      cursor: pointer;
       .example-page-toggle{
         position: absolute;
         top: calc(50vh - 80px / 2);
