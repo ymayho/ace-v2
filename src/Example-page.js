@@ -6,70 +6,183 @@ class ExamplePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pageBodyText: "",
-      headerText: "",
-      hyperlinkText: "",
-      visitedLinkText: "",
+      // pageBodyText1: "",
+      // pageBodyText2: "",
+      // headerText: "",
+      // hyperlinkText: "",
+      // visitedLinkText: "",
+      regularColorSet: {},
+      protanColorSet: {},
+      deutanColorSet: {},
+      tritanColorSet: {},
+      counter: 0
     }
-    this.localStorageUpdated = this.localStorageUpdated.bind(this);
+    this.setColorState = this.setColorState.bind(this);
+    this.resetMode = this.resetMode.bind(this);
     this.handleModeSwitch = this.handleModeSwitch.bind(this)
   }
-  localStorageUpdated(){
-    console.log("LOCALSTORAGE UPDATED!");
-    console.log(localStorage["foregroundColor0"]);
-    console.log(localStorage["foregroundColor1"]);
-    console.log(localStorage["foregroundColor2"]);
-    console.log(localStorage["foregroundColor3"]);
-    console.log(localStorage["backgroundColor0"]);
-    console.log(localStorage["backgroundColor1"]);
-    console.log(localStorage["backgroundColor2"]);
-    // When local storage changes,
-    this.setState({foreground0: localStorage["foregroundColor0"], foreground1: localStorage["foregroundColor1"],
-    background0: localStorage["backgroundColor0"], background1: localStorage["backgroundColor1"]}, ()=>{
-      document.getElementsByClassName("example-body-container")[0].style.backgroundColor = this.state.background0;
-      document.getElementsByClassName("example-header")[0].style.backgroundColor = this.state.background1;
-
-    });
-    console.log("CHANGE!");
-  }
+ resetMode(){
+  this.container.classList.remove("grayscale");
+ }
   handleModeSwitch(mode){
-    if(mode === "grayscale"){
-    //document.getElementsByClassName("example-container")[0].classList.add("grayscale");
+    console.log(mode);
+    this.resetMode();
+    if(mode === "regular"){
+      
+    }else if(mode === "protan"){
+      this.header.style.backgroundColor = this.state.protanColorSet.headerBack;
+    }else if(mode === "deutan"){
+
+    }else if(mode === "tritan"){
+
+    }else if(mode === "grayscale"){
+      console.log(this.body.classList);
+      this.container.classList.add("grayscale");
     }
   }
-  componentDidUpdate(){
+  setColorState(colorType){
+    console.log("foreground colors: \n", this.props.foregroundColors, "\ncvd: \n", this.props.foregroundCVDs);
+    switch(colorType){
+      case "regular":
+        console.log("setColorState: regular");
+        this.setState({
+          regularColorSet: {
+            pageBodyText1: this.props.foregroundColors[0].color,
+            headerText: this.props.foregroundColors[1].color,
+            hyperlinkText: this.props.foregroundColors[2].color,
+            visitedHyperlinkText: this.props.foregroundColors[3].color,
+            fore4: this.props.foregroundColors[4].color,
+            fore5: this.props.foregroundColors[5].color,
+            pageBack: this.props.backgroundColors[0].color,
+            headerBack: this.props.backgroundColors[1].color,
+            hoverBack: this.props.backgroundColors[2].color,
+            back3: this.props.backgroundColors[3].color,
+          }}, 
+        () => console.log("state regularColorSet: ", this.state.regularColorSet));
+        break;
+      case "cvd":
+        console.log("setColorState: cvd");
+        this.setState({
+          protanColorSet: {
+            pageBodyText1: this.props.foregroundCVDs[0].protan,
+            headerText: this.props.foregroundCVDs[1].protan,
+            hyperlinkText: this.props.foregroundCVDs[2].protan,
+            visitedHyperlinkText: this.props.foregroundCVDs[3].protan,
+            fore4: this.props.foregroundCVDs[4].protan,
+            fore5: this.props.foregroundCVDs[5].protan,
+            pageBack: this.props.backgroundCVDs[0].protan,
+            headerBack: this.props.backgroundCVDs[1].protan,
+            hoverBack: this.props.backgroundCVDs[2].protan,
+            back3: this.props.backgroundCVDs[3].protan,
+          }, 
+          deutanColorSet: {
+            pageBodyText1: this.props.foregroundCVDs[0].deutan,
+            headerText: this.props.foregroundCVDs[1].deutan,
+            hyperlinkText: this.props.foregroundCVDs[2].deutan,
+            visitedHyperlinkText: this.props.foregroundCVDs[3].deutan,
+            fore4: this.props.foregroundCVDs[4].deutan,
+            fore5: this.props.foregroundCVDs[5].deutan,
+            pageBack: this.props.backgroundCVDs[0].deutan,
+            headerBack: this.props.backgroundCVDs[1].deutan,
+            hoverBack: this.props.backgroundCVDs[2].deutan,
+            back3: this.props.backgroundCVDs[3].deutan,
+          },
+          tritanColorSet: {
+            pageBodyText1: this.props.foregroundCVDs[0].tritan,
+            headerText: this.props.foregroundCVDs[1].tritan,
+            hyperlinkText: this.props.foregroundCVDs[2].tritan,
+            visitedHyperlinkText: this.props.foregroundCVDs[3].tritan,
+            fore4: this.props.foregroundCVDs[4].tritan,
+            fore5: this.props.foregroundCVDs[5].tritan,
+            pageBack: this.props.backgroundCVDs[0].tritan,
+            headerBack: this.props.backgroundCVDs[1].tritan,
+            hoverBack: this.props.backgroundCVDs[2].tritan,
+            back3: this.props.backgroundCVDs[3].tritan,
+          }
+        }, () => console.log("state cvd color sets: ", this.props.foregroundCVDs, this.state.protanColorSet, this.state.deutanColorSet, this.state.tritanColorSet));
+    }
+  }
+  static getDerivedStateFromProps(props, state){
+    let result = null;
+    let regular = {regularColorSet: {
+      pageBodyText1: props.foregroundColors[0].color,
+      headerText: props.foregroundColors[1].color,
+      hyperlinkText: props.foregroundColors[2].color,
+      visitedHyperlinkText: props.foregroundColors[3].color,
+      fore4: props.foregroundColors[4].color,
+      fore5: props.foregroundColors[5].color,
+      pageBack: props.backgroundColors[0].color,
+      headerBack: props.backgroundColors[1].color,
+      hoverBack: props.backgroundColors[2].color,
+      back3: props.backgroundColors[3].color,
+    }};
+    let cvd = {protanColorSet: {
+      pageBodyText1: props.foregroundCVDs[0].protan,
+      headerText: props.foregroundCVDs[1].protan,
+      hyperlinkText: props.foregroundCVDs[2].protan,
+      visitedHyperlinkText: props.foregroundCVDs[3].protan,
+      fore4: props.foregroundCVDs[4].protan,
+      fore5: props.foregroundCVDs[5].protan,
+      pageBack: props.backgroundCVDs[0].protan,
+      headerBack: props.backgroundCVDs[1].protan,
+      hoverBack: props.backgroundCVDs[2].protan,
+      back3: props.backgroundCVDs[3].protan,
+    }, 
+    deutanColorSet: {
+      pageBodyText1: props.foregroundCVDs[0].deutan,
+      headerText: props.foregroundCVDs[1].deutan,
+      hyperlinkText: props.foregroundCVDs[2].deutan,
+      visitedHyperlinkText: props.foregroundCVDs[3].deutan,
+      fore4: props.foregroundCVDs[4].deutan,
+      fore5: props.foregroundCVDs[5].deutan,
+      pageBack: props.backgroundCVDs[0].deutan,
+      headerBack: props.backgroundCVDs[1].deutan,
+      hoverBack: props.backgroundCVDs[2].deutan,
+      back3: props.backgroundCVDs[3].deutan,
+    },
+    tritanColorSet: {
+      pageBodyText1: props.foregroundCVDs[0].tritan,
+      headerText: props.foregroundCVDs[1].tritan,
+      hyperlinkText: props.foregroundCVDs[2].tritan,
+      visitedHyperlinkText: props.foregroundCVDs[3].tritan,
+      fore4: props.foregroundCVDs[4].tritan,
+      fore5: props.foregroundCVDs[5].tritan,
+      pageBack: props.backgroundCVDs[0].tritan,
+      headerBack: props.backgroundCVDs[1].tritan,
+      hoverBack: props.backgroundCVDs[2].tritan,
+      back3: props.backgroundCVDs[3].tritan,
+    }}
+    let regex = /^rgb/;
+    if(regex.test(props.foregroundCVDs[0].protan)){
+      result = {...regular, ...cvd};
+    }else{
+      result = {...regular};
+    }
+    return result;
+  }
+  componentDidUpdate(prevProps, prevState){
     console.log("Example Update");
-    console.log(this.props.foregroundCVDs);
-    // document.getElementsByClassName("example-body-container")[0].style.backgroundColor = localStorage["backgroundColors"][0];
+    console.log(this.state.regularColorSet, this.state.protanColorSet);
   }
   componentDidMount(){
     console.log("Example Mount");
-    this.setState({foreground0: localStorage["foregroundColor0"], foreground1: localStorage["foregroundColor1"],
-    background0: localStorage["backgroundColor0"], background1: localStorage["backgroundColor1"]}, ()=>{
-      document.getElementsByClassName("example-body-container")[0].style.backgroundColor = this.state.background0;
-      document.getElementsByClassName("example-header")[0].style.backgroundColor = this.state.background1;
-    });
-    window.addEventListener('storage', this.localStorageUpdated)
-
-
+    this.setColorState("regular");
+    this.setColorState("cvd");
   }
   render(){
-    const paragraphStyle = {
-      //color: this.props.foregroundCVDs[2].tritan
-    }
     return (
       <div className="example-page-wrapper">
         <nav className="simulation-options">
-          <button onClick={this.handleModeSwitch("regular")}>No CVD</button>
-          <button onClick={this.handleModeSwitch("protan")}>Protan</button>
-          <button onClick={this.handleModeSwitch("deutan")}>Deutan</button>
-          <button onClick={this.handleModeSwitch("tritan")}>Tritan</button>
-          <button onClick={this.handleModeSwitch("grayscale")}>Grayscale</button>
+          <button onClick={() => this.handleModeSwitch("regular")}>No CVD</button>
+          <button onClick={() => this.handleModeSwitch("protan")}>Protan</button>
+          <button onClick={() => this.handleModeSwitch("deutan")}>Deutan</button>
+          <button onClick={() => this.handleModeSwitch("tritan")}>Tritan</button>
+          <button onClick={() => this.handleModeSwitch("grayscale")}>Grayscale</button>
           <button>NewTab</button>
         </nav>
 
-        <div className="example-container">
-          <header className="example-header">
+        <div className="example-container" ref={(div) => this.container = div}>
+          <header className="example-header" ref={(header) => this.header = header}>
             <h1 className="example-title">Example Page</h1>
             <nav>
               <a href="." className="example-menu">Menu 1</a>
@@ -77,28 +190,28 @@ class ExamplePage extends React.Component {
               <a href="." className="example-menu">Menu 3</a>
             </nav>
           </header>
-          <div className="example-body-container">
-            <p style={paragraphStyle} className="text-18pt">
+          <div className="example-body-container" ref={(div) => this.body = div}>
+            <p className="text-18pt body-text-1">
               This is 18 point text and it is considered large scale by WCAG 2.0. At the AA level it (or larger font sizes) can be used with a minimum contrast ratio 3:1 or greater to ensure it is legible by people with CVD or other vision impairments as well as people with typical colour vision. To achieve a pass at AAA enhanced contrast the contrast ratio would need to be at least 4.5:1
             </p>
-            <p className="text-14pt">
+            <p className="text-14pt body-text-1">
               This text is 14 point and it is considered small text by WCAG 2.0 (less than 18 point). At the AA level this font size can be used with a minimum contrast
           ratio 4.5:1 or greater to ensure it is legible by people with CVD or other vision impairments as well as people
           with typical colour vision. To achieve a pass at AAA enhanced contrast the contrast ratio would need to be at least 7:1
             </p>
-            <p>When you use <a href=".">hyperlinks</a> you will want to customise them because your background colour might be too dark for the defult blue, make sure they are still underlined and that
-            the colour you choose to show when the link has been visited is also easy to distinguish against the background, e.g., <a href=".">hyperlinks</a>
+            <p className="text-14pt body-text-1">When you use <a className="hyperlink-text" href=".">hyperlinks</a> you will want to customise them because your background colour might be too dark for the defult blue, make sure they are still underlined and that
+            the colour you choose to show when the link has been visited is also easy to distinguish against the background, e.g., <a className="hyperlink-text-visited" href=".">hyperlinks</a>
             </p>
-            <p className="text-18pt">
+            <p className="text-18pt body-text-2">
               This is 18 point text and it is considered large scale by WCAG 2.0. At the AA level it (or larger font sizes) can be used with a minimum contrast ratio 3:1 or greater to ensure it is legible by people with CVD or other vision impairments as well as people with typical colour vision. To achieve a pass at AAA enhanced contrast the contrast ratio would need to be at least 4.5:1
             </p>
-            <p className="text-14pt">
+            <p className="text-14pt body-text-2">
               This text is 14 point and it is considered small text by WCAG 2.0 (less than 18 point). At the AA level this font size can be used with a minimum contrast
           ratio 4.5:1 or greater to ensure it is legible by people with CVD or other vision impairments as well as people
           with typical colour vision. To achieve a pass at AAA enhanced contrast the contrast ratio would need to be at least 7:1
             </p>
-            <p>When you use <a href=".">hyperlinks</a> you will want to customise them because your background colour might be too dark for the defult blue, make sure they are still underlined and that
-            the colour you choose to show when the link has been visited is also easy to distinguish against the background, e.g., <a href=".">hyperlinks</a>
+            <p className="text-14pt body-text-2">When you use <a className="hyperlink-text" href=".">hyperlinks</a> you will want to customise them because your background colour might be too dark for the defult blue, make sure they are still underlined and that
+            the colour you choose to show when the link has been visited is also easy to distinguish against the background, e.g., <a className="hyperlink-text-visited" href=".">hyperlinks</a>
             </p>
           </div>
           <footer>
