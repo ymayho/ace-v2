@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import './scss/palette.scss';
-//import { PhotoshopPicker } from 'react-color';
+
 import ColorCube from './ColorCube';
 import ResultCube from './ResultCube';
 import ProtanImg from './img/lut_protan_medium.png';

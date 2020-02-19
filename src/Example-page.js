@@ -39,27 +39,29 @@ class ExamplePage extends React.Component {
     }else{
       menu.style.backgroundColor = this.state.currentColorSet.headerBack;
     }
-
   }
   resetMode(){
     this.container.classList.remove("grayscale");
+    let menu = document.getElementsByClassName("example-menu");
+    Array.from(menu).forEach((item) => {
+      item.style.backgroundColor = this.state.currentColorSet.headerBack;
+    });
   }
   handleModeSwitch(mode){
     console.log(mode);
-    this.resetMode();
     if(mode === "regular"){
-      this.setState({});
-      this.setState({currentColorSet: {...this.state.regularColorSet}, mode: "regular"}, () => console.log(this.state.currentColorSet));
+      this.setState({currentColorSet: {...this.state.regularColorSet}, mode: "regular"}, () => this.resetMode());
     }else if(mode === "protan"){
-      this.setState({currentColorSet: {...this.state.protanColorSet}, mode: "protan"}, () => console.log(this.state.currentColorSet));
+      this.setState({currentColorSet: {...this.state.protanColorSet}, mode: "protan"}, () => this.resetMode());
     }else if(mode === "deutan"){
-      this.setState({currentColorSet: {...this.state.deutanColorSet}, mode: "deutan"}, () => console.log(this.state.currentColorSet));
+      this.setState({currentColorSet: {...this.state.deutanColorSet}, mode: "deutan"}, () => this.resetMode());
     }else if(mode === "tritan"){
-      this.setState({currentColorSet: {...this.state.tritanColorSet}, mode: "tritan"}, () => console.log(this.state.currentColorSet));
+      this.setState({currentColorSet: {...this.state.tritanColorSet}, mode: "tritan"}, () => this.resetMode());
     }else if(mode === "grayscale"){
-      console.log(this.body.classList);
+      this.resetMode();
       this.container.classList.add("grayscale");
     }
+
   }
   setColorState(colorType){
     console.log("foreground colors: \n", this.props.foregroundColors, "\ncvd: \n", this.props.foregroundCVDs);
