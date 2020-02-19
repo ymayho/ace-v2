@@ -77,6 +77,7 @@
     $color-width: 80px;
     margin: 5px 25px 5px 10px;
     padding: 10px 10px 50px 10px;
+    height: 100%;
     font-size: 14px;
     .color-row{
       display: flex;
@@ -203,17 +204,23 @@
     height: 100%;
     border-right: 1px white solid;
     background-color: black;
-    .example-page-toggle{
-      position: absolute;
-      top: calc(50% - 80px / 2);
-      right: -25px;
-      width: 80px;
-      height: 25px;
-      color: white;
-      background-color: black;
-      border-radius: 5px;
-      transform: rotate(90deg);
+    .toggle-wrapper{
+      position: relative;
+      //overflow: hidden;
+      height: 100%;
+      .example-page-toggle{
+        position: absolute;
+        top: calc(50% - 80px / 2);
+        right: -25px;
+        width: 80px;
+        height: 25px;
+        color: white;
+        background-color: black;
+        border-radius: 5px;
+        transform: rotate(90deg);
+      }
     }
+
   }
   #hidden-canvas-area{
     display: none;

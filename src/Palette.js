@@ -8,7 +8,6 @@ import ProtanImg from './img/lut_protan_medium.png';
 import DeutanImg from './img/lut_deutan_medium.png';
 import TritanImg from './img/lut_tritan_medium.png';
 
-let counter = 0;
 class Palette extends React.Component{
   constructor(props) {
     super(props);
@@ -31,30 +30,18 @@ class Palette extends React.Component{
     this.handleClickToggle = this.handleClickToggle.bind(this);
   }
 
-  
+
   callBackColorUpdated(type, no, color){
+    // console.log("CALLBACK");
     if(type==="foreground"){
       let tempArr = this.state.foregroundColorArr;
       tempArr[no] = color;
       //this.setState({foregroundColorArr: tempArr});
-      //localStorage.setItem("foregroundColor" + no, color);
     }else{
       let tempArr = this.state.backgroundColorArr;
       tempArr[no] = color;
       //this.setState({backgroundColorArr: tempArr});
-      //localStorage.setItem("backgroundColor" + no, color);
     }
-    // console.log("CALLBACK");
-    // console.log(this.props.foregroundColors[no], color);
-    if((type === "foreground" && this.props.foregroundColors[no].color === color) || (type === "background" && this.props.backgroundColors[no].color === color)){
-      //console.log("No");
-      //console.log("\n\n\n\n\n", counter++, "\n\n\n\n\n");
-      return
-    }else{
-      //console.log("Yes");
-     
-    }
-
   }
   createColorPaletteObj(type, inputImg){
     let imgObj = new Image();
@@ -284,7 +271,11 @@ class Palette extends React.Component{
             </div>
           </div>
         </div>
-        <div className="palette-border"><button className="example-page-toggle" onClick={this.handleClickToggle}>{this.state.fullScreen ? "Open" : "Collapse"}</button></div>
+        <div className="palette-border">
+          <div className="toggle-wrapper">
+            <button className="example-page-toggle" onClick={this.handleClickToggle}>{this.state.fullScreen ? "Open" : "Collapse"}</button>
+          </div>
+        </div>
 
         <div id="hidden-canvas-area">
           <canvas id="canvasProtan" ref={(canvas) => this.canvasProtan = canvas} width="4096" height="4096">Please use a browser that supports HTML5 Canvas</canvas>

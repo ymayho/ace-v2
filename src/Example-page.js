@@ -1,16 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import {Link} from 'react-router-dom';
 import './scss/example-page.scss';
 
 class ExamplePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // pageBodyText1: "",
-      // pageBodyText2: "",
-      // headerText: "",
-      // hyperlinkText: "",
-      // visitedLinkText: "",
+      currentColorSet: {
+        pageBodyText1: "#000000",
+        headerText: "#ffffff",
+        hyperlinkText: "#0000ee",
+        visitedHyperlinkText: "#551a8b",
+        fore4: "#000000",
+        fore5: "#ffffff",
+        pageBack: "#ffffff",
+        headerBack: "#000000",
+        hoverBack: "#ffffff",
+        back3: "#000000"
+      },
       regularColorSet: {},
       protanColorSet: {},
       deutanColorSet: {},
@@ -28,13 +36,14 @@ class ExamplePage extends React.Component {
     console.log(mode);
     this.resetMode();
     if(mode === "regular"){
-      
+      this.setState({currentColorSet: {...this.state.regularColorSet}}, () => console.log(this.state.currentColorSet));
     }else if(mode === "protan"){
-      this.header.style.backgroundColor = this.state.protanColorSet.headerBack;
+      //this.header.style.backgroundColor = this.state.protanColorSet.headerBack;
+      this.setState({currentColorSet: {...this.state.protanColorSet}}, () => console.log(this.state.currentColorSet));
     }else if(mode === "deutan"){
-
+      this.setState({currentColorSet: {...this.state.deutanColorSet}}, () => console.log(this.state.currentColorSet));
     }else if(mode === "tritan"){
-
+      this.setState({currentColorSet: {...this.state.tritanColorSet}}, () => console.log(this.state.currentColorSet));
     }else if(mode === "grayscale"){
       console.log(this.body.classList);
       this.container.classList.add("grayscale");
@@ -57,7 +66,7 @@ class ExamplePage extends React.Component {
             headerBack: this.props.backgroundColors[1].color,
             hoverBack: this.props.backgroundColors[2].color,
             back3: this.props.backgroundColors[3].color,
-          }}, 
+          }},
         () => console.log("state regularColorSet: ", this.state.regularColorSet));
         break;
       case "cvd":
@@ -74,7 +83,7 @@ class ExamplePage extends React.Component {
             headerBack: this.props.backgroundCVDs[1].protan,
             hoverBack: this.props.backgroundCVDs[2].protan,
             back3: this.props.backgroundCVDs[3].protan,
-          }, 
+          },
           deutanColorSet: {
             pageBodyText1: this.props.foregroundCVDs[0].deutan,
             headerText: this.props.foregroundCVDs[1].deutan,
@@ -100,11 +109,27 @@ class ExamplePage extends React.Component {
             back3: this.props.backgroundCVDs[3].tritan,
           }
         }, () => console.log("state cvd color sets: ", this.props.foregroundCVDs, this.state.protanColorSet, this.state.deutanColorSet, this.state.tritanColorSet));
+        break;
+      default:
+        break;
     }
   }
   static getDerivedStateFromProps(props, state){
+    console.log("getDerivedStateFromProps");
     let result = null;
     let regular = {regularColorSet: {
+      pageBodyText1: props.foregroundColors[0].color,
+      headerText: props.foregroundColors[1].color,
+      hyperlinkText: props.foregroundColors[2].color,
+      visitedHyperlinkText: props.foregroundColors[3].color,
+      fore4: props.foregroundColors[4].color,
+      fore5: props.foregroundColors[5].color,
+      pageBack: props.backgroundColors[0].color,
+      headerBack: props.backgroundColors[1].color,
+      hoverBack: props.backgroundColors[2].color,
+      back3: props.backgroundColors[3].color,
+    }};
+    let current = {currentColorSet: {
       pageBodyText1: props.foregroundColors[0].color,
       headerText: props.foregroundColors[1].color,
       hyperlinkText: props.foregroundColors[2].color,
@@ -127,7 +152,7 @@ class ExamplePage extends React.Component {
       headerBack: props.backgroundCVDs[1].protan,
       hoverBack: props.backgroundCVDs[2].protan,
       back3: props.backgroundCVDs[3].protan,
-    }, 
+    },
     deutanColorSet: {
       pageBodyText1: props.foregroundCVDs[0].deutan,
       headerText: props.foregroundCVDs[1].deutan,
@@ -154,10 +179,11 @@ class ExamplePage extends React.Component {
     }}
     let regex = /^rgb/;
     if(regex.test(props.foregroundCVDs[0].protan)){
-      result = {...regular, ...cvd};
+      result = {...regular, ...current, ...cvd};
     }else{
-      result = {...regular};
+      result = {...regular, ...current};
     }
+    console.log("\n\n", result, "\n\n");
     return result;
   }
   componentDidUpdate(prevProps, prevState){
@@ -178,11 +204,10 @@ class ExamplePage extends React.Component {
           <button onClick={() => this.handleModeSwitch("deutan")}>Deutan</button>
           <button onClick={() => this.handleModeSwitch("tritan")}>Tritan</button>
           <button onClick={() => this.handleModeSwitch("grayscale")}>Grayscale</button>
-          <button>NewTab</button>
+          <button><Link to="/example" target="_blank">NewTab</Link></button>
         </nav>
-
         <div className="example-container" ref={(div) => this.container = div}>
-          <header className="example-header" ref={(header) => this.header = header}>
+          <header className="example-header" ref={(header) => this.header = header} style={{backgroundColor: this.state.currentColorSet.headerBack}}>
             <h1 className="example-title">Example Page</h1>
             <nav>
               <a href="." className="example-menu">Menu 1</a>
@@ -190,31 +215,31 @@ class ExamplePage extends React.Component {
               <a href="." className="example-menu">Menu 3</a>
             </nav>
           </header>
-          <div className="example-body-container" ref={(div) => this.body = div}>
-            <p className="text-18pt body-text-1">
+          <div className="example-body-container" ref={(div) => this.body = div} style={{backgroundColor: this.state.currentColorSet.pageBack}}>
+            <p className="text-18pt body-text-1" style={{color: this.state.currentColorSet.pageBodyText1}}>
               This is 18 point text and it is considered large scale by WCAG 2.0. At the AA level it (or larger font sizes) can be used with a minimum contrast ratio 3:1 or greater to ensure it is legible by people with CVD or other vision impairments as well as people with typical colour vision. To achieve a pass at AAA enhanced contrast the contrast ratio would need to be at least 4.5:1
             </p>
-            <p className="text-14pt body-text-1">
+            <p className="text-14pt body-text-1" style={{color: this.state.currentColorSet.pageBodyText1}}>
               This text is 14 point and it is considered small text by WCAG 2.0 (less than 18 point). At the AA level this font size can be used with a minimum contrast
           ratio 4.5:1 or greater to ensure it is legible by people with CVD or other vision impairments as well as people
           with typical colour vision. To achieve a pass at AAA enhanced contrast the contrast ratio would need to be at least 7:1
             </p>
-            <p className="text-14pt body-text-1">When you use <a className="hyperlink-text" href=".">hyperlinks</a> you will want to customise them because your background colour might be too dark for the defult blue, make sure they are still underlined and that
-            the colour you choose to show when the link has been visited is also easy to distinguish against the background, e.g., <a className="hyperlink-text-visited" href=".">hyperlinks</a>
+            <p className="text-14pt body-text-1" style={{color: this.state.currentColorSet.pageBodyText1}}>When you use <a className="hyperlink-text" href="." style={{color: this.state.currentColorSet.hyperlinkText}}>hyperlinks</a> you will want to customise them because your background colour might be too dark for the defult blue, make sure they are still underlined and that
+            the colour you choose to show when the link has been visited is also easy to distinguish against the background, e.g., <a className="hyperlink-text-visited" href="." style={{color: this.state.currentColorSet.visitedHyperlinkText}}>hyperlinks</a>
             </p>
-            <p className="text-18pt body-text-2">
+            <p className="text-18pt body-text-2" style={{color: this.state.currentColorSet.pageBodyText1}}>
               This is 18 point text and it is considered large scale by WCAG 2.0. At the AA level it (or larger font sizes) can be used with a minimum contrast ratio 3:1 or greater to ensure it is legible by people with CVD or other vision impairments as well as people with typical colour vision. To achieve a pass at AAA enhanced contrast the contrast ratio would need to be at least 4.5:1
             </p>
-            <p className="text-14pt body-text-2">
+            <p className="text-14pt body-text-2" style={{color: this.state.currentColorSet.pageBodyText1}}>
               This text is 14 point and it is considered small text by WCAG 2.0 (less than 18 point). At the AA level this font size can be used with a minimum contrast
           ratio 4.5:1 or greater to ensure it is legible by people with CVD or other vision impairments as well as people
           with typical colour vision. To achieve a pass at AAA enhanced contrast the contrast ratio would need to be at least 7:1
             </p>
-            <p className="text-14pt body-text-2">When you use <a className="hyperlink-text" href=".">hyperlinks</a> you will want to customise them because your background colour might be too dark for the defult blue, make sure they are still underlined and that
-            the colour you choose to show when the link has been visited is also easy to distinguish against the background, e.g., <a className="hyperlink-text-visited" href=".">hyperlinks</a>
+            <p className="text-14pt body-text-2" style={{color: this.state.currentColorSet.pageBodyText1}}>When you use <a className="hyperlink-text" href="." style={{color: this.state.currentColorSet.hyperlinkText}}>hyperlinks</a> you will want to customise them because your background colour might be too dark for the defult blue, make sure they are still underlined and that
+            the colour you choose to show when the link has been visited is also easy to distinguish against the background, e.g., <a className="hyperlink-text-visited" href="." style={{color: this.state.currentColorSet.visitedHyperlinkText}}>hyperlinks</a>
             </p>
           </div>
-          <footer>
+          <footer style={{backgroundColor: this.state.currentColorSet.headerBack}}>
             This is a footer.<br />
             Copyrights, other info.
           </footer>

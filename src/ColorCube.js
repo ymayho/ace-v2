@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {PhotoshopPicker} from 'react-color'
 
-let counter = 0
-let cvdTime = 0;
 class ColorCube extends React.Component{
   constructor(props) {
     super(props);

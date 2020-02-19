@@ -5,7 +5,7 @@ import ExamplePage from './Example-page.js'
 
 const PageRouter = () => (
   <Router>
-    <div>
+    <div className="router">
       <Route exact path="/" component={Main} />
       <Route exact path="/main" component={Main} />
       <Route path="/example" component={ExamplePage} />
