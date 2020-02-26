@@ -10,6 +10,8 @@ import { Provider } from 'react-redux'
 const initialState = {
   wcag2a: true,
   wcag3a: true,
+  foregroundNumber: 4,
+  backgroundNumber: 2,
   foregroundColors: [{
     index: 0,
     color: "#000000",
@@ -29,11 +31,11 @@ const initialState = {
   },{
     index: 4,
     color: "#000000",
-    colorName: " "
+    colorName: "Page body text 2"
   },{
     index: 5,
     color: "#ffffff",
-    colorName: " "
+    colorName: "Accent/hover header text"
   },],
   backgroundColors: [{
     index: 0,
@@ -50,7 +52,7 @@ const initialState = {
   },{
     index: 3,
     color: "#000000",
-    colorName: "Another background"
+    colorName: "Footer background"
   },],
   foregroundCVDs: [{
     index: 0, protan: "#000000", deutan: "#000000", tritan: "#000000"
@@ -80,9 +82,12 @@ function reducer(state = initialState, action){
   let tempColorArr;
   let tempCVDArr;
   switch(action.type){
-    case "UPDATE_CANVAS":
-
-      return state;
+    case "EDIT_FOREGROUND_NUMBER":
+      console.log(action.type);
+      return {...state, foregroundNumber: action.newNumber};
+    case "EDIT_BACKGROUND_NUMBER":
+        console.log(action.type);
+        return {...state, backgroundNumber: action.newNumber};
     case "EDIT_FOREGROUND_COLOR":
       console.log(action.type);
       tempColorArr = [...state.foregroundColors];

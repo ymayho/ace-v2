@@ -6,6 +6,7 @@ class ColorCube extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
+      display: "display",
       colorType: "",
       colorName: "",
       displayColorName: "text color",
@@ -173,17 +174,23 @@ class ColorCube extends React.Component{
     if(props.canvasTritan !== undefined){
       result = {...result, canvasTritan: props.canvasTritan};
     }
+    let colorNum;
+    colorNum = (props.colorType === "foreground") ? props.foregroundNumber : props.backgroundNumber;
+    console.log(props.colorType, ": ", colorNum);
+    console.log(props.colorNo);
+    if(props.colorNo >= colorNum){
+      result = {...result, display: "hidden"};
+    }else{
+      result = {...result, display: "display"};
+    }
     //console.log(result);
     return result;
   }
   componentDidUpdate(prevProps){
-    //console.log(counter++);
-    //console.log("ColorCube update: " + this.props.colorType + this.props.colorNo)
     if(this.state.canvasProtan.length===0 ||this.state.canvasDeutan.length===0 || this.state.canvasTritan.length===0){
       //console.log("空的");
     }else{
       if(this.props.colorType === "foreground"){
-        //console.log("foreground", prevProps.foregroundColors[this.props.colorNo].color, this.props.foregroundColors[this.props.colorNo].color)
         if(prevProps.foregroundColors[this.props.colorNo].color !== this.props.foregroundColors[this.props.colorNo].color){
           this.simulateCVD();
         }
@@ -220,13 +227,12 @@ class ColorCube extends React.Component{
     //Set default color.
     this.setDefaultColor(this.props.colorType, this.props.colorNo, this.props.colorName);
     this.props.handleColorUpdated(this.props.colorType, this.props.colorNo, this.state.colorSelection);
-    //console.log(this.props.canvasProtan);
     this.simulateCVD();
   }
 
   render(){
     return (
-      <div className={this.state.colorType}>
+      <div className={this.state.colorType + " " + this.state.display}>
         {this.colorPickerHolder()}
         <span className="color-name">{this.state.displayColorName}</span>
         <div className="main-color" ref={(div) => this.mainColor = div} onClick={this.handleClickCube}></div>
@@ -244,6 +250,8 @@ class ColorCube extends React.Component{
 // Add this function:
 function mapStateToProps(state) {
   return ({
+    foregroundNumber: state.foregroundNumber,
+    backgroundNumber: state.backgroundNumber,
     foregroundColors: state.foregroundColors,
     backgroundColors: state.backgroundColors,
     foregroundCVDs: state.foregroundCVDs,

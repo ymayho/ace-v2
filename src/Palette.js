@@ -27,6 +27,8 @@ class Palette extends React.Component{
     this.callBackColorUpdated = this.callBackColorUpdated.bind(this);
     this.storeSimulationData = this.storeSimulationData.bind(this);
     this.createColorPaletteObj = this.createColorPaletteObj.bind(this);
+    this.handleBackgroundNumberChange = this.handleBackgroundNumberChange.bind(this);
+    this.handleForegroundNumberChange = this.handleForegroundNumberChange.bind(this);
     this.handleWCAG = this.handleWCAG.bind(this);
     this.handleCVD = this.handleCVD.bind(this);
     this.handleClickToggle = this.handleClickToggle.bind(this);
@@ -72,6 +74,18 @@ class Palette extends React.Component{
     else{
       this.setState({canvasTritan: pixels});
     }
+  }
+  handleBackgroundNumberChange(){
+    this.props.dispatch({type: "EDIT_BACKGROUND_NUMBER",
+      newNumber: this.backgroundNumber.value,
+      });
+    console.log(this.backgroundNumber.value)
+  }
+  handleForegroundNumberChange(){
+    this.props.dispatch({type: "EDIT_FOREGROUND_NUMBER",
+      newNumber: this.foregroundNumber.value,
+      });
+    console.log(this.foregroundNumber.value)
   }
   handleWCAG(){
     let wcagType = document.querySelectorAll('input[name="wcag"]');
@@ -172,6 +186,14 @@ class Palette extends React.Component{
           </div>
         </div>{/*End div.palette-options-container*/}
         <div className="palette">
+          <div className="foreground-number">
+            <input className="color-number-input" type="number" defaultValue="4" min="4" max="6"
+              onChange={this.handleForegroundNumberChange} ref={(input) => this.foregroundNumber = input}/> / 6
+          </div>
+          <div className="background-number">
+            <input className="color-number-input" type="number" defaultValue="2" min="2" max="4"
+              onChange={this.handleBackgroundNumberChange} ref={(input) => this.backgroundNumber = input}/> / 4
+          </div>
           <div className="color-row">
             <div className="color-placeholder">QAQ</div>
             <div className="foreground-color-wrapper">

@@ -5,6 +5,7 @@ class ResultCube extends React.PureComponent{
   constructor(props) {
     super(props);
     this.state = {
+      display: "display",
       aa: 1,
       aaa: 1,
       contrast: 1,
@@ -74,25 +75,31 @@ class ResultCube extends React.PureComponent{
   }
   static getDerivedStateFromProps(props, state){
     let result = null;
-    switch(props.wcag2a){
-      case true:
-        result = {with2a: "with2a"};
-        break;
-      case false:
-        result = {with2a: "without2a"};
-        break;
-      default:
-        break;
+    if(props.foregroundId >= props.foregroundNumber || props.backgroundId >= props.backgroundNumber){
+      result = {display: "hidden"};
     }
-    switch(props.wcag3a){
-      case true:
-        result = {...result, with3a: "with3a"};
-        break;
-      case false:
-        result = {...result, with3a: "without3a"};
-        break;
-      default:
-        break;
+    else{
+      result = {display: "display"};
+      switch(props.wcag2a){
+        case true:
+          result = {...result, with2a: "with2a"};
+          break;
+        case false:
+          result = {...result, with2a: "without2a"};
+          break;
+        default:
+          break;
+      }
+      switch(props.wcag3a){
+        case true:
+          result = {...result, with3a: "with3a"};
+          break;
+        case false:
+          result = {...result, with3a: "without3a"};
+          break;
+        default:
+          break;
+      }
     }
     return result;
   }
@@ -106,7 +113,7 @@ class ResultCube extends React.PureComponent{
   }
   render(){
     return (
-      <div className={this.state.with2a + " result-cube " + this.state.with3a}>
+      <div className={this.state.with2a + " result-cube " + this.state.with3a + " " + this.state.display}>
         <div className="contrast-ratio">{this.state.contrast}</div>
         {this.displayWCAGResult(this.state.contrast)}
       </div>
@@ -116,6 +123,8 @@ class ResultCube extends React.PureComponent{
 
 function mapStateToProps(state) {
   return ({
+    foregroundNumber: state.foregroundNumber,
+    backgroundNumber: state.backgroundNumber,
     foregroundColors: state.foregroundColors,
     backgroundColors: state.backgroundColors,
     wcag2a: state.wcag2a,

@@ -61,13 +61,12 @@ class ExamplePage extends React.Component {
       this.resetMode();
       this.container.classList.add("grayscale");
     }
-
   }
   setColorState(colorType){
-    console.log("foreground colors: \n", this.props.foregroundColors, "\ncvd: \n", this.props.foregroundCVDs);
+    //console.log("foreground colors: \n", this.props.foregroundColors, "\ncvd: \n", this.props.foregroundCVDs);
     switch(colorType){
       case "regular":
-        console.log("setColorState: regular");
+        //console.log("setColorState: regular");
         this.setState({
           regularColorSet: {
             pageBodyText1: this.props.foregroundColors[0].color,
@@ -80,11 +79,10 @@ class ExamplePage extends React.Component {
             headerBack: this.props.backgroundColors[1].color,
             hoverBack: this.props.backgroundColors[2].color,
             back3: this.props.backgroundColors[3].color,
-          }},
-        () => console.log("state regularColorSet: ", this.state.regularColorSet));
+          }});
         break;
       case "cvd":
-        console.log("setColorState: cvd");
+        //console.log("setColorState: cvd");
         this.setState({
           protanColorSet: {
             pageBodyText1: this.props.foregroundCVDs[0].protan,
@@ -122,14 +120,14 @@ class ExamplePage extends React.Component {
             hoverBack: this.props.backgroundCVDs[2].tritan,
             back3: this.props.backgroundCVDs[3].tritan,
           }
-        }, () => console.log("state cvd color sets: ", this.props.foregroundCVDs, this.state.protanColorSet, this.state.deutanColorSet, this.state.tritanColorSet));
+        });
         break;
       default:
         break;
     }
   }
   static getDerivedStateFromProps(props, state){
-    console.log("getDerivedStateFromProps");
+    //console.log("getDerivedStateFromProps");
     let result = null;
     let regular = {regularColorSet: {
       pageBodyText1: props.foregroundColors[0].color,
@@ -190,14 +188,14 @@ class ExamplePage extends React.Component {
       current = {currentColorSet: {...cvd.tritanColorSet}};
     }
 
-    console.log(current);
+    //console.log(current);
     let regex = /^rgb/;
     if(regex.test(props.foregroundCVDs[0].protan)){
       result = {...regular, ...current, ...cvd};
     }else{
       result = {...regular, ...current};
     }
-    console.log("\n\n", result, "\n\n");
+    //console.log("\n\n", result, "\n\n");
     return result;
   }
   componentDidUpdate(prevProps, prevState){

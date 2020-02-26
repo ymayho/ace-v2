@@ -84,10 +84,27 @@
 
   }//End .palette-options-container
   .palette{
+    position: relative;
     margin: 0 auto;
     padding: 30px 20px 50px 10px;
     $color-width: 80px;
     font-size: 14px;
+    .foreground-number, .background-number{
+      position: absolute;
+      input.color-number-input{
+        width: auto;
+        height: 30px;
+        font-size: 16px;
+      }
+    }
+    .foreground-number{
+      top: -15px;
+      right: 15px;
+    }
+    .background-number{
+      bottom: 50px;
+      left: 10px;
+    }
     .color-row{
       display: flex;
       width: fit-content;
@@ -101,6 +118,9 @@
         background-color: white;
         display: inline-block;
         position: relative;
+        &.hidden{
+          display: none !important;
+        }
       }
       .color-placeholder{
         opacity: 0;

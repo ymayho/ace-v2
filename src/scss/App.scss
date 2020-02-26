@@ -1,7 +1,7 @@
 .App {
   height: 100%;
-  display: flex;
-  flex-direction: column;
+  // display: flex;
+  // flex-direction: column;
   overflow-y: hidden;
   .router{
     height: 100%;
@@ -31,7 +31,7 @@
   display: flex;
   .palette-container{
     width: 50%;
-    z-index: 5;
+    //z-index: 5;
     &.full-screen{
       width: 100%;
       .palette{
@@ -40,7 +40,7 @@
     }
   }
   .example-page-container{
-    z-index: 2;
+    //z-index: 2;
     flex: 1;
   }
 }
