@@ -13,12 +13,12 @@ class ExamplePage extends React.Component {
         headerText: "#ffffff",
         hyperlinkText: "#0000ee",
         visitedHyperlinkText: "#551a8b",
-        fore4: "#000000",
-        fore5: "#ffffff",
+        pageBodyText2: "#000000",
+        hoverHeaderText: "#ffffff",
         pageBack: "#ffffff",
         headerBack: "#000000",
         hoverBack: "#aaaaaa",
-        back3: "#000000"
+        footerBack: "#000000"
       },
       regularColorSet: {},
       protanColorSet: {},
@@ -36,8 +36,10 @@ class ExamplePage extends React.Component {
     let menu = document.getElementsByClassName("example-menu")[id-1];
     if(action==="in"){
       menu.style.backgroundColor = this.state.currentColorSet.hoverBack;
+      menu.style.color = this.state.currentColorSet.hoverHeaderText;
     }else{
       menu.style.backgroundColor = this.state.currentColorSet.headerBack;
+      menu.style.color = this.state.currentColorSet.headerText;
     }
   }
   resetMode(){
@@ -45,6 +47,7 @@ class ExamplePage extends React.Component {
     let menu = document.getElementsByClassName("example-menu");
     Array.from(menu).forEach((item) => {
       item.style.backgroundColor = this.state.currentColorSet.headerBack;
+      item.style.color = this.state.currentColorSet.headerText;
     });
   }
   handleModeSwitch(mode){
@@ -63,62 +66,59 @@ class ExamplePage extends React.Component {
     }
   }
   setColorState(colorType){
-    //console.log("foreground colors: \n", this.props.foregroundColors, "\ncvd: \n", this.props.foregroundCVDs);
     switch(colorType){
       case "regular":
-        //console.log("setColorState: regular");
         this.setState({
           regularColorSet: {
             pageBodyText1: this.props.foregroundColors[0].color,
             headerText: this.props.foregroundColors[1].color,
             hyperlinkText: this.props.foregroundColors[2].color,
             visitedHyperlinkText: this.props.foregroundColors[3].color,
-            fore4: this.props.foregroundColors[4].color,
-            fore5: this.props.foregroundColors[5].color,
+            pageBodyText2: this.props.foregroundColors[4].color,
+            hoverHeaderText: this.props.foregroundColors[5].color,
             pageBack: this.props.backgroundColors[0].color,
             headerBack: this.props.backgroundColors[1].color,
             hoverBack: this.props.backgroundColors[2].color,
-            back3: this.props.backgroundColors[3].color,
+            footerBack: this.props.backgroundColors[3].color,
           }});
         break;
       case "cvd":
-        //console.log("setColorState: cvd");
         this.setState({
           protanColorSet: {
             pageBodyText1: this.props.foregroundCVDs[0].protan,
             headerText: this.props.foregroundCVDs[1].protan,
             hyperlinkText: this.props.foregroundCVDs[2].protan,
             visitedHyperlinkText: this.props.foregroundCVDs[3].protan,
-            fore4: this.props.foregroundCVDs[4].protan,
-            fore5: this.props.foregroundCVDs[5].protan,
+            pageBodyText2: this.props.foregroundCVDs[4].protan,
+            hoverHeaderText: this.props.foregroundCVDs[5].protan,
             pageBack: this.props.backgroundCVDs[0].protan,
             headerBack: this.props.backgroundCVDs[1].protan,
             hoverBack: this.props.backgroundCVDs[2].protan,
-            back3: this.props.backgroundCVDs[3].protan,
+            footerBack: this.props.backgroundCVDs[3].protan,
           },
           deutanColorSet: {
             pageBodyText1: this.props.foregroundCVDs[0].deutan,
             headerText: this.props.foregroundCVDs[1].deutan,
             hyperlinkText: this.props.foregroundCVDs[2].deutan,
             visitedHyperlinkText: this.props.foregroundCVDs[3].deutan,
-            fore4: this.props.foregroundCVDs[4].deutan,
-            fore5: this.props.foregroundCVDs[5].deutan,
+            pageBodyText2: this.props.foregroundCVDs[4].deutan,
+            hoverHeaderText: this.props.foregroundCVDs[5].deutan,
             pageBack: this.props.backgroundCVDs[0].deutan,
             headerBack: this.props.backgroundCVDs[1].deutan,
             hoverBack: this.props.backgroundCVDs[2].deutan,
-            back3: this.props.backgroundCVDs[3].deutan,
+            footerBack: this.props.backgroundCVDs[3].deutan,
           },
           tritanColorSet: {
             pageBodyText1: this.props.foregroundCVDs[0].tritan,
             headerText: this.props.foregroundCVDs[1].tritan,
             hyperlinkText: this.props.foregroundCVDs[2].tritan,
             visitedHyperlinkText: this.props.foregroundCVDs[3].tritan,
-            fore4: this.props.foregroundCVDs[4].tritan,
-            fore5: this.props.foregroundCVDs[5].tritan,
+            pageBodyText2: this.props.foregroundCVDs[4].tritan,
+            hoverHeaderText: this.props.foregroundCVDs[5].tritan,
             pageBack: this.props.backgroundCVDs[0].tritan,
             headerBack: this.props.backgroundCVDs[1].tritan,
             hoverBack: this.props.backgroundCVDs[2].tritan,
-            back3: this.props.backgroundCVDs[3].tritan,
+            footerBack: this.props.backgroundCVDs[3].tritan,
           }
         });
         break;
@@ -127,55 +127,56 @@ class ExamplePage extends React.Component {
     }
   }
   static getDerivedStateFromProps(props, state){
-    //console.log("getDerivedStateFromProps");
+    console.log("Example: getDerivedStateFromProps");
     let result = null;
     let regular = {regularColorSet: {
       pageBodyText1: props.foregroundColors[0].color,
       headerText: props.foregroundColors[1].color,
       hyperlinkText: props.foregroundColors[2].color,
       visitedHyperlinkText: props.foregroundColors[3].color,
-      fore4: props.foregroundColors[4].color,
-      fore5: props.foregroundColors[5].color,
+      pageBodyText2: props.foregroundNumber >=5 ? props.foregroundColors[4].color : props.foregroundColors[0].color,
+      hoverHeaderText: props.foregroundNumber >=6 ? props.foregroundColors[5].color : props.foregroundColors[1].color,
       pageBack: props.backgroundColors[0].color,
       headerBack: props.backgroundColors[1].color,
-      hoverBack: props.backgroundColors[2].color,
-      back3: props.backgroundColors[3].color,
+      hoverBack: props.backgroundNumber >= 3 ? props.backgroundColors[2].color : props.backgroundColors[1].color,
+      footerBack: props.backgroundNumber >= 4 ? props.backgroundColors[3].color : props.backgroundColors[1].color,
     }};
+    console.log(regular.regularColorSet)
     let cvd = {protanColorSet: {
       pageBodyText1: props.foregroundCVDs[0].protan,
       headerText: props.foregroundCVDs[1].protan,
       hyperlinkText: props.foregroundCVDs[2].protan,
       visitedHyperlinkText: props.foregroundCVDs[3].protan,
-      fore4: props.foregroundCVDs[4].protan,
-      fore5: props.foregroundCVDs[5].protan,
+      pageBodyText2: props.foregroundNumber >=5 ? props.foregroundCVDs[4].protan : props.foregroundCVDs[0].protan,
+      hoverHeaderText: props.foregroundNumber >=6 ? props.foregroundCVDs[5].protan : props.foregroundCVDs[1].protan,
       pageBack: props.backgroundCVDs[0].protan,
       headerBack: props.backgroundCVDs[1].protan,
-      hoverBack: props.backgroundCVDs[2].protan,
-      back3: props.backgroundCVDs[3].protan,
+      hoverBack: props.backgroundNumber >= 3 ? props.backgroundCVDs[2].protan : props.backgroundCVDs[1].protan,
+      footerBack: props.backgroundNumber >= 4 ? props.backgroundCVDs[3].protan : props.backgroundCVDs[1].protan,
     },
     deutanColorSet: {
       pageBodyText1: props.foregroundCVDs[0].deutan,
       headerText: props.foregroundCVDs[1].deutan,
       hyperlinkText: props.foregroundCVDs[2].deutan,
       visitedHyperlinkText: props.foregroundCVDs[3].deutan,
-      fore4: props.foregroundCVDs[4].deutan,
-      fore5: props.foregroundCVDs[5].deutan,
+      pageBodyText2: props.foregroundNumber >=5 ? props.foregroundCVDs[4].deutan : props.foregroundCVDs[0].deutan,
+      hoverHeaderText: props.foregroundNumber >=6 ? props.foregroundCVDs[5].deutan : props.foregroundCVDs[1].deutan,
       pageBack: props.backgroundCVDs[0].deutan,
       headerBack: props.backgroundCVDs[1].deutan,
-      hoverBack: props.backgroundCVDs[2].deutan,
-      back3: props.backgroundCVDs[3].deutan,
+      hoverBack: props.backgroundNumber >= 3 ? props.backgroundCVDs[2].deutan : props.backgroundCVDs[1].protan,
+      footerBack: props.backgroundNumber >= 4 ? props.backgroundCVDs[3].deutan : props.backgroundCVDs[1].protan,
     },
     tritanColorSet: {
       pageBodyText1: props.foregroundCVDs[0].tritan,
       headerText: props.foregroundCVDs[1].tritan,
       hyperlinkText: props.foregroundCVDs[2].tritan,
       visitedHyperlinkText: props.foregroundCVDs[3].tritan,
-      fore4: props.foregroundCVDs[4].tritan,
-      fore5: props.foregroundCVDs[5].tritan,
+      pageBodyText2: props.foregroundNumber >=5 ? props.foregroundCVDs[4].tritan : props.foregroundCVDs[0].tritan,
+      hoverHeaderText: props.foregroundNumber >=6 ? props.foregroundCVDs[5].tritan : props.foregroundCVDs[1].tritan,
       pageBack: props.backgroundCVDs[0].tritan,
       headerBack: props.backgroundCVDs[1].tritan,
-      hoverBack: props.backgroundCVDs[2].tritan,
-      back3: props.backgroundCVDs[3].tritan,
+      hoverBack: props.backgroundNumber >= 3 ? props.backgroundCVDs[2].tritan : props.backgroundCVDs[1].protan,
+      footerBack: props.backgroundNumber >= 4 ? props.backgroundCVDs[3].tritan : props.backgroundCVDs[1].protan,
     }}
     let current = {};
     if(state.mode === "regular"){
@@ -187,34 +188,21 @@ class ExamplePage extends React.Component {
     }else{
       current = {currentColorSet: {...cvd.tritanColorSet}};
     }
-
-    //console.log(current);
     let regex = /^rgb/;
     if(regex.test(props.foregroundCVDs[0].protan)){
       result = {...regular, ...current, ...cvd};
     }else{
       result = {...regular, ...current};
     }
-    //console.log("\n\n", result, "\n\n");
     return result;
   }
   componentDidUpdate(prevProps, prevState){
     console.log("Example Update");
-    let css = '.example-header nav a:hover{background-color: ' + this.state.currentColorSet.hoverBack + ';}';
-    var style = document.createElement('style');
-    if (style.styleSheet) {
-        style.styleSheet.cssText = css;
-    } else {
-        style.appendChild(document.createTextNode(css));
-    }
-
-    document.getElementsByTagName('head')[0].appendChild(style);
-
   }
   componentDidMount(){
     console.log("Example Mount");
-    this.setColorState("regular");
-    this.setColorState("cvd");
+    // this.setColorState("regular");
+    // this.setColorState("cvd");
   }
   render(){
     return (
@@ -231,12 +219,12 @@ class ExamplePage extends React.Component {
           <header className="example-header" ref={(header) => this.header = header} style={{backgroundColor: this.state.currentColorSet.headerBack}}>
             <h1 className="example-title">Example Page</h1>
             <nav>
-              <a href="." className="example-menu" onMouseOver={() => {this.handleHoverNav(1, "in")}}
-              onMouseOut={() => {this.handleHoverNav(1, "out")}}>Menu 1</a>
-              <a href="." className="example-menu" onMouseOver={() => {this.handleHoverNav(2, "in")}}
-              onMouseOut={() => {this.handleHoverNav(2, "out")}}>Menu 2</a>
-              <a href="." className="example-menu" onMouseOver={() => {this.handleHoverNav(3, "in")}}
-              onMouseOut={() => {this.handleHoverNav(3, "out")}}>Menu 3</a>
+              <li className="example-menu" onMouseOver={() => {this.handleHoverNav(1, "in")}}
+              onMouseOut={() => {this.handleHoverNav(1, "out")}}>Menu 1</li>
+              <li className="example-menu" onMouseOver={() => {this.handleHoverNav(2, "in")}}
+              onMouseOut={() => {this.handleHoverNav(2, "out")}}>Menu 2</li>
+              <li className="example-menu" onMouseOver={() => {this.handleHoverNav(3, "in")}}
+              onMouseOut={() => {this.handleHoverNav(3, "out")}}>Menu 3</li>
             </nav>
           </header>
           <div className="example-body-container" ref={(div) => this.body = div} style={{backgroundColor: this.state.currentColorSet.pageBack}}>
@@ -248,22 +236,26 @@ class ExamplePage extends React.Component {
           ratio 4.5:1 or greater to ensure it is legible by people with CVD or other vision impairments as well as people
           with typical colour vision. To achieve a pass at AAA enhanced contrast the contrast ratio would need to be at least 7:1
             </p>
-            <p className="text-14pt body-text-1" style={{color: this.state.currentColorSet.pageBodyText1}}>When you use <a className="hyperlink-text" href="." style={{color: this.state.currentColorSet.hyperlinkText}}>hyperlinks</a> you will want to customise them because your background colour might be too dark for the defult blue, make sure they are still underlined and that
-            the colour you choose to show when the link has been visited is also easy to distinguish against the background, e.g., <a className="hyperlink-text-visited" href="." style={{color: this.state.currentColorSet.visitedHyperlinkText}}>hyperlinks</a>
+            <p className="text-14pt body-text-1" style={{color: this.state.currentColorSet.pageBodyText1}}>When you use <a className="hyperlink-text" href="."
+            style={{color: this.state.currentColorSet.hyperlinkText}} onClick={(e) => {e.preventDefault();}}>hyperlinks</a> you will want to customise them because your background colour might be too dark for the defult blue, make sure they are still underlined and that
+            the colour you choose to show when the link has been visited is also easy to distinguish against the background, e.g., <a className="hyperlink-text-visited" href="."
+            style={{color: this.state.currentColorSet.visitedHyperlinkText}} onClick={(e) => {e.preventDefault();}}>hyperlinks</a>
             </p>
-            <p className="text-18pt body-text-2" style={{color: this.state.currentColorSet.pageBodyText1}}>
+            <p className="text-18pt body-text-2" style={{color: this.state.currentColorSet.pageBodyText2}}>
               This is 18 point text and it is considered large scale by WCAG 2.0. At the AA level it (or larger font sizes) can be used with a minimum contrast ratio 3:1 or greater to ensure it is legible by people with CVD or other vision impairments as well as people with typical colour vision. To achieve a pass at AAA enhanced contrast the contrast ratio would need to be at least 4.5:1
             </p>
-            <p className="text-14pt body-text-2" style={{color: this.state.currentColorSet.pageBodyText1}}>
+            <p className="text-14pt body-text-2" style={{color: this.state.currentColorSet.pageBodyText2}}>
               This text is 14 point and it is considered small text by WCAG 2.0 (less than 18 point). At the AA level this font size can be used with a minimum contrast
           ratio 4.5:1 or greater to ensure it is legible by people with CVD or other vision impairments as well as people
           with typical colour vision. To achieve a pass at AAA enhanced contrast the contrast ratio would need to be at least 7:1
             </p>
-            <p className="text-14pt body-text-2" style={{color: this.state.currentColorSet.pageBodyText1}}>When you use <a className="hyperlink-text" href="." style={{color: this.state.currentColorSet.hyperlinkText}}>hyperlinks</a> you will want to customise them because your background colour might be too dark for the defult blue, make sure they are still underlined and that
-            the colour you choose to show when the link has been visited is also easy to distinguish against the background, e.g., <a className="hyperlink-text-visited" href="." style={{color: this.state.currentColorSet.visitedHyperlinkText}}>hyperlinks</a>
+            <p className="text-14pt body-text-2" style={{color: this.state.currentColorSet.pageBodyText2}}>When you use <a className="hyperlink-text" href="." style={{color: this.state.currentColorSet.hyperlinkText}}
+             onClick={(e) => {e.preventDefault();}}>hyperlinks</a> you will want to customise them because your background colour might be too dark for the defult blue, make sure they are still underlined and that
+            the colour you choose to show when the link has been visited is also easy to distinguish against the background, e.g., <a className="hyperlink-text-visited" href="." style={{color: this.state.currentColorSet.visitedHyperlinkText}}
+             onClick={(e) => {e.preventDefault();}}>hyperlinks</a>
             </p>
           </div>
-          <footer style={{backgroundColor: this.state.currentColorSet.headerBack}}>
+          <footer style={{backgroundColor: this.state.currentColorSet.footerBack}}>
             This is a footer.<br />
             Copyrights, other info.
           </footer>
@@ -276,6 +268,8 @@ class ExamplePage extends React.Component {
 
 function mapStateToProps(state) {
   return ({
+    foregroundNumber: state.foregroundNumber,
+    backgroundNumber: state.backgroundNumber,
     foregroundColors: state.foregroundColors,
     backgroundColors: state.backgroundColors,
     foregroundCVDs: state.foregroundCVDs,
