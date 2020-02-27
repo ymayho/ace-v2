@@ -37,6 +37,7 @@
     ]
   },
   "devDependencies": {
+    "gh-pages": "^2.2.0",
     "redux-devtools": "^3.5.0"
   }
 }
