@@ -24,9 +24,10 @@ class ExamplePage extends React.Component {
       protanColorSet: {},
       deutanColorSet: {},
       tritanColorSet: {},
-      counter: 0
+      counter: 0,
+      //setColorState: this.setColorState.bind(this)
     }
-    this.setColorState = this.setColorState.bind(this);
+    //this.setColorState = this.setColorState.bind(this);
     this.resetMode = this.resetMode.bind(this);
     this.handleHoverNav = this.handleHoverNav.bind(this);
     this.handleModeSwitch = this.handleModeSwitch.bind(this)
@@ -65,70 +66,26 @@ class ExamplePage extends React.Component {
       this.container.classList.add("grayscale");
     }
   }
-  setColorState(colorType){
-    switch(colorType){
-      case "regular":
-        this.setState({
-          regularColorSet: {
-            pageBodyText1: this.props.foregroundColors[0].color,
-            headerText: this.props.foregroundColors[1].color,
-            hyperlinkText: this.props.foregroundColors[2].color,
-            visitedHyperlinkText: this.props.foregroundColors[3].color,
-            pageBodyText2: this.props.foregroundColors[4].color,
-            hoverHeaderText: this.props.foregroundColors[5].color,
-            pageBack: this.props.backgroundColors[0].color,
-            headerBack: this.props.backgroundColors[1].color,
-            hoverBack: this.props.backgroundColors[2].color,
-            footerBack: this.props.backgroundColors[3].color,
-          }});
-        break;
-      case "cvd":
-        this.setState({
-          protanColorSet: {
-            pageBodyText1: this.props.foregroundCVDs[0].protan,
-            headerText: this.props.foregroundCVDs[1].protan,
-            hyperlinkText: this.props.foregroundCVDs[2].protan,
-            visitedHyperlinkText: this.props.foregroundCVDs[3].protan,
-            pageBodyText2: this.props.foregroundCVDs[4].protan,
-            hoverHeaderText: this.props.foregroundCVDs[5].protan,
-            pageBack: this.props.backgroundCVDs[0].protan,
-            headerBack: this.props.backgroundCVDs[1].protan,
-            hoverBack: this.props.backgroundCVDs[2].protan,
-            footerBack: this.props.backgroundCVDs[3].protan,
-          },
-          deutanColorSet: {
-            pageBodyText1: this.props.foregroundCVDs[0].deutan,
-            headerText: this.props.foregroundCVDs[1].deutan,
-            hyperlinkText: this.props.foregroundCVDs[2].deutan,
-            visitedHyperlinkText: this.props.foregroundCVDs[3].deutan,
-            pageBodyText2: this.props.foregroundCVDs[4].deutan,
-            hoverHeaderText: this.props.foregroundCVDs[5].deutan,
-            pageBack: this.props.backgroundCVDs[0].deutan,
-            headerBack: this.props.backgroundCVDs[1].deutan,
-            hoverBack: this.props.backgroundCVDs[2].deutan,
-            footerBack: this.props.backgroundCVDs[3].deutan,
-          },
-          tritanColorSet: {
-            pageBodyText1: this.props.foregroundCVDs[0].tritan,
-            headerText: this.props.foregroundCVDs[1].tritan,
-            hyperlinkText: this.props.foregroundCVDs[2].tritan,
-            visitedHyperlinkText: this.props.foregroundCVDs[3].tritan,
-            pageBodyText2: this.props.foregroundCVDs[4].tritan,
-            hoverHeaderText: this.props.foregroundCVDs[5].tritan,
-            pageBack: this.props.backgroundCVDs[0].tritan,
-            headerBack: this.props.backgroundCVDs[1].tritan,
-            hoverBack: this.props.backgroundCVDs[2].tritan,
-            footerBack: this.props.backgroundCVDs[3].tritan,
-          }
-        });
-        break;
-      default:
-        break;
-    }
-  }
+  // setColorState(colorType, foreColors, backColors){
+  //   let colorSet = {
+  //     pageBodyText1: foreColors[0].color,
+  //     headerText: foreColors[1].color,
+  //     hyperlinkText: foreColors[2].color,
+  //     visitedHyperlinkText: foreColors[3].color,
+  //     pageBodyText2: this.props.foregroundNumber >=5 ? foreColors[4].color : foreColors[0].color,
+  //     hoverHeaderText: this.props.foregroundNumber >=6 ? foreColors[5].color : foreColors[1].color,
+  //     pageBack: backColors[0].color,
+  //     headerBack: backColors[1].color,
+  //     hoverBack: this.props.backgroundNumber >= 3 ? backColors[2].color : backColors[1].color,
+  //     footerBack: this.props.backgroundNumber >= 4 ? backColors[3].color : backColors[1].color,
+  //   }
+  //   return colorSet;
+  // }
   static getDerivedStateFromProps(props, state){
     console.log("Example: getDerivedStateFromProps");
     let result = null;
+    //let temp = state.setColorState("regular", props.foregroundColors, props.backgroundColors);
+    //console.log(temp);
     let regular = {regularColorSet: {
       pageBodyText1: props.foregroundColors[0].color,
       headerText: props.foregroundColors[1].color,
@@ -201,8 +158,6 @@ class ExamplePage extends React.Component {
   }
   componentDidMount(){
     console.log("Example Mount");
-    // this.setColorState("regular");
-    // this.setColorState("cvd");
   }
   render(){
     return (
