@@ -155,6 +155,7 @@ class ExamplePage extends React.Component {
   }
   componentDidUpdate(prevProps, prevState){
     console.log("Example Update");
+    this.resetMode();
   }
   componentDidMount(){
     console.log("Example Mount");
@@ -171,7 +172,7 @@ class ExamplePage extends React.Component {
           <button><Link to="/example" target="_blank">NewTab</Link></button>
         </nav>
         <div className="example-container" ref={(div) => this.container = div}>
-          <header className="example-header" ref={(header) => this.header = header} style={{backgroundColor: this.state.currentColorSet.headerBack}}>
+          <header className="example-header" ref={(header) => this.header = header} style={{backgroundColor: this.state.currentColorSet.headerBack, color: this.state.currentColorSet.headerText}}>
             <h1 className="example-title">Example Page</h1>
             <nav>
               <li className="example-menu" onMouseOver={() => {this.handleHoverNav(1, "in")}}

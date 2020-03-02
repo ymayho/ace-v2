@@ -10,7 +10,8 @@ class ResultCube extends React.PureComponent{
       aaa: 1,
       contrast: 1,
       with2a: "",
-      with3a: ""
+      with3a: "",
+      pass: true
     }
     this.displayContrastRatio = this.displayContrastRatio.bind(this);
     this.convertHextoRGB = this.convertHextoRGB.bind(this);
@@ -29,7 +30,7 @@ class ResultCube extends React.PureComponent{
           <div className="wcag-2a pass">AA</div>
           <div className="wcag-3a half">AAA</div>
         </div>);;
-    }else if(contrast < 4.5 && contrast > 3){
+    }else if(contrast < 4.5 && contrast >= 3){
       obj =  (
         <div className="wcag-comparison">
           <div className="wcag-2a half">AA</div>
@@ -82,7 +83,11 @@ class ResultCube extends React.PureComponent{
       result = {display: "display"};
       switch(props.wcag2a){
         case true:
-          result = {...result, with2a: "with2a"};
+          if(state.contrast < 3){
+            result = {...result, with2a: "with2a", pass: false};
+          }else{
+            result = {...result, with2a: "with2a", pass: true};
+          }
           break;
         case false:
           result = {...result, with2a: "without2a"};
@@ -93,6 +98,11 @@ class ResultCube extends React.PureComponent{
       switch(props.wcag3a){
         case true:
           result = {...result, with3a: "with3a"};
+          if(state.contrast < 4.5){
+            result = {...result, with3a: "with3a", pass: false};
+          }else{
+            result = {...result, with3a: "with3a", pass: true};
+          }
           break;
         case false:
           result = {...result, with3a: "without3a"};
@@ -113,7 +123,7 @@ class ResultCube extends React.PureComponent{
   }
   render(){
     return (
-      <div className={this.state.with2a + " result-cube " + this.state.with3a + " " + this.state.display}>
+      <div className={this.state.with2a + " result-cube " + this.state.with3a + " " + this.state.display + " " + (this.state.pass ? " " : "fail")}>
         <div className="contrast-ratio">{this.state.contrast}</div>
         {this.displayWCAGResult(this.state.contrast)}
       </div>
