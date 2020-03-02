@@ -41,7 +41,7 @@ class ColorCube extends React.Component{
     pixelColor = pixelColor.substring(4, pixelColor.length - 1)
         .replace(/ /g, '')
         .split(',');
-    //console.log(pixelColor);
+
     // set index to 0x00000000
     var index = 0;
     // blue is taking blue channel value and placing at 0x000000XX
@@ -50,7 +50,7 @@ class ColorCube extends React.Component{
     var green = (pixelColor[1] << 8);
     // red is taking red channel value and placing at 0x00XX0000
     var red = (pixelColor[0] << 16);
-    //console.log("r: " + red + "; g: " + green + "; b: " + blue);
+
     // combine by or'ing produces 0xAARRGGBB
     index = index | blue;
     index = index | green;
@@ -65,7 +65,7 @@ class ColorCube extends React.Component{
     let proColor, deuColor, triColor;
 
     pixels = this.state.canvasProtan;
-    //console.log(pixels);
+
     // pixels in RGBA
     // index in ARGB
     finalRed = pixels[finalIndex];
@@ -88,9 +88,7 @@ class ColorCube extends React.Component{
     finalGreen = pixels[finalIndex + 1];
     finalBlue = pixels[finalIndex + 2];
     triColor = "rgb(" + finalRed + ", " + finalGreen + ", " + finalBlue +")"
-    //console.log(proColor, deuColor, triColor);
     if(finalRed != null && finalGreen != null && finalBlue != null){
-      //console.log("not null");
       if(this.props.colorType === "foreground"){
         this.props.dispatch({type: "UPDATE_FOREGROUND_CVD",
           index: this.props.colorNo,
@@ -126,15 +124,15 @@ class ColorCube extends React.Component{
     this.props.handleColorUpdated(this.props.colorType, this.props.colorNo, this.state.colorSelection);
   }
   handlePickerColorChange(color, event) {
-    this.setState({pickerColor: color.hex});
-    this.mainColor.style.backgroundColor = this.state.pickerColor;
+    this.setState({pickerColor: color.hex}, () => {this.mainColor.style.backgroundColor = this.state.pickerColor;this.simulateCVD();});
+
     if(this.props.colorType === "foreground"){
       this.props.dispatch({type: "EDIT_FOREGROUND_COLOR", newColor: this.state.pickerColor, index: this.props.colorNo});
 
     }else{
       this.props.dispatch({type: "EDIT_BACKGROUND_COLOR", newColor: this.state.pickerColor, index: this.props.colorNo});
     }
-    this.simulateCVD();
+
   }
   handleClickCube(){
     this.setState({displayPicker: !this.state.displayPicker}, ()=>{
