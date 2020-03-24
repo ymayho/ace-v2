@@ -1,27 +1,31 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "260683fe9bfc0122dae3dd67f342bd9d",
+    "revision": "dcdb758e57f4ef7df7adaa395b5ff21f",
     "url": "/ace-v2/index.html"
   },
   {
-    "revision": "d3ebb2bce9f17d0d0f70",
-    "url": "/ace-v2/static/css/main.ec062487.chunk.css"
+    "revision": "e7a5e3569c91d93c5d57",
+    "url": "/ace-v2/static/css/main.c89c4b84.chunk.css"
   },
   {
-    "revision": "e4af55c78293e3302c53",
-    "url": "/ace-v2/static/js/2.e9db848d.chunk.js"
+    "revision": "cec1462036475538c028",
+    "url": "/ace-v2/static/js/2.5bb58790.chunk.js"
   },
   {
     "revision": "928d7b5eb39d16fe9a880722c974b51e",
-    "url": "/ace-v2/static/js/2.e9db848d.chunk.js.LICENSE.txt"
+    "url": "/ace-v2/static/js/2.5bb58790.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "d3ebb2bce9f17d0d0f70",
-    "url": "/ace-v2/static/js/main.84b7eb02.chunk.js"
+    "revision": "e7a5e3569c91d93c5d57",
+    "url": "/ace-v2/static/js/main.6273bae2.chunk.js"
   },
   {
     "revision": "760a66bb681e70c53f74",
     "url": "/ace-v2/static/js/runtime-main.728c02df.js"
+  },
+  {
+    "revision": "3c38e6038c272d277ab4ed6cb57c7eb1",
+    "url": "/ace-v2/static/media/ColorCube-intro.3c38e603.png"
   },
   {
     "revision": "9f24ed5670fb495795ef49e8a4530de0",
