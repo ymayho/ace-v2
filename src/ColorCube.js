@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {PhotoshopPicker} from 'react-color'
 
 class ColorCube extends React.Component{
   constructor(props) {
@@ -10,22 +9,13 @@ class ColorCube extends React.Component{
       colorType: "",
       colorName: "",
       displayColorName: "text color",
-      pickerColor: "#ffffff",
-      colorSelection: "#ffffff",
-      displayPicker: false,
-      canvasProtan: [],
-      canvasDeutan: [],
-      canvasTritan: [],
-      counter: 0
+      colorCode: "#ffffff",
+      proColor: "#ffffff",
+      deuColor: "#ffffff",
+      triColor: "#ffffff"
     }
     this.convertRGBToHex = this.convertRGBToHex.bind(this);
-    this.simulateCVD = this.simulateCVD.bind(this);
-    this.handleCancelColorChange = this.handleCancelColorChange.bind(this);
-    this.handleAcceptColorChange = this.handleAcceptColorChange.bind(this);
-    this.handlePickerColorChange = this.handlePickerColorChange.bind(this);
     this.handleClickCube = this.handleClickCube.bind(this);
-    this.colorPickerHolder = this.colorPickerHolder.bind(this);
-    //this.colourPaletteObj = this.colourPaletteObj.bind(this);
   }
   convertRGBToHex(rgb) {
   var hex = Number(rgb).toString(16);
@@ -34,212 +24,66 @@ class ColorCube extends React.Component{
   }
   return hex;
   };
-  simulateCVD(){
-    //console.log(++cvdTime);
-    let pixelColor = window.getComputedStyle(this.mainColor).getPropertyValue("background-color");
-    //console.log(pixelColor);
-    pixelColor = pixelColor.substring(4, pixelColor.length - 1)
-        .replace(/ /g, '')
-        .split(',');
-
-    // set index to 0x00000000
-    var index = 0;
-    // blue is taking blue channel value and placing at 0x000000XX
-    var blue = pixelColor[2];
-    // green is taking green channel value and placing at 0x0000XX00
-    var green = (pixelColor[1] << 8);
-    // red is taking red channel value and placing at 0x00XX0000
-    var red = (pixelColor[0] << 16);
-
-    // combine by or'ing produces 0xAARRGGBB
-    index = index | blue;
-    index = index | green;
-    index = index | red;
-
-    // multiply index by size of pixel structure
-    var finalIndex = index * 4;
-    var pixels;
-    var finalRed;
-    var finalGreen;
-    var finalBlue;
-    let proColor, deuColor, triColor;
-
-    pixels = this.state.canvasProtan;
-
-    // pixels in RGBA
-    // index in ARGB
-    finalRed = pixels[finalIndex];
-    finalGreen = pixels[finalIndex + 1];
-    finalBlue = pixels[finalIndex + 2];
-    proColor = "rgb(" + finalRed + ", " + finalGreen + ", " + finalBlue +")"
-
-    pixels = this.state.canvasDeutan;
-    // pixels in RGBA
-    // index in ARGB
-    finalRed = pixels[finalIndex];
-    finalGreen = pixels[finalIndex + 1];
-    finalBlue = pixels[finalIndex + 2];
-    deuColor = "rgb(" + finalRed + ", " + finalGreen + ", " + finalBlue +")"
-
-    pixels = this.state.canvasTritan;
-    // pixels in RGBA
-    // index in ARGB
-    finalRed = pixels[finalIndex];
-    finalGreen = pixels[finalIndex + 1];
-    finalBlue = pixels[finalIndex + 2];
-    triColor = "rgb(" + finalRed + ", " + finalGreen + ", " + finalBlue +")"
-    if(finalRed != null && finalGreen != null && finalBlue != null){
-      if(this.props.colorType === "foreground"){
-        this.props.dispatch({type: "UPDATE_FOREGROUND_CVD",
-          index: this.props.colorNo,
-          cvdColors: {protan: proColor, deutan: deuColor, tritan: triColor}});
-      }else{
-        this.props.dispatch({type: "UPDATE_BACKGROUND_CVD",
-          index: this.props.colorNo,
-          cvdColors: {protan: proColor, deutan: deuColor, tritan: triColor}});
-      }
-    }
-  }
-  handleCancelColorChange(e){
-    this.mainColor.style.backgroundColor = this.state.colorSelection;
-    this.setState({pickerColor: this.state.colorSelection, displayPicker: false});
-    if(this.props.colorType === "foreground"){
-      this.props.dispatch({type: "EDIT_FOREGROUND_COLOR", newColor: this.state.colorSelection, index: this.props.colorNo});
-
-    }else{
-      this.props.dispatch({type: "EDIT_BACKGROUND_COLOR", newColor: this.state.colorSelection, index: this.props.colorNo});
-    }
-    this.simulateCVD();
-  }
-  handleAcceptColorChange(){
-    this.setState({colorSelection: this.state.pickerColor});
-    this.setState({displayPicker: false});
-    if(this.props.colorType === "foreground"){
-      this.props.dispatch({type: "EDIT_FOREGROUND_COLOR", newColor: this.state.pickerColor, index: this.props.colorNo});
-
-    }else{
-      this.props.dispatch({type: "EDIT_BACKGROUND_COLOR", newColor: this.state.pickerColor, index: this.props.colorNo});
-    }
-    this.simulateCVD();
-    this.props.handleColorUpdated(this.props.colorType, this.props.colorNo, this.state.colorSelection);
-  }
-  handlePickerColorChange(color, event) {
-    this.setState({pickerColor: color.hex}, () => {this.mainColor.style.backgroundColor = this.state.pickerColor;this.simulateCVD();});
-
-    if(this.props.colorType === "foreground"){
-      this.props.dispatch({type: "EDIT_FOREGROUND_COLOR", newColor: this.state.pickerColor, index: this.props.colorNo});
-
-    }else{
-      this.props.dispatch({type: "EDIT_BACKGROUND_COLOR", newColor: this.state.pickerColor, index: this.props.colorNo});
-    }
-
-  }
   handleClickCube(){
-    this.setState({displayPicker: !this.state.displayPicker}, ()=>{
-      console.log(this.colorPicker);
-    });
-  }
-  colorPickerHolder(){
-    return this.state.displayPicker ? (
-      <PhotoshopPicker  ref={(picker) => this.colorPicker = picker}
-      color={this.state.pickerColor} onChange={this.handlePickerColorChange}
-      onAccept={this.handleAcceptColorChange} onCancel={this.handleCancelColorChange} />
-    ) : null;
-  }
-  setDefaultColor(colorType, colorNo, colorName){
-    let colorData;
-    //console.log(this.props.foregroundColors, colorType, colorNo, colorName);
-    if(colorType === "foreground"){
-      colorData = this.props.foregroundColors[colorNo];
-      this.setState({colorSelection: colorData.color, displayColorName: colorData.colorName}, ()=>{
-        this.mainColor.style.backgroundColor = this.state.colorSelection;
-      });
-    }else{
-      colorData = this.props.backgroundColors[colorNo]
-      this.setState({colorSelection: colorData.color, displayColorName: colorData.colorName}, ()=>{
-        this.mainColor.style.backgroundColor = this.state.colorSelection;
-      });
-    }
+    this.props.dispatch({type: "UPDATE_SELECTED_COLOR_CUBE",
+      newType: this.props.colorType,
+      newIndex: this.props.colorNo});
   }
   static getDerivedStateFromProps(props, state){
     let result = null;
-    if(props.canvasProtan !== undefined){
-      result = {...result, canvasProtan: props.canvasProtan};
-    }
-    if(props.canvasDeutan !== undefined){
-      result = {...result, canvasDeutan: props.canvasDeutan};
-    }
-    if(props.canvasTritan !== undefined){
-      result = {...result, canvasTritan: props.canvasTritan};
-    }
+    //Decide if this cube should display
     let colorNum;
     colorNum = (props.colorType === "foreground") ? props.foregroundNumber : props.backgroundNumber;
-    console.log(props.colorType, ": ", colorNum);
-    console.log(props.colorNo);
     if(props.colorNo >= colorNum){
       result = {...result, display: "hidden"};
     }else{
       result = {...result, display: "display"};
     }
+    //Set color hex code
+    if(props.colorType === "foreground"){
+      result = {...result,
+        colorCode: props.foregroundColors[props.colorNo].color,
+        proColor: props.foregroundCVDs[props.colorNo].protan,
+        deuColor: props.foregroundCVDs[props.colorNo].deutan,
+        triColor: props.foregroundCVDs[props.colorNo].tritan}
+    }else{
+      result = {...result,
+        colorCode: props.backgroundColors[props.colorNo].color,
+        proColor: props.backgroundCVDs[props.colorNo].protan,
+        deuColor: props.backgroundCVDs[props.colorNo].deutan,
+        triColor: props.backgroundCVDs[props.colorNo].tritan}
+    }
     //console.log(result);
     return result;
   }
   componentDidUpdate(prevProps){
-    if(this.state.canvasProtan.length===0 ||this.state.canvasDeutan.length===0 || this.state.canvasTritan.length===0){
-      //console.log("空的");
-    }else{
-      if(this.props.colorType === "foreground"){
-        if(prevProps.foregroundColors[this.props.colorNo].color !== this.props.foregroundColors[this.props.colorNo].color){
-          this.simulateCVD();
-        }
-        else if(this.state.counter <= 2){
-            this.simulateCVD();
-            this.setState({counter: this.state.counter + 1});
-        }
-      }else if(this.props.colorType === "background"){
-        //console.log("background", prevProps.backgroundColors[this.props.colorNo].color, this.props.backgroundColors[this.props.colorNo].color)
-        if(prevProps.backgroundColors[this.props.colorNo].color !== this.props.backgroundColors[this.props.colorNo].color){
-          this.simulateCVD();
-        }
-        else if(this.state.counter <= 2){
-            this.simulateCVD();
-            this.setState({counter: this.state.counter + 1});
-        }
-
-      }
+    if(this.props.colorNo === 0){
+      console.log(this.props.foregroundColors[this.props.colorNo].color);
+      console.log(this.props.foregroundCVDs);
     }
-    //console.log(this.props.colorType, this.props.colorNo, this.state.colorSelection);
-    if(this.props.colorType === "foreground"){
-      this.cvdPro.style.backgroundColor = this.props.foregroundCVDs[this.props.colorNo].protan;
-      this.cvdDeu.style.backgroundColor = this.props.foregroundCVDs[this.props.colorNo].deutan;
-      this.cvdTri.style.backgroundColor = this.props.foregroundCVDs[this.props.colorNo].tritan;
-    }else{
-      this.cvdPro.style.backgroundColor = this.props.backgroundCVDs[this.props.colorNo].protan;
-      this.cvdDeu.style.backgroundColor = this.props.backgroundCVDs[this.props.colorNo].deutan;
-      this.cvdTri.style.backgroundColor = this.props.backgroundCVDs[this.props.colorNo].tritan;
-    }
+    //this.setColors();
   }
   componentDidMount(){
-    this.props.colorType === "foreground" ?
-      this.setState({colorType: "foreground-color"}) : this.setState({colorType: "background-color"});
-    //Set default color.
-    this.setDefaultColor(this.props.colorType, this.props.colorNo, this.props.colorName);
-    this.props.handleColorUpdated(this.props.colorType, this.props.colorNo, this.state.colorSelection);
-    this.simulateCVD();
+    if(this.props.colorType === "foreground"){
+      this.setState({colorType: "foreground-color", displayColorName: this.props.foregroundColors[this.props.colorNo].colorName})
+    }else{
+      this.setState({colorType: "background-color", displayColorName: this.props.backgroundColors[this.props.colorNo].colorName});
+    }
+
   }
 
   render(){
     return (
-      <div className={this.state.colorType + " " + this.state.display}>
-        {this.colorPickerHolder()}
+      <div className={this.state.colorType + " " + this.state.display} onClick={this.handleClickCube}>
+        {/*this.colorPickerHolder()*/}
         <span className="color-name">{this.state.displayColorName}</span>
-        <div className="main-color" ref={(div) => this.mainColor = div} onClick={this.handleClickCube}></div>
+        <div className="main-color" style={{backgroundColor: this.state.colorCode}} ref={(div) => this.mainColor = div}></div>
         <div className="cvd-simulation-color-row">
-          <div className="cvd-pro" ref={(div) => this.cvdPro = div}></div>
-          <div className="cvd-deu" ref={(div) => this.cvdDeu = div}></div>
-          <div className="cvd-tri" ref={(div) => this.cvdTri = div}></div>
+          <div className="cvd-pro" style={{backgroundColor: this.state.proColor}}></div>
+          <div className="cvd-deu" style={{backgroundColor: this.state.deuColor}}></div>
+          <div className="cvd-tri" style={{backgroundColor: this.state.triColor}}></div>
         </div>
-        <span className="color-code">{this.state.colorSelection}</span>
+        <span className="color-code">{this.state.colorCode}</span>
       </div>
     );
   }

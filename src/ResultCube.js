@@ -6,46 +6,32 @@ class ResultCube extends React.PureComponent{
     super(props);
     this.state = {
       display: "display",
-      aa: 1,
-      aaa: 1,
       contrast: 1,
-      with2a: "",
-      with3a: "",
-      pass: true
+      pass: true,
+      passCheck: "pass"
     }
     this.displayContrastRatio = this.displayContrastRatio.bind(this);
     this.convertHextoRGB = this.convertHextoRGB.bind(this);
-    this.displayWCAGResult = this.displayWCAGResult.bind(this);
+    this.checkWCAG = this.checkWCAG.bind(this);
   }
-  displayWCAGResult(contrast){
-    let obj;
-    if(contrast>=7){
-      obj = (<div className="wcag-comparison">
-        <div className="wcag-2a pass">AA</div>
-        <div className="wcag-3a pass">AAA</div>
-      </div>);
-    }else if(contrast < 7 && contrast >=4.5){
-      obj =  (
-        <div className="wcag-comparison">
-          <div className="wcag-2a pass">AA</div>
-          <div className="wcag-3a half">AAA</div>
-        </div>);;
-    }else if(contrast < 4.5 && contrast >= 3){
-      obj =  (
-        <div className="wcag-comparison">
-          <div className="wcag-2a half">AA</div>
-          <div className="wcag-3a fail">AAA</div>
-        </div>
-      );
+  checkWCAG(contrast){
+    if(this.props.wcag === "AAA"){
+      if(contrast >= 7){
+        this.setState({passCheck: "pass"});
+      }else if(contrast < 7 && contrast >=4.5){
+          this.setState({passCheck: "half"});
+      }else{
+        this.setState({passCheck: "fail"});
+      }
     }else{
-      obj =  (
-        <div className="wcag-comparison">
-          <div className="wcag-2a fail">AA</div>
-          <div className="wcag-3a fail">AAA</div>
-        </div>
-      );
+      if(contrast >=4.5){
+          this.setState({passCheck: "pass"});
+      }else if(contrast < 4.5 && contrast >=3){
+        this.setState({passCheck: "half"});
+      }else{
+        this.setState({passCheck: "fail"});
+      }
     }
-    return obj;
   }
   displayContrastRatio(fore, back){
     let foreLumi = this.calculateLuminance(this.convertHextoRGB(fore));
@@ -81,51 +67,26 @@ class ResultCube extends React.PureComponent{
     }
     else{
       result = {display: "display"};
-      switch(props.wcag2a){
-        case true:
-          if(state.contrast < 3){
-            result = {...result, with2a: "with2a", pass: false};
-          }else{
-            result = {...result, with2a: "with2a", pass: true};
-          }
-          break;
-        case false:
-          result = {...result, with2a: "without2a"};
-          break;
-        default:
-          break;
-      }
-      switch(props.wcag3a){
-        case true:
-          result = {...result, with3a: "with3a"};
-          if(state.contrast < 4.5){
-            result = {...result, with3a: "with3a", pass: false};
-          }else{
-            result = {...result, with3a: "with3a", pass: true};
-          }
-          break;
-        case false:
-          result = {...result, with3a: "without3a"};
-          break;
-        default:
-          break;
-      }
+
     }
     return result;
   }
   componentDidUpdate(){
     //console.log("ResultUpdate", this.props.foregroundId, this.props.backgroundId);
     this.displayContrastRatio(this.props.foregroundColors[this.props.foregroundId].color, this.props.backgroundColors[this.props.backgroundId].color);
+    this.checkWCAG(this.state.contrast);
   }
   componentDidMount(){
     //console.log("ResultUpdate", this.props.foregroundId, this.props.backgroundId);
     this.displayContrastRatio(this.props.foregroundColors[this.props.foregroundId].color, this.props.backgroundColors[this.props.backgroundId].color);
+    //this.setState({foreground: this.props.foregroundColors[this.props.foregroundId].color, background: this.props.backgroundColors[this.props.backgroundId].color})
   }
   render(){
     return (
-      <div className={this.state.with2a + " result-cube " + this.state.with3a + " " + this.state.display + " " + (this.state.pass ? " " : "fail")}>
+      <div className={this.state.with2a + " result-cube " + this.state.with3a + " " + this.state.display + " " + (this.state.pass ? " " : "fail")}
+      style={{color: this.props.foregroundColors[this.props.foregroundId].color, backgroundColor: this.props.backgroundColors[this.props.backgroundId].color}}>
+        <div className="wcag-check">{this.state.passCheck}</div>
         <div className="contrast-ratio">{this.state.contrast}</div>
-        {this.displayWCAGResult(this.state.contrast)}
       </div>
     );
   }
@@ -137,8 +98,7 @@ function mapStateToProps(state) {
     backgroundNumber: state.backgroundNumber,
     foregroundColors: state.foregroundColors,
     backgroundColors: state.backgroundColors,
-    wcag2a: state.wcag2a,
-    wcag3a: state.wcag3a
+    wcag: state.wcag
   });
 }
 

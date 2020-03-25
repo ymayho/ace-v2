@@ -8,8 +8,9 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 
 const initialState = {
-  wcag2a: true,
+  wcag2a: false,
   wcag3a: true,
+  wcag: "AAA",
   foregroundNumber: 4,
   backgroundNumber: 2,
   foregroundColors: [{
@@ -27,11 +28,11 @@ const initialState = {
   },{
     index: 3,
     color: "#551a8b",
-    colorName: "Visted hyperlink text"
+    colorName: "Accent hyperlink text"
   },{
     index: 4,
     color: "#000000",
-    colorName: "Page body text 2"
+    colorName: "Button Text"
   },{
     index: 5,
     color: "#ffffff",
@@ -48,7 +49,7 @@ const initialState = {
   },{
     index: 2,
     color: "#aaaaaa",
-    colorName: "Accent/hover background"
+    colorName: "Accent/hover header background"
   },{
     index: 3,
     color: "#000000",
@@ -59,11 +60,11 @@ const initialState = {
   },{
     index: 1, protan: "#ffffff", deutan: "#ffffff", tritan: "#ffffff"
   },{
-    index: 2, protan: "#ffffff", deutan: "#ffffff", tritan: "#ffffff"
+    index: 2, protan: "rgb(0, 51, 238)", deutan: "rgb(0, 73, 237)", tritan: "rgb(0, 86, 122)"
   },{
-    index: 3, protan: "#ffffff", deutan: "#ffffff", tritan: "#ffffff"
+    index: 3, protan: "rgb(0, 51, 139)", deutan: "rgb(24, 68, 138)", tritan: "rgb(74, 59, 61)"
   },{
-    index: 4, protan: "#ffffff", deutan: "#ffffff", tritan: "#ffffff"
+    index: 4, protan: "#000000", deutan: "#000000", tritan: "#000000"
   },{
     index: 5, protan: "#ffffff", deutan: "#ffffff", tritan: "#ffffff"
   }],
@@ -72,15 +73,20 @@ const initialState = {
   },{
     index: 1, protan: "#000000", deutan: "#000000", tritan: "#000000"
   },{
-    index: 2, protan: "#ffffff", deutan: "#ffffff", tritan: "#ffffff"
+    index: 2, protan: "#aaaaaa", deutan: "#aaaaaa", tritan: "#aaaaaa"
   },{
     index: 3, protan: "#000000", deutan: "#000000", tritan: "#000000"
-  },]
+  },],
+  selectedColorCube: {
+    type: "foreground",
+    index: 0
+  }
 };
 
 function reducer(state = initialState, action){
   let tempColorArr;
   let tempCVDArr;
+  let temp;
   switch(action.type){
     case "EDIT_FOREGROUND_NUMBER":
       console.log(action.type);
@@ -114,12 +120,19 @@ function reducer(state = initialState, action){
       return {...state, backgroundCVDs: tempCVDArr}
     case "UPDATE_WCAG_CHECK":
       console.log(action.type);
-      console.log(action.standard, action.bool);
+      console.log(action.standard);
       if(action.standard === "2A"){
-        return {...state, wcag2a: action.bool}
+        return {...state, wcag: "AA"}
       }else{
-        return {...state, wcag3a: action.bool}
+        return {...state, wcag: "AAA"}
       }
+    case "UPDATE_SELECTED_COLOR_CUBE":
+      console.log(action.type);
+      console.log(action);
+      temp = {...state.selectedColorCube};
+      temp.type = action.newType;
+      temp.index = action.newIndex;
+      return {...state, selectedColorCube: temp};
     default:
       return state;
   }

@@ -1,5 +1,7 @@
+@import "./attributes";
+
 .palette-wrapper{
-  $palette-border: 10px;
+  $palette-border: 5px;
   position: relative;
   height: 100%;
   .palette-content-wrapper{
@@ -10,9 +12,9 @@
     height: 35px;
     display: flex;
     button{
-      color: black;
+      color: $theme-color;
       background-color: white;
-      border-bottom: 1px black solid;
+      border-bottom: 1px $theme-color solid;
       flex: 1;
     }
   }
@@ -25,6 +27,11 @@
     font-size: 14px;
     .palette-function-settings{
       display: flex;
+      .sketch-picker{
+        margin-right: 10px;
+        padding: 0 !important;
+        box-shadow: none !important;
+      }
       .palette-options{
         position: relative;
         margin-right: 10px;
@@ -35,7 +42,7 @@
         }
         .option-switch{
           padding: 5px 10px;
-          border: 1px black solid;
+          border: 1px $theme-color solid;
           border-radius: 5px;
           background-color: white;
           display: inline-block;
@@ -50,44 +57,75 @@
             display: block;
             min-width: 100%;
             padding: 5px 10px;
-            border: 1px #aaa solid;
+            border: 1px $theme-color solid;
             border-radius: 5px;
             background-color: white;
             cursor: pointer;
             &:hover{
               color: white;
-              background-color: #aaa;
+              background-color: $theme-color;
             }
           }
           input{
             display: none;
             &:checked+label{
               color: white;
-              border-color: black;
-              background-color: black;
+              border-color: $theme-color;
+              background-color: $theme-color;
             }
           }
         }
       }
     }//End .palette-function-settings
     .help{
+      position: relative;
       .help-switch{
         padding: 5px 10px;
         color: white;
         font-weight: bold;
-        //border: 1px black solid;
+        //border: 1px $theme-color solid;
         border-radius: 5px;
         background-color: gray;
         cursor: pointer;
+        &.isOpen{
+          border: 1px $theme-color solid;
+          background-color: $theme-color;
+        }
       }
     }
-
   }//End .palette-options-container
+  .help-wrapper{
+    position: absolute;
+    right: 0;
+    //bottom: 0;
+    width: 600px;
+    //max-width: 800px;
+    //margin: -20px 0 25px 0;
+    padding: 0 20px;
+
+    z-index: 3;
+    &.hidden{
+      display: none;
+    }
+    .help-container{
+      margin: 10px -15px 0;
+      padding: 20px;
+      border: $theme-color 1px solid;
+      border-radius: 5px;
+      background-color: white;
+      .color-cube-intro-img{
+        width: 60%;
+        height: auto;
+        max-width: 500px;
+        margin: 0 10px 20px 0;
+      }
+    }
+  }
   .palette{
     position: relative;
     margin: 0 auto;
     padding: 30px 20px 50px 10px;
-    $color-width: 80px;
+    $color-width: 90px;
     font-size: 14px;
     .foreground-number, .background-number{
       position: absolute;
@@ -114,7 +152,7 @@
         width: $color-width;
         height: $color-width;
         margin: 10px;
-        border: 2px #222 solid;
+
         background-color: white;
         display: inline-block;
         position: relative;
@@ -129,6 +167,7 @@
       .foreground-color, .background-color{
         cursor: pointer;
         position: relative;
+        border: 1px $theme-color solid;
         .color-name{
           position: absolute;
           top: -2.5em;
@@ -148,10 +187,6 @@
           height: 300px;
           transform: scale(.75);
           z-index: 5;
-          // position: fixed;
-          // top: -20px;
-          // left: -20px;
-
         }
         .main-color{
           width: 100%;
@@ -163,14 +198,14 @@
           bottom: 0;
           width: 100%;
           height: 30px;
-          border-top: 2px black solid;
+          border-top: 1px $theme-color solid;
           display: flex;
           &.noCVD{
             display: none;
           }
           div{
             min-width: 33%;
-            border-right: 1px black solid;
+            border-right: 1px $theme-color solid;
             flex: 1;
             display: inline-block;
             background-color: white;
@@ -203,36 +238,25 @@
       .result-wrapper{
         display: inherit;
         .result-cube{
+          padding: 10px;
           display: flex;
           flex-direction: column;
-          &.without2a{
-            .wcag-2a{
-              display: none;
-            }
-          }
-          &.without3a{
-            .wcag-3a{
-              display: none;
-            }
-          }
           &.fail{
             background-color: #aaaaaa;
           }
           .contrast-ratio{
-            padding: 10px 0;
-            font-size: 18px;
+            //padding: 10px 0;
+            font-size: 14px;
             font-weight: 600;
             text-align: center;
           }
-          .wcag-comparison{
+          .wcag-check{
+            font-size: 18px;
             text-align: center;
             flex: 1;
-            display: flex;
-            justify-content: space-around;
+            // display: flex;
+            // justify-content: space-around;
             .wcag-2a, .wcag-3a{
-              min-width: 50%;
-              text-align: center;
-              position: relative;
               &.pass::after, &.half::after, &.fail::after{
                 position: absolute;
                 bottom: 0;
@@ -260,7 +284,7 @@
     width: $palette-border;
     height: 100%;
     border-right: 1px white solid;
-    background-color: black;
+    background-color: $theme-color;
     .toggle-wrapper{
       position: relative;
       //overflow: hidden;
@@ -273,9 +297,10 @@
         width: 80px;
         height: 25px;
         color: white;
-        background-color: black;
+        background-color: $theme-color;
         border-radius: 5px;
         transform: rotate(90deg);
+        z-index: 4;
       }
     }
 

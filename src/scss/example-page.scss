@@ -1,31 +1,67 @@
+@import "./attributes";
 .example-page-wrapper{
   position: relative;
   $footer-height: 70px;
-  $simulation-nav-height: 35px;
+  $simulation-nav-height: 45px;
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: row-reverse;
   // overflow: scroll;
   .simulation-options{
-    position: sticky;
-    top: 0;
-    width: 100%;
-    height: $simulation-nav-height;
+    //position: absolute;
+    //top: 0;
+    //width: 100%;
+    //height: $simulation-nav-height;
     display: flex;
-    border-bottom: 1px black solid;
+    flex-direction: column;
+    color: $theme-color;
+    border-bottom: 1px $theme-color solid;
     background-color: white;
-    color: black;
+    box-shadow: -1px 3px 3px 2px rgba(0, 0, 0, .25);
     z-index: 3;
     button{
+      position: relative;
+      width: 80px;
+      padding: 15px 10px;
+      color: $theme-color;
+      font-size: 13px;
+      font-weight: 500;
       background-color: white;
-      flex: 1;
+      border-bottom: 1px dashed $theme-color;
+
+      // &:after{
+      //   content: "|";
+      //   position: absolute;
+      //   top: 15px;
+      //   right: 0;
+      // }
+      // &:first-child, &:last-child{
+      //   flex: 0 1 50px;
+      // }
+      // &:last-child:after{
+      //   content: "";
+      // }
+      &:last-child{
+        //align-self: flex-end;
+        //background-color: red;
+      }
+      .technical-term{
+        display: inline-block;
+        font-size: 12px;
+        font-weight: normal;
+        transform: scale(0.8);
+      }
     }
   }
   .example-container{
     // margin-bottom: calc( -1 * #{$footer-height});
+    //padding-top: $simulation-nav-height;
     margin-bottom: $footer-height;
     position: relative;
     height: 100%;
-    overflow: scroll;
+    flex-grow: 1;
+    //overflow: scroll;
     &.grayscale{
       filter: grayscale(1);
     }
@@ -42,7 +78,7 @@
       z-index: 2;
       .example-title{
         padding: 10px;
-        font-size: 18pt;
+        font-size: 14pt;
       }
       nav{
         height: 100%;
@@ -64,25 +100,46 @@
       padding: 20px 20px calc(#{$footer-height} * 2);
       max-width: 1160px;
       position: relative;
-      // height: 100%;
+      height: 100%;
       // height: 3000px;
       p{
         margin-top: 1em;
         text-align: left;
-        &.text-18pt{
+        &.text-large{
           font-size: 18pt;
+          .bold{
+            font-size: 14pt;
+            font-weight: bold;
+          }
         }
-        &.text-14pt{
+        &.text-normal{
           font-size: 14pt;
         }
       }
       a{
         text-decoration: underline;
       }
+      button{
+        display: block;
+        margin-top: 1em;
+        padding: 8px 10px;
+        font-size: 14pt;
+        border-radius: 8px;
+        &.btn-normal{
+          color: black;
+          border: 1px black solid;
+          background-color: white;
+        }
+        &.btn-accent{
+          color: white;
+          border: 1px white solid;
+          background-color: black;
+        }
+      }
     }
     footer{
       position: sticky;
-      bottom: 50px;
+      bottom: 0;
       width: 100%;
       height: $footer-height;
       //margin-bottom: $footer-height;

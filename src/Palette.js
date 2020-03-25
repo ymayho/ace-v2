@@ -2,51 +2,36 @@ import React from 'react';
 import { connect } from 'react-redux';
 import './scss/palette.scss';
 
+import ColorPicker from './ColorPicker';
 import ColorCube from './ColorCube';
 import ResultCube from './ResultCube';
 import ProtanImg from './img/lut_protan_medium.png';
 import DeutanImg from './img/lut_deutan_medium.png';
 import TritanImg from './img/lut_tritan_medium.png';
+import ColorCubeIntro from './img/ColorCube-intro.png';
 
 class Palette extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
       fullScreen: false,
+      isHelpOpen: false,
       hasCVD: true,
-      wcag2a: true,
-      wcag3a: true,
       canvasProtan: [],
       canvasDeutan: [],
       canvasTritan: [],
       colorNum: 7,
-      foregroundColorArr: [],
-      backgroundColorArr: [],
-      result: [],
     }
-    this.callBackColorUpdated = this.callBackColorUpdated.bind(this);
     this.storeSimulationData = this.storeSimulationData.bind(this);
     this.createColorPaletteObj = this.createColorPaletteObj.bind(this);
     this.handleBackgroundNumberChange = this.handleBackgroundNumberChange.bind(this);
     this.handleForegroundNumberChange = this.handleForegroundNumberChange.bind(this);
+    this.handleHelp = this.handleHelp.bind(this);
     this.handleWCAG = this.handleWCAG.bind(this);
     this.handleCVD = this.handleCVD.bind(this);
     this.handleClickToggle = this.handleClickToggle.bind(this);
   }
 
-
-  callBackColorUpdated(type, no, color){
-    // console.log("CALLBACK");
-    if(type==="foreground"){
-      let tempArr = this.state.foregroundColorArr;
-      tempArr[no] = color;
-      //this.setState({foregroundColorArr: tempArr});
-    }else{
-      let tempArr = this.state.backgroundColorArr;
-      tempArr[no] = color;
-      //this.setState({backgroundColorArr: tempArr});
-    }
-  }
   createColorPaletteObj(type, inputImg){
     let imgObj = new Image();
     imgObj.src = inputImg;
@@ -66,7 +51,7 @@ class Palette extends React.Component{
       //This will get the rgba data for the pixels within the colour palette array
   	let pixels = colorPaletteData.data;
     if(type==="pro"){
-      this.setState({canvasProtan: pixels});
+      this.setState({canvasProtan: pixels}, ()=>console.log(type));
     }
     else if (type==="deu") {
       this.setState({canvasDeutan: pixels});
@@ -79,28 +64,24 @@ class Palette extends React.Component{
     this.props.dispatch({type: "EDIT_BACKGROUND_NUMBER",
       newNumber: this.backgroundNumber.value,
       });
-    console.log(this.backgroundNumber.value)
+    //console.log(this.backgroundNumber.value)
   }
   handleForegroundNumberChange(){
     this.props.dispatch({type: "EDIT_FOREGROUND_NUMBER",
       newNumber: this.foregroundNumber.value,
       });
-    console.log(this.foregroundNumber.value)
+    //console.log(this.foregroundNumber.value)
+  }
+  handleHelp(){
+    this.setState({isHelpOpen: !this.state.isHelpOpen});
   }
   handleWCAG(){
     let wcagType = document.querySelectorAll('input[name="wcag"]');
-    console.log(wcagType);
+    //console.log(wcagType);
     wcagType.forEach((item, key) => {
       if(item.checked === true){
         this.props.dispatch({type: "UPDATE_WCAG_CHECK",
           standard: item.value,
-          bool: true,
-        });
-      }
-      else{//false
-        this.props.dispatch({type: "UPDATE_WCAG_CHECK",
-          standard: item.value,
-          bool: false,
         });
       }
     });
@@ -118,7 +99,7 @@ class Palette extends React.Component{
     }else{
       this.setState({hasCVD: false}, ()=>{
         this.cvdSwitch.innerHTML = "CVD Simulation: No";
-        console.log("False");
+        //console.log("False");
         for(let i = 0; i < this.state.colorNum; i++){
           document.getElementsByClassName("cvd-simulation-color-row")[i].classList.add("noCVD");
         }
@@ -139,9 +120,14 @@ class Palette extends React.Component{
       });
     }
   }
+  static getDerivedStateFromProps(props, state){
+    let result = null;
+
+    return result;
+  }
   componentDidUpdate(prevProps){
     //console.log("Palette update");
-    //console.log(this.props.foregroundColors, prevProps.foregroundColors)
+
   }
   componentDidMount(){
     //console.log("Mount");
@@ -153,38 +139,50 @@ class Palette extends React.Component{
     return (
       <div className="palette-wrapper" ref={(div)=>this.paletteWrapper = div}>
         <div className="palette-content-wrapper">
-        <nav className="palette-nav">
+        {/*
+          <nav className="palette-nav">
           <button>Palette</button>
           <button>CVD Info</button>
         </nav>
+      */}
         <div className="palette-options-container">
           <div className="palette-function-settings">
+            <ColorPicker canvasProtan={this.state.canvasProtan} canvasDeutan={this.state.canvasDeutan} canvasTritan={this.state.canvasTritan} />
             <div className="cvd-options palette-options">
               <span className="option-switch" ref={span => this.cvdSwitch = span}>CVD Simulation: Yes</span>
               <div className="cvd-inputs dropdown-inputs">
-              <input id="yesCVD" type="radio" name="cvd" value="cvd-true" onChange={this.handleCVD}
-               defaultChecked /><label htmlFor="yesCVD">Yes</label>
-              <input id="noCVD" type="radio" name="cvd" value="cvd-false"  onChange={this.handleCVD}
-               /><label htmlFor="noCVD">No</label>
+                <input id="yesCVD" type="radio" name="cvd" value="cvd-true" onChange={this.handleCVD}
+                  defaultChecked /><label htmlFor="yesCVD">Yes</label>
+                <input id="noCVD" type="radio" name="cvd" value="cvd-false"  onChange={this.handleCVD} />
+                <label htmlFor="noCVD">No</label>
               </div>
             </div>
             <div className="wcag-options palette-options">
               <span className="option-switch" ref={span => this.wcagSwitch = span}>
-                WCAG: {this.props.wcag2a ? "AA" : ""} {this.props.wcag3a ? "AAA" : ""}
-                {this.props.wcag2a===false && this.props.wcag3a===false ? "No" : ""}
+                WCAG: {this.props.wcag}
               </span>
               <div className="wcag-inputs dropdown-inputs">
-                <input id="wcag-2a" type="checkbox" name="wcag" value="2A" onChange={this.handleWCAG} defaultChecked />
+                <input id="wcag-2a" type="radio" name="wcag" value="2A" onChange={this.handleWCAG} />
                 <label htmlFor="wcag-2a">AA</label>
-                <input id="wcag-3a" type="checkbox" name="wcag" value="3A" onChange={this.handleWCAG} defaultChecked />
+                <input id="wcag-3a" type="radio" name="wcag" value="3A" onChange={this.handleWCAG} defaultChecked />
                 <label htmlFor="wcag-3a">AAA</label>
               </div>
             </div>
           </div>{/*End div.palette-function-setting*/}
           <div className="help">
-            <button className="help-switch">Help</button>
+            <button className={"help-switch " + (this.state.isHelpOpen ? "isOpen" : "isHidden")} onClick={this.handleHelp}>Help</button>
+            <div className={"help-wrapper " + (this.state.isHelpOpen ? "visible" : "hidden")}>
+              <div className={"help-container"}>
+                <img className="color-cube-intro-img" src={ColorCubeIntro} alt="Introduction to color cube parts." />
+                <p>
+                  Sorry, Help is still under construction. More details will be provided in the future.
+                </p>
+              </div>
+            </div>
           </div>
+
         </div>{/*End div.palette-options-container*/}
+
         <div className="palette">
           <div className="foreground-number">
             <input className="color-number-input" type="number" defaultValue="4" min="4" max="6"
@@ -197,62 +195,30 @@ class Palette extends React.Component{
           <div className="color-row">
             <div className="color-placeholder">QAQ</div>
             <div className="foreground-color-wrapper">
-              <ColorCube  handleColorUpdated={this.callBackColorUpdated}
-              canvasProtan={this.state.canvasProtan}
-              canvasDeutan={this.state.canvasDeutan}
-              canvasTritan={this.state.canvasTritan}
-              colorType={"foreground"} colorName={"body-text"}
-              colorNo={0} />
+              <ColorCube colorType={"foreground"} colorNo={0} colorName={"body-text"} />
             </div>
             <div className="foreground-color-wrapper">
-              <ColorCube handleColorUpdated={this.callBackColorUpdated}
-              canvasProtan={this.state.canvasProtan}
-              canvasDeutan={this.state.canvasDeutan}
-              canvasTritan={this.state.canvasTritan}
+              <ColorCube
+
               colorType={"foreground"} colorName={"header-text"}
               colorNo={1} />
             </div>
             <div className="foreground-color-wrapper">
-              <ColorCube handleColorUpdated={this.callBackColorUpdated}
-              canvasProtan={this.state.canvasProtan}
-              canvasDeutan={this.state.canvasDeutan}
-              canvasTritan={this.state.canvasTritan}
-              colorType={"foreground"} colorName={"url-text"}
-              colorNo={2} />
+              <ColorCube colorType={"foreground"} colorNo={2} colorName={"url-text"} />
             </div>
             <div className="foreground-color-wrapper">
-              <ColorCube handleColorUpdated={this.callBackColorUpdated}
-              canvasProtan={this.state.canvasProtan}
-              canvasDeutan={this.state.canvasDeutan}
-              canvasTritan={this.state.canvasTritan}
-              colorType={"foreground"} colorName={"clicked-url-text"}
-              colorNo={3} />
+              <ColorCube colorType={"foreground"} colorNo={3} colorName={"clicked-url-text"} />
             </div>
             <div className="foreground-color-wrapper">
-              <ColorCube handleColorUpdated={this.callBackColorUpdated}
-              canvasProtan={this.state.canvasProtan}
-              canvasDeutan={this.state.canvasDeutan}
-              canvasTritan={this.state.canvasTritan}
-              colorType={"foreground"} colorName={"clicked-url-text"}
-              colorNo={4} />
+              <ColorCube colorType={"foreground"} colorNo={4} colorName={"clicked-url-text"} />
             </div>
             <div className="foreground-color-wrapper">
-              <ColorCube handleColorUpdated={this.callBackColorUpdated}
-              canvasProtan={this.state.canvasProtan}
-              canvasDeutan={this.state.canvasDeutan}
-              canvasTritan={this.state.canvasTritan}
-              colorType={"foreground"} colorName={"clicked-url-text"}
-              colorNo={5} />
+              <ColorCube colorType={"foreground"} colorNo={5} colorName={"clicked-url-text"} />
             </div>
           </div>
           <div className="color-row">
             <div className="background-color-wrapper">
-              <ColorCube handleColorUpdated={this.callBackColorUpdated}
-              canvasProtan={this.state.canvasProtan}
-              canvasDeutan={this.state.canvasDeutan}
-              canvasTritan={this.state.canvasTritan}
-              colorType={"background"} colorName={"body-background"}
-              colorNo={0} />
+              <ColorCube colorType={"background"} colorNo={0} colorName={"body-background"} />
             </div>
             <div className="result-wrapper">
               <ResultCube foregroundId={0} backgroundId={0} />
@@ -265,12 +231,7 @@ class Palette extends React.Component{
           </div>
           <div className="color-row">
             <div className="background-color-wrapper">
-              <ColorCube handleColorUpdated={this.callBackColorUpdated}
-              canvasProtan={this.state.canvasProtan}
-              canvasDeutan={this.state.canvasDeutan}
-              canvasTritan={this.state.canvasTritan}
-              colorType={"background"} colorName={"header-background"}
-              colorNo={1} />
+              <ColorCube colorType={"background"} colorNo={1} colorName={"header-background"} />
             </div>
             <div className="result-wrapper">
               <ResultCube foregroundId={0} backgroundId={1} />
@@ -283,12 +244,7 @@ class Palette extends React.Component{
           </div>
           <div className="color-row">
             <div className="background-color-wrapper">
-              <ColorCube handleColorUpdated={this.callBackColorUpdated}
-              canvasProtan={this.state.canvasProtan}
-              canvasDeutan={this.state.canvasDeutan}
-              canvasTritan={this.state.canvasTritan}
-              colorType={"background"} colorName={"body-background"}
-              colorNo={2} />
+              <ColorCube colorType={"background"} colorNo={2} colorName={"body-background"} />
             </div>
             <div className="result-wrapper">
               <ResultCube foregroundId={0} backgroundId={2} />
@@ -301,12 +257,7 @@ class Palette extends React.Component{
           </div>
           <div className="color-row">
             <div className="background-color-wrapper">
-              <ColorCube handleColorUpdated={this.callBackColorUpdated}
-              canvasProtan={this.state.canvasProtan}
-              canvasDeutan={this.state.canvasDeutan}
-              canvasTritan={this.state.canvasTritan}
-              colorType={"background"} colorName={"body-background"}
-              colorNo={3} />
+              <ColorCube colorType={"background"} colorNo={3} colorName={"body-background"} />
             </div>
             <div className="result-wrapper">
               <ResultCube foregroundId={0} backgroundId={3} />
@@ -340,8 +291,8 @@ function mapStateToProps(state) {
   return ({
     foregroundColors: state.foregroundColors,
     backgroundColors: state.backgroundColors,
-    wcag2a: state.wcag2a,
-    wcag3a: state.wcag3a
+    wcag: state.wcag,
+    selectedColorCube: state.selectedColorCube
   });
 }
 export default connect(mapStateToProps)(Palette);

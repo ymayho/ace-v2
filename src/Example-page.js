@@ -33,7 +33,7 @@ class ExamplePage extends React.Component {
     this.handleModeSwitch = this.handleModeSwitch.bind(this)
   }
   handleHoverNav(id, action){
-    console.log(id);
+    //console.log(id);
     let menu = document.getElementsByClassName("example-menu")[id-1];
     if(action==="in"){
       menu.style.backgroundColor = this.state.currentColorSet.hoverBack;
@@ -50,6 +50,7 @@ class ExamplePage extends React.Component {
       item.style.backgroundColor = this.state.currentColorSet.headerBack;
       item.style.color = this.state.currentColorSet.headerText;
     });
+    this.footer.style.backgroundColor = this.state.currentColorSet.footerBack;
   }
   handleModeSwitch(mode){
     console.log(mode);
@@ -98,7 +99,7 @@ class ExamplePage extends React.Component {
       hoverBack: props.backgroundNumber >= 3 ? props.backgroundColors[2].color : props.backgroundColors[1].color,
       footerBack: props.backgroundNumber >= 4 ? props.backgroundColors[3].color : props.backgroundColors[1].color,
     }};
-    console.log(regular.regularColorSet)
+    //console.log(regular.regularColorSet)
     let cvd = {protanColorSet: {
       pageBodyText1: props.foregroundCVDs[0].protan,
       headerText: props.foregroundCVDs[1].protan,
@@ -120,8 +121,8 @@ class ExamplePage extends React.Component {
       hoverHeaderText: props.foregroundNumber >=6 ? props.foregroundCVDs[5].deutan : props.foregroundCVDs[1].deutan,
       pageBack: props.backgroundCVDs[0].deutan,
       headerBack: props.backgroundCVDs[1].deutan,
-      hoverBack: props.backgroundNumber >= 3 ? props.backgroundCVDs[2].deutan : props.backgroundCVDs[1].protan,
-      footerBack: props.backgroundNumber >= 4 ? props.backgroundCVDs[3].deutan : props.backgroundCVDs[1].protan,
+      hoverBack: props.backgroundNumber >= 3 ? props.backgroundCVDs[2].deutan : props.backgroundCVDs[1].deutan,
+      footerBack: props.backgroundNumber >= 4 ? props.backgroundCVDs[3].deutan : props.backgroundCVDs[1].deutan,
     },
     tritanColorSet: {
       pageBodyText1: props.foregroundCVDs[0].tritan,
@@ -132,8 +133,8 @@ class ExamplePage extends React.Component {
       hoverHeaderText: props.foregroundNumber >=6 ? props.foregroundCVDs[5].tritan : props.foregroundCVDs[1].tritan,
       pageBack: props.backgroundCVDs[0].tritan,
       headerBack: props.backgroundCVDs[1].tritan,
-      hoverBack: props.backgroundNumber >= 3 ? props.backgroundCVDs[2].tritan : props.backgroundCVDs[1].protan,
-      footerBack: props.backgroundNumber >= 4 ? props.backgroundCVDs[3].tritan : props.backgroundCVDs[1].protan,
+      hoverBack: props.backgroundNumber >= 3 ? props.backgroundCVDs[2].tritan : props.backgroundCVDs[1].tritan,
+      footerBack: props.backgroundNumber >= 4 ? props.backgroundCVDs[3].tritan : props.backgroundCVDs[1].tritan,
     }}
     let current = {};
     if(state.mode === "regular"){
@@ -159,15 +160,21 @@ class ExamplePage extends React.Component {
   }
   componentDidMount(){
     console.log("Example Mount");
+    let width = window.getComputedStyle(document.getElementsByClassName("example-page-wrapper")[0]).getPropertyValue("width");
+    width = parseInt(width);
+    //console.log(width);
+    if(width > 1000){
+      alert("Sorry, the full-size example page is still under construction.");
+    }
   }
   render(){
     return (
       <div className="example-page-wrapper">
         <nav className="simulation-options">
-          <button onClick={() => this.handleModeSwitch("regular")}>No CVD</button>
-          <button onClick={() => this.handleModeSwitch("protan")}>Protan</button>
-          <button onClick={() => this.handleModeSwitch("deutan")}>Deutan</button>
-          <button onClick={() => this.handleModeSwitch("tritan")}>Tritan</button>
+          <button onClick={() => this.handleModeSwitch("regular")}>Typical Vision</button>
+          <button onClick={() => this.handleModeSwitch("protan")}>Red Colorblind <span className="technical-term">Protan</span></button>
+          <button onClick={() => this.handleModeSwitch("deutan")}>Green Colorblind <span className="technical-term">Deutan</span></button>
+          <button onClick={() => this.handleModeSwitch("tritan")}>Blue Colorblind <span className="technical-term">Tritan</span></button>
           <button onClick={() => this.handleModeSwitch("grayscale")}>Grayscale</button>
           <button><Link to="/example" target="_blank">NewTab</Link></button>
         </nav>
@@ -176,15 +183,24 @@ class ExamplePage extends React.Component {
             <h1 className="example-title">Example Page</h1>
             <nav>
               <li className="example-menu" onMouseOver={() => {this.handleHoverNav(1, "in")}}
-              onMouseOut={() => {this.handleHoverNav(1, "out")}}>Menu 1</li>
+              onMouseOut={() => {this.handleHoverNav(1, "out")}}>Menu</li>
               <li className="example-menu" onMouseOver={() => {this.handleHoverNav(2, "in")}}
-              onMouseOut={() => {this.handleHoverNav(2, "out")}}>Menu 2</li>
-              <li className="example-menu" onMouseOver={() => {this.handleHoverNav(3, "in")}}
-              onMouseOut={() => {this.handleHoverNav(3, "out")}}>Menu 3</li>
+              onMouseOut={() => {this.handleHoverNav(2, "out")}}>Accent Menu</li>
+              {/*<li className="example-menu" onMouseOver={() => {this.handleHoverNav(3, "in")}}
+              onMouseOut={() => {this.handleHoverNav(3, "out")}}>Menu 3</li>*/}
             </nav>
           </header>
           <div className="example-body-container" ref={(div) => this.body = div} style={{backgroundColor: this.state.currentColorSet.pageBack}}>
-            <p className="text-18pt body-text-1" style={{color: this.state.currentColorSet.pageBodyText1}}>
+            <p className="text-large body-text-1" style={{color: this.state.currentColorSet.pageBodyText1}}>Large Text (18pt) <span className="bold">Larget Text (14pt bold)</span></p>
+            <p className="text-normal body-text-1" style={{color: this.state.currentColorSet.pageBodyText1}}>Normal Text (14pt)</p>
+            <p><a className="hyperlink-text" href="."
+            style={{color: this.state.currentColorSet.hyperlinkText}} onClick={(e) => {e.preventDefault();}}>Hyperlink</a></p>
+            <p><a className="hyperlink-text-visited" href="."
+            style={{color: this.state.currentColorSet.visitedHyperlinkText}} onClick={(e) => {e.preventDefault();}}>Accent Hyperlink</a></p>
+            <button className="btn-normal">Button</button>
+            <button className="btn-accent">Accent Button</button>
+            {/*
+              <p className="text-18pt body-text-1" style={{color: this.state.currentColorSet.pageBodyText1}}>
               This is 18 point text and it is considered large scale by WCAG 2.0. At the AA level it (or larger font sizes) can be used with a minimum contrast ratio 3:1 or greater to ensure it is legible by people with CVD or other vision impairments as well as people with typical colour vision. To achieve a pass at AAA enhanced contrast the contrast ratio would need to be at least 4.5:1
             </p>
             <p className="text-14pt body-text-1" style={{color: this.state.currentColorSet.pageBodyText1}}>
@@ -210,8 +226,9 @@ class ExamplePage extends React.Component {
             the colour you choose to show when the link has been visited is also easy to distinguish against the background, e.g., <a className="hyperlink-text-visited" href="." style={{color: this.state.currentColorSet.visitedHyperlinkText}}
              onClick={(e) => {e.preventDefault();}}>hyperlinks</a>
             </p>
+          */}
           </div>
-          <footer style={{backgroundColor: this.state.currentColorSet.footerBack}}>
+          <footer style={{backgroundColor: this.state.currentColorSet.footerBack}} ref={(footer) => this.footer = footer}>
             This is a footer.<br />
             Copyrights, other info.
           </footer>
