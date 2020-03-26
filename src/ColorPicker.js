@@ -102,7 +102,12 @@ class ColorPicker extends React.Component{
   }
   static getDerivedStateFromProps(props, state){
     let result = null;
-    result = {...result, pickerColor: props.foregroundColors[props.selectedColorCube.index].color}
+    if(props.selectedColorCube.type === "foreground"){
+      result = {...result, pickerColor: props.foregroundColors[props.selectedColorCube.index].color}
+    }else{
+      result = {...result, pickerColor: props.backgroundColors[props.selectedColorCube.index].color}
+    }
+
     return result;
   }
   componentDidUpdate(prevProps){

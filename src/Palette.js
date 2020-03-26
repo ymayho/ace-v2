@@ -146,8 +146,9 @@ class Palette extends React.Component{
         </nav>
       */}
         <div className="palette-options-container">
+          <ColorPicker canvasProtan={this.state.canvasProtan} canvasDeutan={this.state.canvasDeutan} canvasTritan={this.state.canvasTritan} />
           <div className="palette-function-settings">
-            <ColorPicker canvasProtan={this.state.canvasProtan} canvasDeutan={this.state.canvasDeutan} canvasTritan={this.state.canvasTritan} />
+
             <div className="cvd-options palette-options">
               <span className="option-switch" ref={span => this.cvdSwitch = span}>CVD Simulation: Yes</span>
               <div className="cvd-inputs dropdown-inputs">

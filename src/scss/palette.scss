@@ -19,19 +19,24 @@
     }
   }
   .palette-options-container{
+    position: sticky;
+    top: 0;
     width: 100%;
     margin-bottom: 30px;
     padding: 15px calc( 10px + #{$palette-border}) 5px 20px;
+    font-size: 14px;
+    background-color: white;
     display: flex;
     justify-content: space-between;
-    font-size: 14px;
+    box-shadow: -1px 3px 3px 2px rgba(0, 0, 0, .25);
+    z-index: 2;
+    .sketch-picker{
+      margin-right: 10px;
+      padding: 0 !important;
+      box-shadow: none !important;
+    }
     .palette-function-settings{
       display: flex;
-      .sketch-picker{
-        margin-right: 10px;
-        padding: 0 !important;
-        box-shadow: none !important;
-      }
       .palette-options{
         position: relative;
         margin-right: 10px;
@@ -285,6 +290,7 @@
     height: 100%;
     border-right: 1px white solid;
     background-color: $theme-color;
+    z-index: 3;
     .toggle-wrapper{
       position: relative;
       //overflow: hidden;
@@ -300,7 +306,7 @@
         background-color: $theme-color;
         border-radius: 5px;
         transform: rotate(90deg);
-        z-index: 4;
+
       }
     }
 
