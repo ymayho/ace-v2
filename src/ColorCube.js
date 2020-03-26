@@ -77,11 +77,12 @@ class ColorCube extends React.Component{
       <div className={this.state.colorType + " " + this.state.display} onClick={this.handleClickCube}>
         {/*this.colorPickerHolder()*/}
         <span className="color-name">{this.state.displayColorName}</span>
-        <div className="main-color" style={{backgroundColor: this.state.colorCode}} ref={(div) => this.mainColor = div}></div>
-        <div className="cvd-simulation-color-row">
-          <div className="cvd-pro" style={{backgroundColor: this.state.proColor}}></div>
-          <div className="cvd-deu" style={{backgroundColor: this.state.deuColor}}></div>
-          <div className="cvd-tri" style={{backgroundColor: this.state.triColor}}></div>
+        <div className="main-color" style={{backgroundColor: this.state.colorCode}} ref={(div) => this.mainColor = div}>
+          <div className="cvd-simulation-color-row">
+            <div className="cvd-pro" style={{backgroundColor: this.state.proColor}}></div>
+            <div className="cvd-deu" style={{backgroundColor: this.state.deuColor}}></div>
+            <div className="cvd-tri" style={{backgroundColor: this.state.triColor}}></div>
+          </div>
         </div>
         <span className="color-code">{this.state.colorCode}</span>
       </div>
