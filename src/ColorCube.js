@@ -12,7 +12,8 @@ class ColorCube extends React.Component{
       colorCode: "#ffffff",
       proColor: "#ffffff",
       deuColor: "#ffffff",
-      triColor: "#ffffff"
+      triColor: "#ffffff",
+      isSelected: false
     }
     this.convertRGBToHex = this.convertRGBToHex.bind(this);
     this.handleClickCube = this.handleClickCube.bind(this);
@@ -36,6 +37,7 @@ class ColorCube extends React.Component{
     colorNum = (props.colorType === "foreground") ? props.foregroundNumber : props.backgroundNumber;
     if(props.colorNo >= colorNum){
       result = {...result, display: "hidden"};
+      return result;
     }else{
       result = {...result, display: "display"};
     }
@@ -52,6 +54,11 @@ class ColorCube extends React.Component{
         proColor: props.backgroundCVDs[props.colorNo].protan,
         deuColor: props.backgroundCVDs[props.colorNo].deutan,
         triColor: props.backgroundCVDs[props.colorNo].tritan}
+    }
+    if(props.selectedColorCube.type === props.colorType && props.selectedColorCube.index === props.colorNo){
+      result = {...result, isSelected: true};
+    }else{
+      result = {...result, isSelected: false};
     }
     //console.log(result);
     return result;
@@ -73,9 +80,9 @@ class ColorCube extends React.Component{
   }
 
   render(){
+    let className = this.state.colorType + " " + this.state.display + " " + (this.state.isSelected ? "selected-color" : "");
     return (
-      <div className={this.state.colorType + " " + this.state.display} onClick={this.handleClickCube}>
-        {/*this.colorPickerHolder()*/}
+      <div className={className} onClick={this.handleClickCube}>
         <span className="color-name">{this.state.displayColorName}</span>
         <div className="main-color" style={{backgroundColor: this.state.colorCode}} ref={(div) => this.mainColor = div}>
           <div className="cvd-simulation-color-row">
@@ -98,7 +105,8 @@ function mapStateToProps(state) {
     foregroundColors: state.foregroundColors,
     backgroundColors: state.backgroundColors,
     foregroundCVDs: state.foregroundCVDs,
-    backgroundCVDs: state.backgroundCVDs
+    backgroundCVDs: state.backgroundCVDs,
+    selectedColorCube: state.selectedColorCube
   });
 }
 export default connect(mapStateToProps)(ColorCube);

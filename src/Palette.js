@@ -199,10 +199,7 @@ class Palette extends React.Component{
               <ColorCube colorType={"foreground"} colorNo={0} colorName={"body-text"} />
             </div>
             <div className="foreground-color-wrapper">
-              <ColorCube
-
-              colorType={"foreground"} colorName={"header-text"}
-              colorNo={1} />
+              <ColorCube colorType={"foreground"} colorNo={1} colorName={"header-text"} />
             </div>
             <div className="foreground-color-wrapper">
               <ColorCube colorType={"foreground"} colorNo={2} colorName={"url-text"} />
@@ -223,10 +220,20 @@ class Palette extends React.Component{
             </div>
             <div className="result-wrapper">
               <ResultCube foregroundId={0} backgroundId={0} />
+            </div>
+            <div className="result-wrapper">
               <ResultCube foregroundId={1} backgroundId={0} />
+            </div>
+            <div className="result-wrapper">
               <ResultCube foregroundId={2} backgroundId={0} />
+            </div>
+            <div className="result-wrapper">
               <ResultCube foregroundId={3} backgroundId={0} />
+            </div>
+            <div className="result-wrapper">
               <ResultCube foregroundId={4} backgroundId={0} />
+            </div>
+            <div className="result-wrapper">
               <ResultCube foregroundId={5} backgroundId={0} />
             </div>
           </div>
@@ -236,10 +243,20 @@ class Palette extends React.Component{
             </div>
             <div className="result-wrapper">
               <ResultCube foregroundId={0} backgroundId={1} />
+            </div>
+            <div className="result-wrapper">
               <ResultCube foregroundId={1} backgroundId={1} />
+            </div>
+            <div className="result-wrapper">
               <ResultCube foregroundId={2} backgroundId={1} />
+            </div>
+            <div className="result-wrapper">
               <ResultCube foregroundId={3} backgroundId={1} />
+            </div>
+            <div className="result-wrapper">
               <ResultCube foregroundId={4} backgroundId={1} />
+            </div>
+            <div className="result-wrapper">
               <ResultCube foregroundId={5} backgroundId={1} />
             </div>
           </div>
@@ -249,10 +266,20 @@ class Palette extends React.Component{
             </div>
             <div className="result-wrapper">
               <ResultCube foregroundId={0} backgroundId={2} />
+            </div>
+            <div className="result-wrapper">
               <ResultCube foregroundId={1} backgroundId={2} />
+            </div>
+            <div className="result-wrapper">
               <ResultCube foregroundId={2} backgroundId={2} />
+            </div>
+            <div className="result-wrapper">
               <ResultCube foregroundId={3} backgroundId={2} />
+            </div>
+            <div className="result-wrapper">
               <ResultCube foregroundId={4} backgroundId={2} />
+            </div>
+            <div className="result-wrapper">
               <ResultCube foregroundId={5} backgroundId={2} />
             </div>
           </div>
@@ -262,10 +289,20 @@ class Palette extends React.Component{
             </div>
             <div className="result-wrapper">
               <ResultCube foregroundId={0} backgroundId={3} />
+            </div>
+            <div className="result-wrapper">
               <ResultCube foregroundId={1} backgroundId={3} />
+            </div>
+            <div className="result-wrapper">
               <ResultCube foregroundId={2} backgroundId={3} />
+            </div>
+            <div className="result-wrapper">
               <ResultCube foregroundId={3} backgroundId={3} />
+            </div>
+            <div className="result-wrapper">
               <ResultCube foregroundId={4} backgroundId={3} />
+            </div>
+            <div className="result-wrapper">
               <ResultCube foregroundId={5} backgroundId={3} />
             </div>
           </div>
