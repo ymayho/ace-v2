@@ -20,7 +20,7 @@ class Palette extends React.Component{
       canvasProtan: [],
       canvasDeutan: [],
       canvasTritan: [],
-      colorNum: 7,
+      colorNum: 8,
     }
     this.storeSimulationData = this.storeSimulationData.bind(this);
     this.createColorPaletteObj = this.createColorPaletteObj.bind(this);
@@ -89,21 +89,20 @@ class Palette extends React.Component{
   }
   handleCVD(){
     let cvdValue = document.querySelector('input[name="cvd"]:checked').value;
+    let elements = document.getElementsByClassName("cvd-simulation-color-row");
     if(cvdValue === "cvd-true"){
       this.setState({hasCVD: true}, ()=>{
         this.cvdSwitch.innerHTML = "CVD Simulation: Yes";
-        for(let i = 0; i < this.state.colorNum; i++){
-          document.getElementsByClassName("cvd-simulation-color-row")[i].classList.remove("noCVD");
-        }
+        [].forEach.call(elements, (element) => {
+          element.classList.remove("noCVD");
+        });
       });
     }else{
       this.setState({hasCVD: false}, ()=>{
         this.cvdSwitch.innerHTML = "CVD Simulation: No";
-        //console.log("False");
-        for(let i = 0; i < this.state.colorNum; i++){
-          document.getElementsByClassName("cvd-simulation-color-row")[i].classList.add("noCVD");
-        }
-
+        [].forEach.call(elements, (element) => {
+          element.classList.add("noCVD");
+        });
       });
     }
   }
@@ -127,7 +126,6 @@ class Palette extends React.Component{
   }
   componentDidUpdate(prevProps){
     //console.log("Palette update");
-
   }
   componentDidMount(){
     //console.log("Mount");
@@ -139,12 +137,6 @@ class Palette extends React.Component{
     return (
       <div className="palette-wrapper" ref={(div)=>this.paletteWrapper = div}>
         <div className="palette-content-wrapper">
-        {/*
-          <nav className="palette-nav">
-          <button>Palette</button>
-          <button>CVD Info</button>
-        </nav>
-      */}
         <div className="palette-options-container">
           <ColorPicker canvasProtan={this.state.canvasProtan} canvasDeutan={this.state.canvasDeutan} canvasTritan={this.state.canvasTritan} />
           <div className="palette-function-settings">
@@ -196,27 +188,30 @@ class Palette extends React.Component{
           <div className="color-row">
             <div className="color-placeholder">QAQ</div>
             <div className="foreground-color-wrapper">
-              <ColorCube colorType={"foreground"} colorNo={0} colorName={"body-text"} />
+              <ColorCube colorType={"foreground"} colorNo={0} />
             </div>
             <div className="foreground-color-wrapper">
-              <ColorCube colorType={"foreground"} colorNo={1} colorName={"header-text"} />
+              <ColorCube colorType={"foreground"} colorNo={1} />
             </div>
             <div className="foreground-color-wrapper">
-              <ColorCube colorType={"foreground"} colorNo={2} colorName={"url-text"} />
+              <ColorCube colorType={"foreground"} colorNo={2} />
             </div>
             <div className="foreground-color-wrapper">
-              <ColorCube colorType={"foreground"} colorNo={3} colorName={"clicked-url-text"} />
+              <ColorCube colorType={"foreground"} colorNo={3} />
             </div>
             <div className="foreground-color-wrapper">
-              <ColorCube colorType={"foreground"} colorNo={4} colorName={"clicked-url-text"} />
+              <ColorCube colorType={"foreground"} colorNo={4} />
             </div>
             <div className="foreground-color-wrapper">
-              <ColorCube colorType={"foreground"} colorNo={5} colorName={"clicked-url-text"} />
+              <ColorCube colorType={"foreground"} colorNo={5} />
+            </div>
+            <div className="foreground-color-wrapper">
+              <ColorCube colorType={"foreground"} colorNo={6} />
             </div>
           </div>
           <div className="color-row">
             <div className="background-color-wrapper">
-              <ColorCube colorType={"background"} colorNo={0} colorName={"body-background"} />
+              <ColorCube colorType={"background"} colorNo={0} />
             </div>
             <div className="result-wrapper">
               <ResultCube foregroundId={0} backgroundId={0} />
@@ -236,10 +231,13 @@ class Palette extends React.Component{
             <div className="result-wrapper">
               <ResultCube foregroundId={5} backgroundId={0} />
             </div>
+            <div className="result-wrapper">
+              <ResultCube foregroundId={6} backgroundId={0} />
+            </div>
           </div>
           <div className="color-row">
             <div className="background-color-wrapper">
-              <ColorCube colorType={"background"} colorNo={1} colorName={"header-background"} />
+              <ColorCube colorType={"background"} colorNo={1} />
             </div>
             <div className="result-wrapper">
               <ResultCube foregroundId={0} backgroundId={1} />
@@ -259,10 +257,13 @@ class Palette extends React.Component{
             <div className="result-wrapper">
               <ResultCube foregroundId={5} backgroundId={1} />
             </div>
+            <div className="result-wrapper">
+              <ResultCube foregroundId={6} backgroundId={1} />
+            </div>
           </div>
           <div className="color-row">
             <div className="background-color-wrapper">
-              <ColorCube colorType={"background"} colorNo={2} colorName={"body-background"} />
+              <ColorCube colorType={"background"} colorNo={2} />
             </div>
             <div className="result-wrapper">
               <ResultCube foregroundId={0} backgroundId={2} />
@@ -282,10 +283,13 @@ class Palette extends React.Component{
             <div className="result-wrapper">
               <ResultCube foregroundId={5} backgroundId={2} />
             </div>
+            <div className="result-wrapper">
+              <ResultCube foregroundId={6} backgroundId={2} />
+            </div>
           </div>
           <div className="color-row">
             <div className="background-color-wrapper">
-              <ColorCube colorType={"background"} colorNo={3} colorName={"body-background"} />
+              <ColorCube colorType={"background"} colorNo={3} />
             </div>
             <div className="result-wrapper">
               <ResultCube foregroundId={0} backgroundId={3} />
@@ -304,6 +308,35 @@ class Palette extends React.Component{
             </div>
             <div className="result-wrapper">
               <ResultCube foregroundId={5} backgroundId={3} />
+            </div>
+            <div className="result-wrapper">
+              <ResultCube foregroundId={6} backgroundId={3} />
+            </div>
+          </div>
+          <div className="color-row">
+            <div className="background-color-wrapper">
+              <ColorCube colorType={"background"} colorNo={4} />
+            </div>
+            <div className="result-wrapper">
+              <ResultCube foregroundId={0} backgroundId={4} />
+            </div>
+            <div className="result-wrapper">
+              <ResultCube foregroundId={1} backgroundId={4} />
+            </div>
+            <div className="result-wrapper">
+              <ResultCube foregroundId={2} backgroundId={4} />
+            </div>
+            <div className="result-wrapper">
+              <ResultCube foregroundId={3} backgroundId={4} />
+            </div>
+            <div className="result-wrapper">
+              <ResultCube foregroundId={4} backgroundId={4} />
+            </div>
+            <div className="result-wrapper">
+              <ResultCube foregroundId={5} backgroundId={4} />
+            </div>
+            <div className="result-wrapper">
+              <ResultCube foregroundId={6} backgroundId={4} />
             </div>
           </div>
         </div>{/*End div.palette*/}

@@ -11,8 +11,8 @@ const initialState = {
   wcag2a: false,
   wcag3a: true,
   wcag: "AAA",
-  foregroundNumber: 4,
-  backgroundNumber: 2,
+  foregroundNumber: 7,
+  backgroundNumber: 5,
   foregroundColors: [{
     index: 0,
     color: "#000000",
@@ -32,12 +32,16 @@ const initialState = {
   },{
     index: 4,
     color: "#000000",
-    colorName: "Button Text"
+    colorName: "Accent header text"
   },{
     index: 5,
     color: "#ffffff",
-    colorName: "Accent/hover header text"
-  },],
+    colorName: "Button Text"
+  },{
+    index: 6,
+    color: "#ffffff",
+    colorName: "Accent button text"
+  }],
   backgroundColors: [{
     index: 0,
     color: "#ffffff",
@@ -49,12 +53,16 @@ const initialState = {
   },{
     index: 2,
     color: "#aaaaaa",
-    colorName: "Accent/hover header background"
+    colorName: "Accent header background"
   },{
     index: 3,
     color: "#000000",
-    colorName: "Footer background"
-  },],
+    colorName: "Button background"
+  },{
+    index: 4,
+    color: "#000000",
+    colorName: "Accent button background"
+  }],
   foregroundCVDs: [{
     index: 0, protan: "#000000", deutan: "#000000", tritan: "#000000"
   },{
@@ -67,6 +75,8 @@ const initialState = {
     index: 4, protan: "#000000", deutan: "#000000", tritan: "#000000"
   },{
     index: 5, protan: "#ffffff", deutan: "#ffffff", tritan: "#ffffff"
+  },{
+    index: 6, protan: "#ffffff", deutan: "#ffffff", tritan: "#ffffff"
   }],
   backgroundCVDs: [{
     index: 0, protan: "#ffffff", deutan: "#ffffff", tritan: "#ffffff"
@@ -76,7 +86,9 @@ const initialState = {
     index: 2, protan: "#aaaaaa", deutan: "#aaaaaa", tritan: "#aaaaaa"
   },{
     index: 3, protan: "#000000", deutan: "#000000", tritan: "#000000"
-  },],
+  },{
+    index: 4, protan: "#000000", deutan: "#000000", tritan: "#000000"
+  }],
   selectedColorCube: {
     type: "foreground",
     index: 0
@@ -128,7 +140,6 @@ function reducer(state = initialState, action){
       }
     case "UPDATE_SELECTED_COLOR_CUBE":
       console.log(action.type);
-      console.log(action);
       temp = {...state.selectedColorCube};
       temp.type = action.newType;
       temp.index = action.newIndex;
