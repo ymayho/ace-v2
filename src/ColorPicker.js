@@ -45,27 +45,21 @@ class ColorPicker extends React.Component{
     var finalGreen;
     var finalBlue;
     let proColor, deuColor, triColor;
-    console.log(1);
     pixels = this.props.canvasProtan;
-    console.log(2);
     // pixels in RGBA
     // index in ARGB
     finalRed = pixels[finalIndex];
     finalGreen = pixels[finalIndex + 1];
     finalBlue = pixels[finalIndex + 2];
     proColor = "rgb(" + finalRed + ", " + finalGreen + ", " + finalBlue +")"
-    console.log(3);
     pixels = this.props.canvasDeutan;
-    console.log(4);
     // pixels in RGBA
     // index in ARGB
     finalRed = pixels[finalIndex];
     finalGreen = pixels[finalIndex + 1];
     finalBlue = pixels[finalIndex + 2];
     deuColor = "rgb(" + finalRed + ", " + finalGreen + ", " + finalBlue +")"
-    console.log(5);
     pixels = this.props.canvasTritan;
-    console.log(6);
     // pixels in RGBA
     // index in ARGB
     finalRed = pixels[finalIndex];
@@ -112,7 +106,6 @@ class ColorPicker extends React.Component{
   }
   componentDidUpdate(prevProps){
     console.log("ColorPicker update");
-    console.log(this.props.selectedColorCube);
   }
   componentDidMount(){
     console.log("Mount");

@@ -64,11 +64,7 @@ class ColorCube extends React.Component{
     return result;
   }
   componentDidUpdate(prevProps){
-    if(this.props.colorNo === 0){
-      console.log(this.props.foregroundColors[this.props.colorNo].color);
-      console.log(this.props.foregroundCVDs);
-    }
-    //this.setColors();
+
   }
   componentDidMount(){
     if(this.props.colorType === "foreground"){

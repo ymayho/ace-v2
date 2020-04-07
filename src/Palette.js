@@ -51,7 +51,7 @@ class Palette extends React.Component{
       //This will get the rgba data for the pixels within the colour palette array
   	let pixels = colorPaletteData.data;
     if(type==="pro"){
-      this.setState({canvasProtan: pixels}, ()=>console.log(type));
+      this.setState({canvasProtan: pixels});
     }
     else if (type==="deu") {
       this.setState({canvasDeutan: pixels});
@@ -92,14 +92,12 @@ class Palette extends React.Component{
     let elements = document.getElementsByClassName("cvd-simulation-color-row");
     if(cvdValue === "cvd-true"){
       this.setState({hasCVD: true}, ()=>{
-        this.cvdSwitch.innerHTML = "CVD Simulation: Yes";
         [].forEach.call(elements, (element) => {
           element.classList.remove("noCVD");
         });
       });
     }else{
       this.setState({hasCVD: false}, ()=>{
-        this.cvdSwitch.innerHTML = "CVD Simulation: No";
         [].forEach.call(elements, (element) => {
           element.classList.add("noCVD");
         });
@@ -140,10 +138,9 @@ class Palette extends React.Component{
         <div className="palette-options-container">
           <ColorPicker canvasProtan={this.state.canvasProtan} canvasDeutan={this.state.canvasDeutan} canvasTritan={this.state.canvasTritan} />
           <div className="palette-function-settings">
-
             <div className="cvd-options palette-options">
-              <span className="option-switch" ref={span => this.cvdSwitch = span}>CVD Simulation: Yes</span>
-              <div className="cvd-inputs dropdown-inputs">
+              <span className="option-name">CVD Simulation: </span>
+              <div className="cvd-inputs option-inputs">
                 <input id="yesCVD" type="radio" name="cvd" value="cvd-true" onChange={this.handleCVD}
                   defaultChecked /><label htmlFor="yesCVD">Yes</label>
                 <input id="noCVD" type="radio" name="cvd" value="cvd-false"  onChange={this.handleCVD} />
@@ -151,14 +148,23 @@ class Palette extends React.Component{
               </div>
             </div>
             <div className="wcag-options palette-options">
-              <span className="option-switch" ref={span => this.wcagSwitch = span}>
-                WCAG: {this.props.wcag}
-              </span>
-              <div className="wcag-inputs dropdown-inputs">
+              <span className="option-name">WCAG: </span>
+              <div className="wcag-inputs option-inputs">
                 <input id="wcag-2a" type="radio" name="wcag" value="2A" onChange={this.handleWCAG} />
                 <label htmlFor="wcag-2a">AA</label>
                 <input id="wcag-3a" type="radio" name="wcag" value="3A" onChange={this.handleWCAG} defaultChecked />
                 <label htmlFor="wcag-3a">AAA</label>
+              </div>
+            </div>
+            <div className="element-options palette-options">
+              <span className="option-name">Elements</span>
+              <div className="element-inputs option-inputs">
+                <input id="accent-header" type="checkbox" name="element" value="accent-header" />
+                <label htmlFor="accent-header">Accent Header</label>
+                <input id="regular-button" type="checkbox" name="element" value="accent-header" />
+                <label htmlFor="regular-button">Button</label>
+                <input id="accent-button" type="checkbox" name="element" value="accent-header" />
+                <label htmlFor="accent-button">Accent Button</label>
               </div>
             </div>
           </div>{/*End div.palette-function-setting*/}
@@ -177,14 +183,6 @@ class Palette extends React.Component{
         </div>{/*End div.palette-options-container*/}
 
         <div className="palette">
-          <div className="foreground-number">
-            <input className="color-number-input" type="number" defaultValue="4" min="4" max="6"
-              onChange={this.handleForegroundNumberChange} ref={(input) => this.foregroundNumber = input}/> / 6
-          </div>
-          <div className="background-number">
-            <input className="color-number-input" type="number" defaultValue="2" min="2" max="4"
-              onChange={this.handleBackgroundNumberChange} ref={(input) => this.backgroundNumber = input}/> / 4
-          </div>
           <div className="color-row">
             <div className="color-placeholder">QAQ</div>
             <div className="foreground-color-wrapper">
