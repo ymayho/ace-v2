@@ -24,9 +24,8 @@ class Palette extends React.Component{
     }
     this.storeSimulationData = this.storeSimulationData.bind(this);
     this.createColorPaletteObj = this.createColorPaletteObj.bind(this);
-    this.handleBackgroundNumberChange = this.handleBackgroundNumberChange.bind(this);
-    this.handleForegroundNumberChange = this.handleForegroundNumberChange.bind(this);
     this.handleHelp = this.handleHelp.bind(this);
+    this.handleElementDisplay = this.handleElementDisplay.bind(this);
     this.handleWCAG = this.handleWCAG.bind(this);
     this.handleCVD = this.handleCVD.bind(this);
     this.handleClickToggle = this.handleClickToggle.bind(this);
@@ -60,35 +59,28 @@ class Palette extends React.Component{
       this.setState({canvasTritan: pixels});
     }
   }
-  handleBackgroundNumberChange(){
-    this.props.dispatch({type: "EDIT_BACKGROUND_NUMBER",
-      newNumber: this.backgroundNumber.value,
-      });
-    //console.log(this.backgroundNumber.value)
-  }
-  handleForegroundNumberChange(){
-    this.props.dispatch({type: "EDIT_FOREGROUND_NUMBER",
-      newNumber: this.foregroundNumber.value,
-      });
-    //console.log(this.foregroundNumber.value)
-  }
   handleHelp(){
     this.setState({isHelpOpen: !this.state.isHelpOpen});
   }
+  handleElementDisplay(e){
+    console.log(e.target.checked);
+    this.props.dispatch({type: "UPDATE_ELEMENT_DISPLAY",
+      name: e.target.value,
+      display: e.target.checked,
+    });
+  }
   handleWCAG(){
     let wcagType = document.querySelectorAll('input[name="wcag"]');
-    //console.log(wcagType);
     wcagType.forEach((item, key) => {
       if(item.checked === true){
         this.props.dispatch({type: "UPDATE_WCAG_CHECK",
           standard: item.value,
         });
-      }
-    });
-
+      }//End if.
+    });//End  forEach.
   }
-  handleCVD(){
-    let cvdValue = document.querySelector('input[name="cvd"]:checked').value;
+  handleCVD(e){
+    let cvdValue = e.target.value;
     let elements = document.getElementsByClassName("cvd-simulation-color-row");
     if(cvdValue === "cvd-true"){
       this.setState({hasCVD: true}, ()=>{
@@ -102,20 +94,20 @@ class Palette extends React.Component{
           element.classList.add("noCVD");
         });
       });
-    }
+    }//End else.
   }
   handleClickToggle(){
     if(this.state.fullScreen){
       this.setState({fullScreen: false}, () => {
         document.querySelector(".palette-container").classList.remove("full-screen");
         document.querySelector(".example-page-container").style.display = "block";
-      });
+      });//End setState.
     }else{
       this.setState({fullScreen: true}, () => {
         document.querySelector(".palette-container").classList.add("full-screen");
         document.querySelector(".example-page-container").style.display = "none";
       });
-    }
+    }//End else.
   }
   static getDerivedStateFromProps(props, state){
     let result = null;
@@ -159,11 +151,11 @@ class Palette extends React.Component{
             <div className="element-options palette-options">
               <span className="option-name">Elements</span>
               <div className="element-inputs option-inputs">
-                <input id="accent-header" type="checkbox" name="element" value="accent-header" />
+                <input id="accent-header" type="checkbox" name="element" value="accent-header" onChange={this.handleElementDisplay} />
                 <label htmlFor="accent-header">Accent Header</label>
-                <input id="regular-button" type="checkbox" name="element" value="accent-header" />
+                <input id="regular-button" type="checkbox" name="element" value="regular-button" onChange={this.handleElementDisplay} />
                 <label htmlFor="regular-button">Button</label>
-                <input id="accent-button" type="checkbox" name="element" value="accent-header" />
+                <input id="accent-button" type="checkbox" name="element" value="accent-button" onChange={this.handleElementDisplay} />
                 <label htmlFor="accent-button">Accent Button</label>
               </div>
             </div>

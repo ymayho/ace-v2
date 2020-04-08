@@ -60,14 +60,47 @@ class ResultCube extends React.PureComponent{
     let rgb = [parseInt(hexCode.substring(1,3) ,16), parseInt(hexCode.substring(3,5) ,16), parseInt(hexCode.substring(5) ,16)];
     return rgb;
   }
+  static shouldDisplay(foregroundId, backgroundId, elementDisplay){
+    let token = true;
+    if(foregroundId < 4 && backgroundId < 2){
+      token = true;
+    }else if(foregroundId >= 4 && backgroundId < 2){
+      elementDisplay.forEach(item => {
+        if(item.foreIndex === foregroundId){
+          token = item.display;
+        }
+      });
+    }else if(foregroundId < 4 && backgroundId >= 2){
+      elementDisplay.forEach(item => {
+        if(item.backIndex === backgroundId){
+          token = item.display;
+        }
+      });
+    }else{
+      token = false;
+      elementDisplay.forEach(item => {
+        if(item.foreIndex === foregroundId){
+          token = item.display;
+        }
+      });
+      if(token){
+        elementDisplay.forEach(item => {
+          if(item.backIndex === backgroundId){
+            token = item.display;
+          }
+        });
+      }//End if(token).
+    }//End if-else.
+    return token;
+  }
   static getDerivedStateFromProps(props, state){
     let result = null;
-    if(props.foregroundId >= props.foregroundNumber || props.backgroundId >= props.backgroundNumber){
-      result = {display: "hidden"};
+    let display = ResultCube.shouldDisplay(props.foregroundId, props.backgroundId, props.elementDisplay);
+    if(display){
+      result = {display: "display"};
     }
     else{
-      result = {display: "display"};
-
+      result = {display: "hidden"};
     }
     return result;
   }
@@ -83,10 +116,11 @@ class ResultCube extends React.PureComponent{
   }
   render(){
     return (
-      <div className={" result-cube " + this.state.display + " " + this.state.passCheck}
-      style={{color: this.props.foregroundColors[this.props.foregroundId].color, backgroundColor: this.props.backgroundColors[this.props.backgroundId].color}}>
-        <div className="wcag-check">{this.state.passCheck}</div>
-        <div className="contrast-ratio">{this.state.contrast}</div>
+      <div className={"result-cube " + this.state.display + " " + this.state.passCheck}>
+        <div className="result-content" style={{color: this.props.foregroundColors[this.props.foregroundId].color, backgroundColor: this.props.backgroundColors[this.props.backgroundId].color}}>
+          <div className="wcag-check">{this.state.passCheck}</div>
+          <div className="contrast-ratio">{this.state.contrast}</div>
+        </div>
       </div>
     );
   }
@@ -98,7 +132,8 @@ function mapStateToProps(state) {
     backgroundNumber: state.backgroundNumber,
     foregroundColors: state.foregroundColors,
     backgroundColors: state.backgroundColors,
-    wcag: state.wcag
+    wcag: state.wcag,
+    elementDisplay: state.elementDisplay
   });
 }
 

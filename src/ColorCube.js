@@ -15,6 +15,7 @@ class ColorCube extends React.Component{
       triColor: "#ffffff",
       isSelected: false
     }
+    //this.shouldDisplay = this.shouldDisplay.bind(this);
     this.convertRGBToHex = this.convertRGBToHex.bind(this);
     this.handleClickCube = this.handleClickCube.bind(this);
   }
@@ -30,16 +31,38 @@ class ColorCube extends React.Component{
       newType: this.props.colorType,
       newIndex: this.props.colorNo});
   }
+  static shouldDisplay(colorType, colorNo, elementDisplay){
+    let token = true;
+    if(colorType === "foreground" && colorNo >= 4){
+      elementDisplay.forEach(item => {
+        if(item.foreIndex === colorNo){
+          token = item.display;
+          //console.log(item.foreIndex, token);
+        }
+      });
+    }else if(colorType === "background" && colorNo >= 2){
+      elementDisplay.forEach(item => {
+        if(item.backIndex === colorNo){
+          token = item.display;
+          //console.log(item.backIndex, token);
+        }
+      });
+    }else{
+      token = true;
+    }
+    return token;
+  }
   static getDerivedStateFromProps(props, state){
     let result = null;
     //Decide if this cube should display
-    let colorNum;
-    colorNum = (props.colorType === "foreground") ? props.foregroundNumber : props.backgroundNumber;
-    if(props.colorNo >= colorNum){
+    //let colorNum;
+    //colorNum = (props.colorType === "foreground") ? props.foregroundNumber : props.backgroundNumber;
+    let display = ColorCube.shouldDisplay(props.colorType, props.colorNo, props.elementDisplay);
+    if(display){
+      result = {...result, display: "display"};
+    }else{
       result = {...result, display: "hidden"};
       return result;
-    }else{
-      result = {...result, display: "display"};
     }
     //Set color hex code
     if(props.colorType === "foreground"){
@@ -102,7 +125,8 @@ function mapStateToProps(state) {
     backgroundColors: state.backgroundColors,
     foregroundCVDs: state.foregroundCVDs,
     backgroundCVDs: state.backgroundCVDs,
-    selectedColorCube: state.selectedColorCube
+    selectedColorCube: state.selectedColorCube,
+    elementDisplay: state.elementDisplay
   });
 }
 export default connect(mapStateToProps)(ColorCube);

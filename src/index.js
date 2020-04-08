@@ -92,7 +92,14 @@ const initialState = {
   selectedColorCube: {
     type: "foreground",
     index: 0
-  }
+  },
+  elementDisplay: [{
+    foreIndex: 4, backIndex: 2, name: "accent-header", display: false
+  },{
+    foreIndex: 5, backIndex: 3, name: "regular-button", display: false
+  },{
+    foreIndex: 6, backIndex: 4, name: "accent-button", display: false
+  }]
 };
 
 function reducer(state = initialState, action){
@@ -144,6 +151,11 @@ function reducer(state = initialState, action){
       temp.type = action.newType;
       temp.index = action.newIndex;
       return {...state, selectedColorCube: temp};
+    case "UPDATE_ELEMENT_DISPLAY":
+      console.log(action.type);
+      console.log(action.name, action.display)
+      temp = state.elementDisplay.map(item => item.name === action.name ? {...item, display: action.display} : item);
+      return {...state, elementDisplay: temp};
     default:
       return state;
   }

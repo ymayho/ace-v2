@@ -155,14 +155,22 @@
     .color-row{
       display: flex;
       width: fit-content;
-      .foreground-color-wrapper, .background-color-wrapper, .result-wrapper, .color-placeholder{
+      // .result-wrapper, .color-placeholder{
+      //   width: $wrapper-width;
+      //   margin: 3px 2px;
+      // }
+      .result-wrapper, .color-placeholder{
+        //width: $wrapper-width;
+        margin: 3px 2px;
+      }
+      .color-placeholder{
         width: $wrapper-width;
         margin: 3px 2px;
-        text-align: center;
       }
       .foreground-color, .background-color, .result-cube{
         width: $wrapper-width;
-        margin: 0 auto;
+        //margin: 0 auto;
+        margin: 3px 2px;
         padding: 5px calc((#{$wrapper-width} - #{$color-width}) / 2);
         border-radius: $border-radius;
         background-color: white;
@@ -236,8 +244,21 @@
       }
       .result-wrapper{
         display: inherit;
-        margin: calc(3em + 1px) 2px 1em;
-        .result-cube{
+        margin: calc(3em + 1px) 0 1em;
+        .result-cube.fail{
+          .result-content::before{
+            content: '';
+            position: absolute;
+            top: -7px;
+            left: 60px;
+            display: block;
+            width: 1px;
+            height: $wrapper-width;
+            background-color: $theme-color;
+            transform: rotate(315deg);
+          }
+        }
+        .result-content{
           width: $color-width;
           height: $color-width;
           margin: 0 auto;
@@ -246,20 +267,6 @@
           flex-direction: column;
           border: 1px $theme-color solid;
           border-radius: 50%;
-          &.fail{
-            &::before{
-              content: '';
-              position: absolute;
-              top: -15px;
-              left: 45px;
-              display: block;
-              width: 1px;
-              height: $wrapper-width;
-              background-color: $theme-color;
-              transform: rotate(315deg);
-            }
-
-          }
           .contrast-ratio{
             font-size: 14px;
             font-weight: 600;
