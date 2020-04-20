@@ -35,7 +35,7 @@ const initialState = {
     colorName: "Accent header text"
   },{
     index: 5,
-    color: "#ffffff",
+    color: "#000000",
     colorName: "Button Text"
   },{
     index: 6,
@@ -56,7 +56,7 @@ const initialState = {
     colorName: "Accent header background"
   },{
     index: 3,
-    color: "#000000",
+    color: "#aaaaaa",
     colorName: "Button background"
   },{
     index: 4,
@@ -74,7 +74,7 @@ const initialState = {
   },{
     index: 4, protan: "#000000", deutan: "#000000", tritan: "#000000"
   },{
-    index: 5, protan: "#ffffff", deutan: "#ffffff", tritan: "#ffffff"
+    index: 5, protan: "#000000", deutan: "#000000", tritan: "#000000"
   },{
     index: 6, protan: "#ffffff", deutan: "#ffffff", tritan: "#ffffff"
   }],
@@ -85,7 +85,7 @@ const initialState = {
   },{
     index: 2, protan: "#aaaaaa", deutan: "#aaaaaa", tritan: "#aaaaaa"
   },{
-    index: 3, protan: "#000000", deutan: "#000000", tritan: "#000000"
+    index: 3, protan: "#aaaaaa", deutan: "#aaaaaa", tritan: "#aaaaaa"
   },{
     index: 4, protan: "#000000", deutan: "#000000", tritan: "#000000"
   }],

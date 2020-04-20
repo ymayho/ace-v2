@@ -54,9 +54,6 @@ class ColorCube extends React.Component{
   }
   static getDerivedStateFromProps(props, state){
     let result = null;
-    //Decide if this cube should display
-    //let colorNum;
-    //colorNum = (props.colorType === "foreground") ? props.foregroundNumber : props.backgroundNumber;
     let display = ColorCube.shouldDisplay(props.colorType, props.colorNo, props.elementDisplay);
     if(display){
       result = {...result, display: "display"};
@@ -119,8 +116,6 @@ class ColorCube extends React.Component{
 // Add this function:
 function mapStateToProps(state) {
   return ({
-    foregroundNumber: state.foregroundNumber,
-    backgroundNumber: state.backgroundNumber,
     foregroundColors: state.foregroundColors,
     backgroundColors: state.backgroundColors,
     foregroundCVDs: state.foregroundCVDs,

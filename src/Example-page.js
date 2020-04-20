@@ -9,25 +9,27 @@ class ExamplePage extends React.Component {
     this.state = {
       mode: "regular",
       currentColorSet: {
-        pageBodyText1: "#000000",
+        pageBodyText: "#000000",
         headerText: "#ffffff",
         hyperlinkText: "#0000ee",
         visitedHyperlinkText: "#551a8b",
-        pageBodyText2: "#000000",
-        hoverHeaderText: "#ffffff",
+        accentHeaderText: "#000000",
+        buttonText: "#000000",
+        accentButtonText: "#ffffff",
         pageBack: "#ffffff",
         headerBack: "#000000",
-        hoverBack: "#aaaaaa",
-        footerBack: "#000000"
+        accentHeaderBack: "#aaaaaa",
+        buttonBack: "#aaaaaa",
+        accentButtonBack: "#000000"
       },
       regularColorSet: {},
       protanColorSet: {},
       deutanColorSet: {},
       tritanColorSet: {},
-      counter: 0,
-      //setColorState: this.setColorState.bind(this)
+      displayAccentHeader: false,
+      displayButton: false,
+      displayAccentButton: false,
     }
-    //this.setColorState = this.setColorState.bind(this);
     this.resetMode = this.resetMode.bind(this);
     this.handleHoverNav = this.handleHoverNav.bind(this);
     this.handleModeSwitch = this.handleModeSwitch.bind(this)
@@ -36,8 +38,8 @@ class ExamplePage extends React.Component {
     //console.log(id);
     let menu = document.getElementsByClassName("example-menu")[id-1];
     if(action==="in"){
-      menu.style.backgroundColor = this.state.currentColorSet.hoverBack;
-      menu.style.color = this.state.currentColorSet.hoverHeaderText;
+      menu.style.backgroundColor = this.state.currentColorSet.accentHeaderBack;
+      menu.style.color = this.state.currentColorSet.accentHeaderText;
     }else{
       menu.style.backgroundColor = this.state.currentColorSet.headerBack;
       menu.style.color = this.state.currentColorSet.headerText;
@@ -45,12 +47,12 @@ class ExamplePage extends React.Component {
   }
   resetMode(){
     this.container.classList.remove("grayscale");
-    let menu = document.getElementsByClassName("example-menu");
-    Array.from(menu).forEach((item) => {
-      item.style.backgroundColor = this.state.currentColorSet.headerBack;
-      item.style.color = this.state.currentColorSet.headerText;
-    });
-    this.footer.style.backgroundColor = this.state.currentColorSet.footerBack;
+    // let menu = document.getElementsByClassName("example-menu");
+    // Array.from(menu).forEach((item) => {
+    //   item.style.backgroundColor = this.state.currentColorSet.headerBack;
+    //   item.style.color = this.state.currentColorSet.headerText;
+    // });
+    // this.footer.style.backgroundColor = this.state.currentColorSet.headerBack;
   }
   handleModeSwitch(mode){
     console.log(mode);
@@ -67,74 +69,76 @@ class ExamplePage extends React.Component {
       this.container.classList.add("grayscale");
     }
   }
-  // setColorState(colorType, foreColors, backColors){
-  //   let colorSet = {
-  //     pageBodyText1: foreColors[0].color,
-  //     headerText: foreColors[1].color,
-  //     hyperlinkText: foreColors[2].color,
-  //     visitedHyperlinkText: foreColors[3].color,
-  //     pageBodyText2: this.props.foregroundNumber >=5 ? foreColors[4].color : foreColors[0].color,
-  //     hoverHeaderText: this.props.foregroundNumber >=6 ? foreColors[5].color : foreColors[1].color,
-  //     pageBack: backColors[0].color,
-  //     headerBack: backColors[1].color,
-  //     hoverBack: this.props.backgroundNumber >= 3 ? backColors[2].color : backColors[1].color,
-  //     footerBack: this.props.backgroundNumber >= 4 ? backColors[3].color : backColors[1].color,
-  //   }
-  //   return colorSet;
-  // }
   static getDerivedStateFromProps(props, state){
     console.log("Example: getDerivedStateFromProps");
     let result = null;
-    //let temp = state.setColorState("regular", props.foregroundColors, props.backgroundColors);
-    //console.log(temp);
     let regular = {regularColorSet: {
-      pageBodyText1: props.foregroundColors[0].color,
+      pageBodyText: props.foregroundColors[0].color,
       headerText: props.foregroundColors[1].color,
       hyperlinkText: props.foregroundColors[2].color,
       visitedHyperlinkText: props.foregroundColors[3].color,
-      pageBodyText2: props.foregroundNumber >=5 ? props.foregroundColors[4].color : props.foregroundColors[0].color,
-      hoverHeaderText: props.foregroundNumber >=6 ? props.foregroundColors[5].color : props.foregroundColors[1].color,
+      accentHeaderText: props.foregroundColors[4].color,
+      buttonText: props.foregroundColors[5].color,
+      accentButtonText: props.foregroundColors[6].color,
       pageBack: props.backgroundColors[0].color,
       headerBack: props.backgroundColors[1].color,
-      hoverBack: props.backgroundNumber >= 3 ? props.backgroundColors[2].color : props.backgroundColors[1].color,
-      footerBack: props.backgroundNumber >= 4 ? props.backgroundColors[3].color : props.backgroundColors[1].color,
+      accentHeaderBack: props.backgroundColors[2].color,
+      buttonBack: props.backgroundColors[3].color,
+      accentButtonBack: props.backgroundColors[4].color
     }};
     //console.log(regular.regularColorSet)
     let cvd = {protanColorSet: {
-      pageBodyText1: props.foregroundCVDs[0].protan,
+      pageBodyText: props.foregroundCVDs[0].protan,
       headerText: props.foregroundCVDs[1].protan,
       hyperlinkText: props.foregroundCVDs[2].protan,
       visitedHyperlinkText: props.foregroundCVDs[3].protan,
-      pageBodyText2: props.foregroundNumber >=5 ? props.foregroundCVDs[4].protan : props.foregroundCVDs[0].protan,
-      hoverHeaderText: props.foregroundNumber >=6 ? props.foregroundCVDs[5].protan : props.foregroundCVDs[1].protan,
+      accentHeaderText: props.foregroundCVDs[4].protan,
+      buttonText: props.foregroundCVDs[5].protan,
+      accentButtonText: props.foregroundCVDs[6].protan,
       pageBack: props.backgroundCVDs[0].protan,
       headerBack: props.backgroundCVDs[1].protan,
-      hoverBack: props.backgroundNumber >= 3 ? props.backgroundCVDs[2].protan : props.backgroundCVDs[1].protan,
-      footerBack: props.backgroundNumber >= 4 ? props.backgroundCVDs[3].protan : props.backgroundCVDs[1].protan,
+      accentHeaderBack: props.backgroundCVDs[2].protan,
+      buttonBack: props.backgroundCVDs[3].protan,
+      accentButtonBack: props.backgroundCVDs[4].protan
     },
     deutanColorSet: {
-      pageBodyText1: props.foregroundCVDs[0].deutan,
+      pageBodyText: props.foregroundCVDs[0].deutan,
       headerText: props.foregroundCVDs[1].deutan,
       hyperlinkText: props.foregroundCVDs[2].deutan,
       visitedHyperlinkText: props.foregroundCVDs[3].deutan,
-      pageBodyText2: props.foregroundNumber >=5 ? props.foregroundCVDs[4].deutan : props.foregroundCVDs[0].deutan,
-      hoverHeaderText: props.foregroundNumber >=6 ? props.foregroundCVDs[5].deutan : props.foregroundCVDs[1].deutan,
+      accentHeaderText: props.foregroundCVDs[4].deutan,
+      buttonText: props.foregroundCVDs[5].deutan,
+      accentButtonText: props.foregroundCVDs[6].deutan,
       pageBack: props.backgroundCVDs[0].deutan,
       headerBack: props.backgroundCVDs[1].deutan,
-      hoverBack: props.backgroundNumber >= 3 ? props.backgroundCVDs[2].deutan : props.backgroundCVDs[1].deutan,
-      footerBack: props.backgroundNumber >= 4 ? props.backgroundCVDs[3].deutan : props.backgroundCVDs[1].deutan,
+      accentHeaderBack: props.backgroundCVDs[2].deutan,
+      buttonBack: props.backgroundCVDs[3].deutan,
+      accentButtonBack: props.backgroundCVDs[4].deutan
     },
     tritanColorSet: {
-      pageBodyText1: props.foregroundCVDs[0].tritan,
+      pageBodyText: props.foregroundCVDs[0].tritan,
       headerText: props.foregroundCVDs[1].tritan,
       hyperlinkText: props.foregroundCVDs[2].tritan,
       visitedHyperlinkText: props.foregroundCVDs[3].tritan,
-      pageBodyText2: props.foregroundNumber >=5 ? props.foregroundCVDs[4].tritan : props.foregroundCVDs[0].tritan,
-      hoverHeaderText: props.foregroundNumber >=6 ? props.foregroundCVDs[5].tritan : props.foregroundCVDs[1].tritan,
+      accentHeaderText: props.foregroundCVDs[4].tritan,
+      buttonText: props.foregroundCVDs[5].tritan,
+      accentButtonText: props.foregroundCVDs[6].tritan,
       pageBack: props.backgroundCVDs[0].tritan,
       headerBack: props.backgroundCVDs[1].tritan,
-      hoverBack: props.backgroundNumber >= 3 ? props.backgroundCVDs[2].tritan : props.backgroundCVDs[1].tritan,
-      footerBack: props.backgroundNumber >= 4 ? props.backgroundCVDs[3].tritan : props.backgroundCVDs[1].tritan,
+      accentHeaderBack: props.backgroundCVDs[2].tritan,
+      buttonBack: props.backgroundCVDs[3].tritan,
+      accentButtonBack: props.backgroundCVDs[4].tritan
+
+      // pageBodyText: props.foregroundCVDs[0].tritan,
+      // headerText: props.foregroundCVDs[1].tritan,
+      // hyperlinkText: props.foregroundCVDs[2].tritan,
+      // visitedHyperlinkText: props.foregroundCVDs[3].tritan,
+      // accentHeaderText: props.foregroundNumber >=5 ? props.foregroundCVDs[4].tritan : props.foregroundCVDs[0].tritan,
+      // hoverHeaderText: props.foregroundNumber >=6 ? props.foregroundCVDs[5].tritan : props.foregroundCVDs[1].tritan,
+      // pageBack: props.backgroundCVDs[0].tritan,
+      // headerBack: props.backgroundCVDs[1].tritan,
+      // hoverBack: props.backgroundNumber >= 3 ? props.backgroundCVDs[2].tritan : props.backgroundCVDs[1].tritan,
+      // footerBack: props.backgroundNumber >= 4 ? props.backgroundCVDs[3].tritan : props.backgroundCVDs[1].tritan,
     }}
     let current = {};
     if(state.mode === "regular"){
@@ -152,6 +156,21 @@ class ExamplePage extends React.Component {
     }else{
       result = {...regular, ...current};
     }
+    for(let i in props.elementDisplay){
+      switch(props.elementDisplay[i].name){
+        case "accent-header":
+          result = {...result, displayAccentHeader: props.elementDisplay[i].display}
+          break;
+        case "regular-button":
+          result = {...result, displayButton: props.elementDisplay[i].display}
+          break;
+        case "accent-button":
+          result = {...result, displayAccentButton: props.elementDisplay[i].display}
+          break;
+        default:
+          break;
+      }
+    }
     return result;
   }
   componentDidUpdate(prevProps, prevState){
@@ -162,12 +181,21 @@ class ExamplePage extends React.Component {
     console.log("Example Mount");
     let width = window.getComputedStyle(document.getElementsByClassName("example-page-wrapper")[0]).getPropertyValue("width");
     width = parseInt(width);
-    //console.log(width);
     if(width > 1000){
       alert("Sorry, the full-size example page is still under construction.");
     }
   }
   render(){
+    let pageTextStyle = {color: this.state.currentColorSet.pageBodyText};
+    let hyperlinkTextStyle = {color: this.state.currentColorSet.hyperlinkText};
+    let accentHyperlinkTextStyle = {color: this.state.currentColorSet.visitedHyperlinkText};
+    let headerStyle = {color: this.state.currentColorSet.headerText, backgroundColor: this.state.currentColorSet.headerBack};
+    let accentHeaderStyle={color: this.state.currentColorSet.accentHeaderText, backgroundColor: this.state.currentColorSet.accentHeaderBack};
+    let buttonStyle = {color: this.state.currentColorSet.buttonText, backgroundColor: this.state.currentColorSet.buttonBack, borderColor: this.state.currentColorSet.buttonBack};
+    let accentButtonStyle = {color: this.state.currentColorSet.accentButtonText, backgroundColor: this.state.currentColorSet.accentButtonBack, borderColor: this.state.currentColorSet.accentButtonBack};
+
+    let buttonElement = (<button className="btn-normal" style={buttonStyle}>Button</button>);
+    let accentButtonElement = (<button className="btn-accent" style={accentButtonStyle}>Accent Button</button>);
     return (
       <div className="example-page-wrapper">
         <nav className="simulation-options">
@@ -179,56 +207,26 @@ class ExamplePage extends React.Component {
           <button><Link to="/example" target="_blank">NewTab</Link></button>
         </nav>
         <div className="example-container" ref={(div) => this.container = div}>
-          <header className="example-header" ref={(header) => this.header = header} style={{backgroundColor: this.state.currentColorSet.headerBack, color: this.state.currentColorSet.headerText}}>
+          <header className="example-header" ref={(header) => this.header = header} style={headerStyle}>
             <h1 className="example-title">Example Page</h1>
             <nav>
               <li className="example-menu" onMouseOver={() => {this.handleHoverNav(1, "in")}}
               onMouseOut={() => {this.handleHoverNav(1, "out")}}>Menu</li>
-              <li className="example-menu" onMouseOver={() => {this.handleHoverNav(2, "in")}}
-              onMouseOut={() => {this.handleHoverNav(2, "out")}}>Accent Menu</li>
-              {/*<li className="example-menu" onMouseOver={() => {this.handleHoverNav(3, "in")}}
-              onMouseOut={() => {this.handleHoverNav(3, "out")}}>Menu 3</li>*/}
+              <li className="example-menu" style={this.state.displayAccentHeader ? accentHeaderStyle : {}}>{this.state.displayAccentHeader ? "Accent" : "Menu"}</li>
             </nav>
           </header>
           <div className="example-body-container" ref={(div) => this.body = div} style={{backgroundColor: this.state.currentColorSet.pageBack}}>
-            <p className="text-large body-text-1" style={{color: this.state.currentColorSet.pageBodyText1}}>Large Text (18pt) <span className="bold">Larget Text (14pt bold)</span></p>
-            <p className="text-normal body-text-1" style={{color: this.state.currentColorSet.pageBodyText1}}>Normal Text (14pt)</p>
-            <p><a className="hyperlink-text" href="."
-            style={{color: this.state.currentColorSet.hyperlinkText}} onClick={(e) => {e.preventDefault();}}>Hyperlink</a></p>
-            <p><a className="hyperlink-text-visited" href="."
-            style={{color: this.state.currentColorSet.visitedHyperlinkText}} onClick={(e) => {e.preventDefault();}}>Accent Hyperlink</a></p>
-            <button className="btn-normal">Button</button>
-            <button className="btn-accent">Accent Button</button>
-            {/*
-              <p className="text-18pt body-text-1" style={{color: this.state.currentColorSet.pageBodyText1}}>
-              This is 18 point text and it is considered large scale by WCAG 2.0. At the AA level it (or larger font sizes) can be used with a minimum contrast ratio 3:1 or greater to ensure it is legible by people with CVD or other vision impairments as well as people with typical colour vision. To achieve a pass at AAA enhanced contrast the contrast ratio would need to be at least 4.5:1
-            </p>
-            <p className="text-14pt body-text-1" style={{color: this.state.currentColorSet.pageBodyText1}}>
-              This text is 14 point and it is considered small text by WCAG 2.0 (less than 18 point). At the AA level this font size can be used with a minimum contrast
-          ratio 4.5:1 or greater to ensure it is legible by people with CVD or other vision impairments as well as people
-          with typical colour vision. To achieve a pass at AAA enhanced contrast the contrast ratio would need to be at least 7:1
-            </p>
-            <p className="text-14pt body-text-1" style={{color: this.state.currentColorSet.pageBodyText1}}>When you use <a className="hyperlink-text" href="."
-            style={{color: this.state.currentColorSet.hyperlinkText}} onClick={(e) => {e.preventDefault();}}>hyperlinks</a> you will want to customise them because your background colour might be too dark for the defult blue, make sure they are still underlined and that
-            the colour you choose to show when the link has been visited is also easy to distinguish against the background, e.g., <a className="hyperlink-text-visited" href="."
-            style={{color: this.state.currentColorSet.visitedHyperlinkText}} onClick={(e) => {e.preventDefault();}}>hyperlinks</a>
-            </p>
-            <p className="text-18pt body-text-2" style={{color: this.state.currentColorSet.pageBodyText2}}>
-              This is 18 point text and it is considered large scale by WCAG 2.0. At the AA level it (or larger font sizes) can be used with a minimum contrast ratio 3:1 or greater to ensure it is legible by people with CVD or other vision impairments as well as people with typical colour vision. To achieve a pass at AAA enhanced contrast the contrast ratio would need to be at least 4.5:1
-            </p>
-            <p className="text-14pt body-text-2" style={{color: this.state.currentColorSet.pageBodyText2}}>
-              This text is 14 point and it is considered small text by WCAG 2.0 (less than 18 point). At the AA level this font size can be used with a minimum contrast
-          ratio 4.5:1 or greater to ensure it is legible by people with CVD or other vision impairments as well as people
-          with typical colour vision. To achieve a pass at AAA enhanced contrast the contrast ratio would need to be at least 7:1
-            </p>
-            <p className="text-14pt body-text-2" style={{color: this.state.currentColorSet.pageBodyText2}}>When you use <a className="hyperlink-text" href="." style={{color: this.state.currentColorSet.hyperlinkText}}
-             onClick={(e) => {e.preventDefault();}}>hyperlinks</a> you will want to customise them because your background colour might be too dark for the defult blue, make sure they are still underlined and that
-            the colour you choose to show when the link has been visited is also easy to distinguish against the background, e.g., <a className="hyperlink-text-visited" href="." style={{color: this.state.currentColorSet.visitedHyperlinkText}}
-             onClick={(e) => {e.preventDefault();}}>hyperlinks</a>
-            </p>
-          */}
+            <p className="text-large body-text-1" style={pageTextStyle}>Large Text (18pt / 24px normal)</p>
+            <p className="text-large body-text-1" style={pageTextStyle}><span className="bold">Large Text (14pt / 18.66px bold)</span></p>
+            <p className="text-normal body-text-1" style={pageTextStyle}>Normal Text (14pt / 18.66px normal)</p>
+            <p><a className="hyperlink-text" href="." style={hyperlinkTextStyle}
+              onClick={(e) => {e.preventDefault();}}>Hyperlink</a></p>
+            <p><a className="hyperlink-text-visited" href="." style={accentHyperlinkTextStyle}
+              onClick={(e) => {e.preventDefault();}}>Accent Hyperlink</a></p>
+            {this.state.displayButton ? buttonElement : null}
+            {this.state.displayAccentButton ? accentButtonElement : null}
           </div>
-          <footer style={{backgroundColor: this.state.currentColorSet.footerBack}} ref={(footer) => this.footer = footer}>
+          <footer style={{backgroundColor: this.state.currentColorSet.headerBack}} ref={(footer) => this.footer = footer}>
             This is a footer.<br />
             Copyrights, other info.
           </footer>
@@ -246,7 +244,8 @@ function mapStateToProps(state) {
     foregroundColors: state.foregroundColors,
     backgroundColors: state.backgroundColors,
     foregroundCVDs: state.foregroundCVDs,
-    backgroundCVDs: state.backgroundCVDs
+    backgroundCVDs: state.backgroundCVDs,
+    elementDisplay: state.elementDisplay
   });
 }
 export default connect(mapStateToProps)(ExamplePage);
