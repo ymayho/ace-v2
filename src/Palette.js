@@ -70,7 +70,7 @@ class Palette extends React.Component{
     });
   }
   handleWCAG(e){
-    let is3A = e.target.checked;
+    let is3A = e.target.checked;//boolean
     this.props.dispatch({type: "UPDATE_WCAG_CHECK",
       standard: is3A ? "3A" : "2A",
     });
@@ -78,7 +78,6 @@ class Palette extends React.Component{
   handleCVD(e){
     console.log();
     let showCvd = e.target.checked;//boolean
-    //let cvdValue = e.target.value;
     let elements = document.getElementsByClassName("cvd-simulation-color-row");
     if(showCvd){
       this.setState({hasCVD: true}, ()=>{

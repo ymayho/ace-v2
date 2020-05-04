@@ -43,11 +43,6 @@
         position: relative;
         margin-bottom: 10px;
         display: flex;
-        // &.element-options{
-        //   margin-top: 10px;
-        //   padding-top: 15px;
-        //   border-top: 1px $theme-color solid;
-        // }
         .option-name{
           padding: 5px 10px;
           font-weight: 500;
@@ -200,6 +195,7 @@
     }
     .color-row{
       display: flex;
+      align-items: center;
       width: fit-content;
       .result-wrapper, .color-placeholder{
         //width: $wrapper-width;
@@ -286,18 +282,22 @@
       }
       .result-wrapper{
         display: inherit;
-        margin: calc(3em + 1px) 0 1em;
-        .result-cube.fail{
-          .result-content::before{
-            content: '';
-            position: absolute;
-            top: -7px;
-            left: 60px;
-            display: block;
-            width: 1px;
-            height: $wrapper-width;
-            background-color: $theme-color;
-            transform: rotate(315deg);
+        //margin: calc(3em + 1px) 0 1em;
+        margin: 0;
+        .result-cube{
+          margin-top: 2em;
+          &.fail{
+            .result-content::before{
+              content: '';
+              position: absolute;
+              top: -7px;
+              left: 60px;
+              display: block;
+              width: 1px;
+              height: $wrapper-width;
+              background-color: $theme-color;
+              transform: rotate(315deg);
+            }
           }
         }
         .result-content{
