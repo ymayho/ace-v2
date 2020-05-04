@@ -58,10 +58,11 @@
           cursor: pointer;
         }
         .option-inputs{
-          display: inline-block;
+          display: flex;
+          align-items: center;
           position: relative;
-          label{
-            display: inline-block;
+          label.button-switch{
+            //display: inline-block;
             margin-right: 5px;
             padding: 5px 10px;
             border: 1px $theme-color solid;
@@ -74,12 +75,65 @@
               background-color: $theme-color;
             }
           }
-          input{
+          input.button-switch{
             display: none;
             &:checked+label{
               color: white;
               border-color: $theme-color;
               background-color: $theme-color;
+            }
+          }
+          .toggle-text-label{
+            padding: 0 5px;
+          }
+          .toggle-switch{
+            $toggle-height: 30px;
+            position: relative;
+            //display: inline-block;
+            width: 60px;
+            height: $toggle-height;
+            input {
+              opacity: 0;
+              width: 0;
+              height: 0;
+            }
+            .slider{
+              position: absolute;
+              cursor: pointer;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              border-radius: $toggle-height;
+              background-color: #ccc;
+              -webkit-transition: .4s;
+              transition: .4s;
+              &:before{
+                position: absolute;
+                content: "";
+                height: 26px;
+                width: 26px;
+                left: 4px;
+                bottom: 2px;
+                border-radius: 50%;
+                background-color: white;
+                transform: translateX(-1px);
+                -webkit-transition: .25s;
+                transition: .25s;
+              }
+            }
+            input:checked + .slider {
+              background-color: $accent-color;
+            }
+
+            input:focus + .slider {
+              //box-shadow: 0 0 1px #2196F3;
+            }
+
+            input:checked + .slider:before {
+              -webkit-transform: translateX(27px);
+              -ms-transform: translateX(27px);
+              transform: translateX(27px);
             }
           }
         }
@@ -144,21 +198,9 @@
         font-size: 16px;
       }
     }
-    .foreground-number{
-      top: 0px;
-      right: 15px;
-    }
-    .background-number{
-      bottom: 50px;
-      left: 10px;
-    }
     .color-row{
       display: flex;
       width: fit-content;
-      // .result-wrapper, .color-placeholder{
-      //   width: $wrapper-width;
-      //   margin: 3px 2px;
-      // }
       .result-wrapper, .color-placeholder{
         //width: $wrapper-width;
         margin: 3px 2px;

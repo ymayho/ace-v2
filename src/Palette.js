@@ -69,20 +69,18 @@ class Palette extends React.Component{
       display: e.target.checked,
     });
   }
-  handleWCAG(){
-    let wcagType = document.querySelectorAll('input[name="wcag"]');
-    wcagType.forEach((item, key) => {
-      if(item.checked === true){
-        this.props.dispatch({type: "UPDATE_WCAG_CHECK",
-          standard: item.value,
-        });
-      }//End if.
-    });//End  forEach.
+  handleWCAG(e){
+    let is3A = e.target.checked;
+    this.props.dispatch({type: "UPDATE_WCAG_CHECK",
+      standard: is3A ? "3A" : "2A",
+    });
   }
   handleCVD(e){
-    let cvdValue = e.target.value;
+    console.log();
+    let showCvd = e.target.checked;//boolean
+    //let cvdValue = e.target.value;
     let elements = document.getElementsByClassName("cvd-simulation-color-row");
-    if(cvdValue === "cvd-true"){
+    if(showCvd){
       this.setState({hasCVD: true}, ()=>{
         [].forEach.call(elements, (element) => {
           element.classList.remove("noCVD");
@@ -96,6 +94,7 @@ class Palette extends React.Component{
       });
     }//End else.
   }
+  //Switch between full-size palette and default.
   handleClickToggle(){
     if(this.state.fullScreen){
       this.setState({fullScreen: false}, () => {
@@ -133,30 +132,35 @@ class Palette extends React.Component{
             <div className="cvd-options palette-options">
               <span className="option-name">CVD Simulation: </span>
               <div className="cvd-inputs option-inputs">
-                <input id="yesCVD" type="radio" name="cvd" value="cvd-true" onChange={this.handleCVD}
-                  defaultChecked /><label htmlFor="yesCVD">Yes</label>
-                <input id="noCVD" type="radio" name="cvd" value="cvd-false"  onChange={this.handleCVD} />
-                <label htmlFor="noCVD">No</label>
+                <span className="toggle-text-label">Off</span>
+                <label className="toggle-switch">
+                  <input type="checkbox" name="cvd" value="cvd-true" onChange={this.handleCVD}
+                  defaultChecked />
+                  <span className="slider"></span>
+                </label>
+                <span className="toggle-text-label">On</span>
               </div>
             </div>
             <div className="wcag-options palette-options">
-              <span className="option-name">WCAG: </span>
+              <span className="option-name">WCAG Contrast Ratio: </span>
               <div className="wcag-inputs option-inputs">
-                <input id="wcag-2a" type="radio" name="wcag" value="2A" onChange={this.handleWCAG} />
-                <label htmlFor="wcag-2a">AA</label>
-                <input id="wcag-3a" type="radio" name="wcag" value="3A" onChange={this.handleWCAG} defaultChecked />
-                <label htmlFor="wcag-3a">AAA</label>
+                <span className="toggle-text-label">AA</span>
+                <label className="toggle-switch">
+                  <input type="checkbox" name="wcag" value="3A" onChange={this.handleWCAG} defaultChecked />
+                  <span className="slider"></span>
+                </label>
+                <span className="toggle-text-label">AAA</span>
               </div>
             </div>
             <div className="element-options palette-options">
               <span className="option-name">Elements</span>
               <div className="element-inputs option-inputs">
-                <input id="accent-header" type="checkbox" name="element" value="accent-header" onChange={this.handleElementDisplay} />
-                <label htmlFor="accent-header">Accent Header</label>
-                <input id="regular-button" type="checkbox" name="element" value="regular-button" onChange={this.handleElementDisplay} />
-                <label htmlFor="regular-button">Button</label>
-                <input id="accent-button" type="checkbox" name="element" value="accent-button" onChange={this.handleElementDisplay} />
-                <label htmlFor="accent-button">Accent Button</label>
+                <input id="accent-header" className="button-switch" type="checkbox" name="element" value="accent-header" onChange={this.handleElementDisplay} />
+                <label htmlFor="accent-header" className="button-switch">Accent Header</label>
+                <input id="regular-button" className="button-switch" type="checkbox" name="element" value="regular-button" onChange={this.handleElementDisplay} />
+                <label htmlFor="regular-button" className="button-switch">Button</label>
+                <input id="accent-button" className="button-switch" type="checkbox" name="element" value="accent-button" onChange={this.handleElementDisplay} />
+                <label htmlFor="accent-button" className="button-switch">Accent Button</label>
               </div>
             </div>
           </div>{/*End div.palette-function-setting*/}
@@ -336,7 +340,6 @@ class Palette extends React.Component{
             <button className="example-page-toggle">{this.state.fullScreen ? "Open" : "Collapse"}</button>
           </div>
         </div>
-
         <div id="hidden-canvas-area">
           <canvas id="canvasProtan" ref={(canvas) => this.canvasProtan = canvas} width="4096" height="4096">Please use a browser that supports HTML5 Canvas</canvas>
           <canvas id="canvasDeutan" ref={(canvas) => this.canvasDeutan = canvas} width="4096" height="4096">Please use a browser that supports HTML5 Canvas</canvas>
