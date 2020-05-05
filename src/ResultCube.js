@@ -115,10 +115,23 @@ class ResultCube extends React.PureComponent{
     //this.setState({foreground: this.props.foregroundColors[this.props.foregroundId].color, background: this.props.backgroundColors[this.props.backgroundId].color})
   }
   render(){
+    let passCheckText = () => {
+      switch(this.state.passCheck){
+        case "pass":
+          return "Pass";
+        case "half":
+          return "Half";
+        case "fail":
+          return "Fail";
+        default:
+          return;
+      }
+    };
     return (
       <div className={"result-cube " + this.state.display + " " + this.state.passCheck}>
         <div className="result-content" style={{color: this.props.foregroundColors[this.props.foregroundId].color, backgroundColor: this.props.backgroundColors[this.props.backgroundId].color}}>
-          <div className="wcag-check">{this.state.passCheck}</div>
+          <div className="wcag-check">
+          {passCheckText()}</div>
           <div className="contrast-ratio">{this.state.contrast}</div>
         </div>
       </div>

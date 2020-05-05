@@ -183,6 +183,7 @@
     padding: 0px 20px 50px 10px;
     $wrapper-width: 120px;
     $color-width: 90px;
+    $color-height: 60px;
     font-size: 14px;
     .foreground-number, .background-number{
       display: none;
@@ -243,7 +244,7 @@
         .main-color{
           position: relative;
           width: $color-width;
-          height: $color-width;
+          height: $color-height;
           border: 1px $theme-color solid;
           border-radius: $border-radius;
           background-color: white;
@@ -301,12 +302,14 @@
           }
         }
         .result-content{
-          width: $color-width;
-          height: $color-width;
+          $result-width: 80px;
+          width: $result-width;
+          height: $result-width;
           margin: 0 auto;
           padding: 10px;
           display: flex;
           flex-direction: column;
+          justify-content: space-around;
           border: 1px $theme-color solid;
           border-radius: 50%;
           .contrast-ratio{
@@ -315,9 +318,9 @@
             text-align: center;
           }
           .wcag-check{
-            font-size: 18px;
+            font-size: 16px;
             text-align: center;
-            flex: 1;
+            //flex: 1;
             // display: flex;
             // justify-content: space-around;
             .wcag-2a, .wcag-3a{
