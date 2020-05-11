@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {SketchPicker} from 'react-color'
 
-
 class ColorPicker extends React.Component{
   constructor(props) {
     super(props);
@@ -118,7 +117,7 @@ class ColorPicker extends React.Component{
   }
   render(){
     return (
-      <div className="color-picker-wrapper" ref={(div)=>this.colorPickerWrapper = div}>
+      <div className="color-picker-wrapper" id={this.props.pickerId}>
         <SketchPicker disableAlpha={true} presetColors={[]}
           color={this.state.pickerColor} onChange={this.handleColorPickerChange}/>
       </div>

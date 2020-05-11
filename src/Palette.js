@@ -22,15 +22,34 @@ class Palette extends React.Component{
       canvasTritan: [],
       colorNum: 8,
     }
+    this.handlePaletteScroll = this.handlePaletteScroll.bind(this);
     this.storeSimulationData = this.storeSimulationData.bind(this);
     this.createColorPaletteObj = this.createColorPaletteObj.bind(this);
     this.handleHelp = this.handleHelp.bind(this);
     this.handleElementDisplay = this.handleElementDisplay.bind(this);
+    this.handleTextSize = this.handleTextSize.bind(this);
     this.handleWCAG = this.handleWCAG.bind(this);
     this.handleCVD = this.handleCVD.bind(this);
     this.handleClickToggle = this.handleClickToggle.bind(this);
-  }
 
+    this.colorPicker = React.createRef();
+  }
+  handlePaletteScroll(e){
+    console.log(e.target.scrollTop);
+    let scrollTop = e.target.scrollTop;
+    if(scrollTop >= 120){
+      this.paletteOptionsContainer.style.height = "80px";
+      this.paletteOptionsContainer.style.boxShadow = "-1px 2px 3px 2px rgba(0, 0, 0, .25)";
+      document.querySelector("#main-color-picker").style.opacity = "0";
+      document.querySelector(".floating-color-picker-container").style.display = "block";
+
+    }else if(scrollTop < 80){
+      this.paletteOptionsContainer.style.height = "auto";
+      this.paletteOptionsContainer.style.boxShadow = "none";
+      document.querySelector("#main-color-picker").style.opacity = "1";
+      document.querySelector(".floating-color-picker-container").style.display = "none";
+    }
+  }
   createColorPaletteObj(type, inputImg){
     let imgObj = new Image();
     imgObj.src = inputImg;
@@ -69,6 +88,9 @@ class Palette extends React.Component{
       display: e.target.checked,
     });
   }
+  handleTextSize(e){
+    console.log(e.target.value);
+  }
   handleWCAG(e){
     let is3A = e.target.checked;//boolean
     this.props.dispatch({type: "UPDATE_WCAG_CHECK",
@@ -76,7 +98,6 @@ class Palette extends React.Component{
     });
   }
   handleCVD(e){
-    console.log();
     let showCvd = e.target.checked;//boolean
     let elements = document.getElementsByClassName("cvd-simulation-color-row");
     if(showCvd){
@@ -124,9 +145,9 @@ class Palette extends React.Component{
   render(){
     return (
       <div className="palette-wrapper" ref={(div)=>this.paletteWrapper = div}>
-        <div className="palette-content-wrapper">
-        <div className="palette-options-container">
-          <ColorPicker canvasProtan={this.state.canvasProtan} canvasDeutan={this.state.canvasDeutan} canvasTritan={this.state.canvasTritan} />
+        <div className="palette-content-wrapper" onScroll={this.handlePaletteScroll}>
+        <div className="palette-options-container" ref={(div) => this.paletteOptionsContainer = div}>
+          <ColorPicker pickerId="main-color-picker" canvasProtan={this.state.canvasProtan} canvasDeutan={this.state.canvasDeutan} canvasTritan={this.state.canvasTritan} />
           <div className="palette-function-settings">
             <div className="cvd-options palette-options">
               <span className="option-name">CVD Simulation: </span>
@@ -149,6 +170,17 @@ class Palette extends React.Component{
                   <span className="slider"></span>
                 </label>
                 <span className="toggle-text-label">AAA</span>
+              </div>
+            </div>
+            <div className="wcag-options palette-options">
+              <span className="option-name">WCAG Text Size</span>
+              <div className="wcag-inputs option-inputs">
+                <span className="toggle-text-label">Normal</span>
+                <label className="toggle-switch">
+                  <input type="checkbox" name="textSize" value="large" onChange={this.handleTextSize} defaultChecked />
+                  <span className="slider"></span>
+                </label>
+                <span className="toggle-text-label">Large</span>
               </div>
             </div>
             <div className="element-options palette-options">
@@ -176,6 +208,10 @@ class Palette extends React.Component{
           </div>
 
         </div>{/*End div.palette-options-container*/}
+
+        <div className="floating-color-picker-container">
+          <ColorPicker pickerId="floating-color-picker" canvasProtan={this.state.canvasProtan} canvasDeutan={this.state.canvasDeutan} canvasTritan={this.state.canvasTritan} />
+        </div>
 
         <div className="palette">
           <div className="color-row">

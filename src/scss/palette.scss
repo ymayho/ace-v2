@@ -19,7 +19,7 @@
     }
   }
   .palette-options-container{
-    position: sticky;
+    position: absolute;
     top: 0;
     width: 100%;
     //margin-bottom: 15px;
@@ -28,7 +28,8 @@
     background-color: white;
     display: flex;
     justify-content: space-between;
-    box-shadow: -1px 3px 3px 2px rgba(0, 0, 0, .25);
+    overflow: hidden;
+    //box-shadow: -1px 2px 3px 2px rgba(0, 0, 0, .25);
     z-index: 2;
     .sketch-picker{
       margin-right: 10px;
@@ -177,9 +178,21 @@
       }
     }
   }
+  .floating-color-picker-container{
+    z-index: 3;
+    position: fixed;
+    top: 20px;
+    left: 10px;
+    display: none; //Hidden by default.
+    .sketch-picker{
+      width: 170px !important;
+      //transform: scale(.8);
+    }
+  }
   .palette{
     position: relative;
-    margin: 20px auto;
+    //margin: 15px auto 20px;
+    margin: 250px auto 20px;
     padding: 0px 20px 50px 10px;
     $wrapper-width: 120px;
     $color-width: 90px;
@@ -320,9 +333,7 @@
           .wcag-check{
             font-size: 16px;
             text-align: center;
-            //flex: 1;
-            // display: flex;
-            // justify-content: space-around;
+            text-transform: capitalize;
             .wcag-2a, .wcag-3a{
               &.pass::after, &.half::after, &.fail::after{
                 position: absolute;

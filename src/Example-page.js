@@ -31,41 +31,46 @@ class ExamplePage extends React.Component {
       displayAccentButton: false,
     }
     this.resetMode = this.resetMode.bind(this);
-    this.handleHoverNav = this.handleHoverNav.bind(this);
+    //this.handleHoverNav = this.handleHoverNav.bind(this);
     this.handleModeSwitch = this.handleModeSwitch.bind(this)
   }
-  handleHoverNav(id, action){
-    //console.log(id);
-    let menu = document.getElementsByClassName("example-menu")[id-1];
-    if(action==="in"){
-      menu.style.backgroundColor = this.state.currentColorSet.accentHeaderBack;
-      menu.style.color = this.state.currentColorSet.accentHeaderText;
-    }else{
-      menu.style.backgroundColor = this.state.currentColorSet.headerBack;
-      menu.style.color = this.state.currentColorSet.headerText;
-    }
-  }
+  // handleHoverNav(id, action){
+  //   //console.log(id);
+  //   let menu = document.getElementsByClassName("example-menu")[id-1];
+  //   if(action==="in"){
+  //     menu.style.backgroundColor = this.state.currentColorSet.accentHeaderBack;
+  //     menu.style.color = this.state.currentColorSet.accentHeaderText;
+  //   }else{
+  //     menu.style.backgroundColor = this.state.currentColorSet.headerBack;
+  //     menu.style.color = this.state.currentColorSet.headerText;
+  //   }
+  // }
   resetMode(){
     this.container.classList.remove("grayscale");
-    // let menu = document.getElementsByClassName("example-menu");
-    // Array.from(menu).forEach((item) => {
-    //   item.style.backgroundColor = this.state.currentColorSet.headerBack;
-    //   item.style.color = this.state.currentColorSet.headerText;
-    // });
+    let options = document.getElementsByClassName("option-btn");
+    Array.from(options).forEach((item) => {
+      console.log(item.classList);
+      item.classList.remove("current-selection");
+    });
+    console.log("QAQ");
     // this.footer.style.backgroundColor = this.state.currentColorSet.headerBack;
   }
-  handleModeSwitch(mode){
-    console.log(mode);
+  handleModeSwitch(e){
+    let mode = e.target.value;
+    console.log(e.target.classList);
+    this.resetMode();
+    e.target.classList.add("current-selection");
+    console.log("YO");
     if(mode === "regular"){
-      this.setState({currentColorSet: {...this.state.regularColorSet}, mode: "regular"}, () => this.resetMode());
+      this.setState({currentColorSet: {...this.state.regularColorSet}, mode: "regular"});
     }else if(mode === "protan"){
-      this.setState({currentColorSet: {...this.state.protanColorSet}, mode: "protan"}, () => this.resetMode());
+      this.setState({currentColorSet: {...this.state.protanColorSet}, mode: "protan"});
     }else if(mode === "deutan"){
-      this.setState({currentColorSet: {...this.state.deutanColorSet}, mode: "deutan"}, () => this.resetMode());
+      this.setState({currentColorSet: {...this.state.deutanColorSet}, mode: "deutan"});
     }else if(mode === "tritan"){
-      this.setState({currentColorSet: {...this.state.tritanColorSet}, mode: "tritan"}, () => this.resetMode());
+      this.setState({currentColorSet: {...this.state.tritanColorSet}, mode: "tritan"});
     }else if(mode === "grayscale"){
-      this.resetMode();
+      //this.resetMode();
       this.container.classList.add("grayscale");
     }
   }
@@ -128,18 +133,7 @@ class ExamplePage extends React.Component {
       accentHeaderBack: props.backgroundCVDs[2].tritan,
       buttonBack: props.backgroundCVDs[3].tritan,
       accentButtonBack: props.backgroundCVDs[4].tritan
-
-      // pageBodyText: props.foregroundCVDs[0].tritan,
-      // headerText: props.foregroundCVDs[1].tritan,
-      // hyperlinkText: props.foregroundCVDs[2].tritan,
-      // visitedHyperlinkText: props.foregroundCVDs[3].tritan,
-      // accentHeaderText: props.foregroundNumber >=5 ? props.foregroundCVDs[4].tritan : props.foregroundCVDs[0].tritan,
-      // hoverHeaderText: props.foregroundNumber >=6 ? props.foregroundCVDs[5].tritan : props.foregroundCVDs[1].tritan,
-      // pageBack: props.backgroundCVDs[0].tritan,
-      // headerBack: props.backgroundCVDs[1].tritan,
-      // hoverBack: props.backgroundNumber >= 3 ? props.backgroundCVDs[2].tritan : props.backgroundCVDs[1].tritan,
-      // footerBack: props.backgroundNumber >= 4 ? props.backgroundCVDs[3].tritan : props.backgroundCVDs[1].tritan,
-    }}
+    }}//End let cvd;
     let current = {};
     if(state.mode === "regular"){
       current = {currentColorSet: {...regular.regularColorSet}};
@@ -175,7 +169,7 @@ class ExamplePage extends React.Component {
   }
   componentDidUpdate(prevProps, prevState){
     console.log("Example Update");
-    this.resetMode();
+    //this.resetMode();
   }
   componentDidMount(){
     console.log("Example Mount");
@@ -199,19 +193,18 @@ class ExamplePage extends React.Component {
     return (
       <div className="example-page-wrapper">
         <nav className="simulation-options">
-          <button onClick={() => this.handleModeSwitch("regular")}>Typical Vision</button>
-          <button onClick={() => this.handleModeSwitch("protan")}>Red Colorblind <span className="technical-term">Protan</span></button>
-          <button onClick={() => this.handleModeSwitch("deutan")}>Green Colorblind <span className="technical-term">Deutan</span></button>
-          <button onClick={() => this.handleModeSwitch("tritan")}>Blue Colorblind <span className="technical-term">Tritan</span></button>
-          <button onClick={() => this.handleModeSwitch("grayscale")}>Grayscale</button>
-          <button><Link to="/example" target="_blank">NewTab</Link></button>
+          <button className="option-btn current-selection" onClick={this.handleModeSwitch} value="regular">Typical Vision</button>
+          <button className="option-btn" onClick={this.handleModeSwitch} value="protan">Red Colorblind <span className="technical-term">Protan</span></button>
+          <button className="option-btn" onClick={this.handleModeSwitch} value="deutan">Green Colorblind <span className="technical-term">Deutan</span></button>
+          <button className="option-btn" onClick={this.handleModeSwitch} value="tritan">Blue Colorblind <span className="technical-term">Tritan</span></button>
+          <button className="option-btn" onClick={this.handleModeSwitch} value="grayscale">Grayscale</button>
+          <button className="new-tab-btn"><Link to="/example" target="_blank">NewTab</Link></button>
         </nav>
         <div className="example-container" ref={(div) => this.container = div}>
           <header className="example-header" ref={(header) => this.header = header} style={headerStyle}>
             <h1 className="example-title">Example Page</h1>
             <nav>
-              <li className="example-menu" onMouseOver={() => {this.handleHoverNav(1, "in")}}
-              onMouseOut={() => {this.handleHoverNav(1, "out")}}>Menu</li>
+              <li className="example-menu">Menu</li>
               <li className="example-menu" style={this.state.displayAccentHeader ? accentHeaderStyle : {}}>{this.state.displayAccentHeader ? "Accent" : "Menu"}</li>
             </nav>
           </header>
