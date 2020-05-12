@@ -1,17 +1,15 @@
 import React from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {HashRouter as Router, Route} from 'react-router-dom';
 import Main from './Main.js';
 import ExamplePage from './Example-page.js'
-//import MyColorPicker from './MyColorPicker.js'
 
 const PageRouter = () => (
-  <Router>
+  <Router basename="/ace-v2">
     <div className="router">
       <Route exact path="/" component={Main} />
       <Route exact path="/main" component={Main} />
       <Route path="/example" component={ExamplePage} />
       <Route path="/example-page" component={ExamplePage} />
-
     </div>
   </Router>
 );

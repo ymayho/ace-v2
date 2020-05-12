@@ -8,6 +8,9 @@ import ResultCube from './ResultCube';
 import ProtanImg from './img/lut_protan_medium.png';
 import DeutanImg from './img/lut_deutan_medium.png';
 import TritanImg from './img/lut_tritan_medium.png';
+// import ProtanImg from './img/lut_protan_compressed.png';
+// import DeutanImg from './img/lut_deutan_compressed.png';
+// import TritanImg from './img/lut_tritan_compressed.png';
 import ColorCubeIntro from './img/ColorCube-intro.png';
 
 class Palette extends React.Component{
