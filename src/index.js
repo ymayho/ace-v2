@@ -8,11 +8,8 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 
 const initialState = {
-  wcag2a: false,
-  wcag3a: true,
-  wcag: "AAA",
-  foregroundNumber: 7,
-  backgroundNumber: 5,
+  wcagContrast: "AAA",
+  wcagTextSize: "normal",
   foregroundColors: [{
     index: 0,
     color: "#000000",
@@ -137,14 +134,18 @@ function reducer(state = initialState, action){
       tempCVDArr[action.index].deutan = action.cvdColors.deutan;
       tempCVDArr[action.index].tritan = action.cvdColors.tritan;
       return {...state, backgroundCVDs: tempCVDArr}
-    case "UPDATE_WCAG_CHECK":
+    case "UPDATE_WCAG_CONTRAST_CHECK":
       console.log(action.type);
       console.log(action.standard);
       if(action.standard === "2A"){
-        return {...state, wcag: "AA"}
+        return {...state, wcagContrast: "AA"}
       }else{
-        return {...state, wcag: "AAA"}
+        return {...state, wcagContrast: "AAA"}
       }
+    case "UPDATE_WCAG_TEXT_SIZE_CHECK":
+      console.log(action.type);
+      console.log(action.size);
+      return {...state, wcagTextSize: action.size}
     case "UPDATE_SELECTED_COLOR_CUBE":
       console.log(action.type);
       temp = {...state.selectedColorCube};

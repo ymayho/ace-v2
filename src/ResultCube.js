@@ -15,22 +15,43 @@ class ResultCube extends React.PureComponent{
     this.checkWCAG = this.checkWCAG.bind(this);
   }
   checkWCAG(contrast){
-    if(this.props.wcag === "AAA"){
-      if(contrast >= 7){
-        this.setState({passCheck: "pass"});
-      }else if(contrast < 7 && contrast >=4.5){
-          this.setState({passCheck: "half"});
-      }else{
-        this.setState({passCheck: "fail"});
-      }
-    }else{
-      if(contrast >=4.5){
+    switch(this.props.wcagContrast){
+      case "AAA":
+        if(contrast >= 7){
           this.setState({passCheck: "pass"});
-      }else if(contrast < 4.5 && contrast >=3){
-        this.setState({passCheck: "half"});
-      }else{
-        this.setState({passCheck: "fail"});
-      }
+        }else if(contrast < 7 && contrast >=4.5){
+          switch(this.props.wcagTextSize){
+            case "large":
+              this.setState({passCheck: "fail"});
+              break;
+            case "normal":
+              this.setState({passCheck: "pass"});
+              break;
+            default:
+              break;
+          }
+        }else{
+          this.setState({passCheck: "fail"});
+        }
+        break;
+      case "AA":
+        if(contrast >= 4.5){
+          this.setState({passCheck: "pass"});
+        }else if(contrast < 4.5 && contrast >= 3){
+          switch(this.props.wcagTextSize){
+            case "large":
+              this.setState({passCheck: "fail"});
+              break;
+            case "normal":
+              this.setState({passCheck: "pass"});
+              break;
+            default:
+              break;
+          }
+        }
+        break;
+      default:
+        break;
     }
   }
   displayContrastRatio(fore, back){
@@ -132,7 +153,8 @@ function mapStateToProps(state) {
     backgroundNumber: state.backgroundNumber,
     foregroundColors: state.foregroundColors,
     backgroundColors: state.backgroundColors,
-    wcag: state.wcag,
+    wcagContrast: state.wcagContrast,
+    wcagTextSize: state.wcagTextSize,
     elementDisplay: state.elementDisplay
   });
 }

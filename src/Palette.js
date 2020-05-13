@@ -92,11 +92,14 @@ class Palette extends React.Component{
     });
   }
   handleTextSize(e){
-    console.log(e.target.value);
+    let size = e.target.checked ? "large" : "normal";
+    this.props.dispatch({type: "UPDATE_WCAG_TEXT_SIZE_CHECK",
+      size: size,
+    });
   }
   handleWCAG(e){
     let is3A = e.target.checked;//boolean
-    this.props.dispatch({type: "UPDATE_WCAG_CHECK",
+    this.props.dispatch({type: "UPDATE_WCAG_CONTRAST_CHECK",
       standard: is3A ? "3A" : "2A",
     });
   }
@@ -180,7 +183,7 @@ class Palette extends React.Component{
               <div className="wcag-inputs option-inputs">
                 <span className="toggle-text-label">Normal</span>
                 <label className="toggle-switch">
-                  <input type="checkbox" name="textSize" value="large" onChange={this.handleTextSize} defaultChecked />
+                  <input type="checkbox" name="textSize" value="large" onChange={this.handleTextSize}  />
                   <span className="slider"></span>
                 </label>
                 <span className="toggle-text-label">Large</span>
@@ -393,7 +396,6 @@ function mapStateToProps(state) {
   return ({
     foregroundColors: state.foregroundColors,
     backgroundColors: state.backgroundColors,
-    wcag: state.wcag,
     selectedColorCube: state.selectedColorCube
   });
 }
