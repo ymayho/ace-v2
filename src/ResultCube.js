@@ -33,7 +33,7 @@ class ResultCube extends React.PureComponent{
         }else{
           this.setState({passCheck: "fail"});
         }
-        break;
+        break;//End case "AAA"
       case "AA":
         if(contrast >= 4.5){
           this.setState({passCheck: "pass"});
@@ -48,11 +48,13 @@ class ResultCube extends React.PureComponent{
             default:
               break;
           }
+        }else{
+          this.setState({passCheck: "fail"});
         }
-        break;
+        break;//End case "AA".
       default:
         break;
-    }
+    }//End switch(this.props.wcagContrast).
   }
   displayContrastRatio(fore, back){
     let foreLumi = this.calculateLuminance(this.convertHextoRGB(fore));
@@ -131,9 +133,10 @@ class ResultCube extends React.PureComponent{
     this.checkWCAG(this.state.contrast);
   }
   componentDidMount(){
-    //console.log("ResultUpdate", this.props.foregroundId, this.props.backgroundId);
+    console.log("Result Mount");
     this.displayContrastRatio(this.props.foregroundColors[this.props.foregroundId].color, this.props.backgroundColors[this.props.backgroundId].color);
-    //this.setState({foreground: this.props.foregroundColors[this.props.foregroundId].color, background: this.props.backgroundColors[this.props.backgroundId].color})
+    console.log(this.state.contrast)
+    this.checkWCAG(this.state.contrast);
   }
   render(){
     return (
@@ -149,8 +152,6 @@ class ResultCube extends React.PureComponent{
 
 function mapStateToProps(state) {
   return ({
-    foregroundNumber: state.foregroundNumber,
-    backgroundNumber: state.backgroundNumber,
     foregroundColors: state.foregroundColors,
     backgroundColors: state.backgroundColors,
     wcagContrast: state.wcagContrast,

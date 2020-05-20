@@ -38,7 +38,7 @@ class Palette extends React.Component{
     this.colorPicker = React.createRef();
   }
   handlePaletteScroll(e){
-    console.log(e.target.scrollTop);
+    //console.log(e.target.scrollTop);
     let scrollTop = e.target.scrollTop;
     if(scrollTop >= 120){
       this.paletteOptionsContainer.style.height = "80px";
