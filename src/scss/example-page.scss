@@ -7,20 +7,20 @@
   height: 100%;
   display: flex;
   flex-direction: row-reverse;
-  // overflow: scroll;
+
+  // align-items: center;
+  // background-color: #dddddd;
   .simulation-options{
-    //position: absolute;
-    //top: 0;
-    //width: 100%;
-    //height: $simulation-nav-height;
     display: flex;
     flex-direction: column;
     color: $theme-color;
-    //border-left: 1px $theme-color solid;
-    //border-bottom: 1px $theme-color solid;
     background-color: white;
     box-shadow: -1px 2px 3px 2px rgba(0, 0, 0, .25);
     z-index: 3;
+
+    // position: absolute;
+    // right: 0;
+
     button.option-btn, button.new-tab-btn{
       position: relative;
       width: 80px;
@@ -47,16 +47,17 @@
     position: relative;
     height: 100%;
     flex-grow: 1;
-    //overflow: scroll;
+
+    // margin: auto auto;
+    // width: 70%;
+    // height: auto;
     &.grayscale{
       filter: grayscale(1);
     }
     header.example-header{
       position: sticky;
-      //top: $simulation-nav-height;
       top: 0;
       min-height: 45px;
-      //margin-top: $simulation-nav-height;
       display: flex;
       justify-content: space-between;
       color: white;
@@ -73,21 +74,20 @@
           padding: 13px;
           height: 100%;
           display: inline-block;
-          color: white;
+          //color: white;
           cursor: pointer;
-          // &:hover{
-          //   background-color: darkblue;
-          // }
         }
       }
     }
     .example-body-container{
-      margin: 0 auto;
+      //margin: 0 auto;
       padding: 20px 20px calc(#{$footer-height} * 2);
-      max-width: 1160px;
+      //max-width: 1160px;
+      width: 100%;
       position: relative;
       height: 100%;
-      // height: 3000px;
+
+      // height: 400px;
       p{
         margin-top: 1em;
         text-align: left;

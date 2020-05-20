@@ -21,10 +21,10 @@ class ResultCube extends React.PureComponent{
           this.setState({passCheck: "pass"});
         }else if(contrast < 7 && contrast >=4.5){
           switch(this.props.wcagTextSize){
-            case "large":
+            case "normal":
               this.setState({passCheck: "fail"});
               break;
-            case "normal":
+            case "large":
               this.setState({passCheck: "pass"});
               break;
             default:
@@ -39,10 +39,10 @@ class ResultCube extends React.PureComponent{
           this.setState({passCheck: "pass"});
         }else if(contrast < 4.5 && contrast >= 3){
           switch(this.props.wcagTextSize){
-            case "large":
+            case "normal":
               this.setState({passCheck: "fail"});
               break;
-            case "normal":
+            case "large":
               this.setState({passCheck: "pass"});
               break;
             default:

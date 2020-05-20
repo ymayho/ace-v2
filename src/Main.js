@@ -1,5 +1,5 @@
 import React from 'react';
-import ExamplePage from './Example-page.js'
+import PartialExamplePage from './Partial-example-page.js'
 import Palette from './Palette.js'
 
 function Main() {
@@ -10,7 +10,7 @@ function Main() {
       </header>
       <div className="main-container">
         <div className="palette-container"><Palette /></div>
-        <div className="example-page-container"><ExamplePage /></div>
+        <div className="example-page-container"><PartialExamplePage /></div>
       </div>
     </div>
   );

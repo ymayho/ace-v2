@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
+import { saveStateToLocalStorage, loadStateFromLocalStorage } from './utils/helper'
 
 const initialState = {
   wcagContrast: "AAA",
@@ -104,12 +105,6 @@ function reducer(state = initialState, action){
   let tempCVDArr;
   let temp;
   switch(action.type){
-    case "EDIT_FOREGROUND_NUMBER":
-      console.log(action.type);
-      return {...state, foregroundNumber: action.newNumber};
-    case "EDIT_BACKGROUND_NUMBER":
-        console.log(action.type);
-        return {...state, backgroundNumber: action.newNumber};
     case "EDIT_FOREGROUND_COLOR":
       console.log(action.type);
       tempColorArr = [...state.foregroundColors];
@@ -162,7 +157,17 @@ function reducer(state = initialState, action){
   }
 }
 
-const store = createStore(reducer);
+//const store = createStore(reducer);
+
+const persistedState = loadStateFromLocalStorage()
+var store = Object()
+if ( typeof window !== 'undefined' ) {
+  store = createStore( reducer, persistedState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() )
+}
+else {
+  store = createStore(reducer, persistedState);
+}
+store.subscribe(() => saveStateToLocalStorage( store.getState() ))
 
 ReactDOM.render(
   <Provider store={store}>

@@ -172,14 +172,14 @@ class Palette extends React.Component{
               <div className="wcag-inputs option-inputs">
                 <span className="toggle-text-label">AA</span>
                 <label className="toggle-switch">
-                  <input type="checkbox" name="wcag" value="3A" onChange={this.handleWCAG} defaultChecked />
+                  <input type="checkbox" name="wcag" value="3A" onChange={this.handleWCAG} checked={this.props.wcagContrast === "AAA"} />
                   <span className="slider"></span>
                 </label>
                 <span className="toggle-text-label">AAA</span>
               </div>
             </div>
             <div className="wcag-options palette-options">
-              <span className="option-name">WCAG Text Size</span>
+              <span className="option-name">WCAG Text Size: </span>
               <div className="wcag-inputs option-inputs">
                 <span className="toggle-text-label">Normal</span>
                 <label className="toggle-switch">
@@ -190,7 +190,7 @@ class Palette extends React.Component{
               </div>
             </div>
             <div className="element-options palette-options">
-              <span className="option-name">Elements</span>
+              <span className="option-name">More Elements: </span>
               <div className="element-inputs option-inputs">
                 <input id="accent-header" className="button-switch" type="checkbox" name="element" value="accent-header" onChange={this.handleElementDisplay} />
                 <label htmlFor="accent-header" className="button-switch">Accent Header</label>
@@ -396,7 +396,8 @@ function mapStateToProps(state) {
   return ({
     foregroundColors: state.foregroundColors,
     backgroundColors: state.backgroundColors,
-    selectedColorCube: state.selectedColorCube
+    selectedColorCube: state.selectedColorCube,
+    wcagContrast: state.wcagContrast
   });
 }
 export default connect(mapStateToProps)(Palette);
