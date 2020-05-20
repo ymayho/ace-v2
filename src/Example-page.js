@@ -155,7 +155,7 @@ class ExamplePage extends React.Component {
             {this.state.displayButton ? buttonElement : null}
             {this.state.displayAccentButton ? accentButtonElement : null}
           </div>
-          <footer style={{backgroundColor: this.state.currentColorSet.headerBack}} ref={(footer) => this.footer = footer}>
+          <footer style={style["header"]} ref={(footer) => this.footer = footer}>
             This is a footer.<br />
             Copyrights, other info.
           </footer>
