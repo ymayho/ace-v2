@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "69a3e4be75a0d0cd2128b3b0e6e5fae1",
+    "revision": "2ec0c2d81f01e66d78e9060955a05a99",
     "url": "/ace-v2/index.html"
   },
   {
-    "revision": "2d6292020dde0b16940c",
-    "url": "/ace-v2/static/css/main.a8c172e6.chunk.css"
+    "revision": "a8f3b10e27cf9f1e7ce6",
+    "url": "/ace-v2/static/css/main.b4fe6289.chunk.css"
   },
   {
     "revision": "06f86a7a4d4a136c0800",
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ace-v2/static/js/2.91831cc9.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "2d6292020dde0b16940c",
-    "url": "/ace-v2/static/js/main.bbce9ef0.chunk.js"
+    "revision": "a8f3b10e27cf9f1e7ce6",
+    "url": "/ace-v2/static/js/main.0e0484df.chunk.js"
   },
   {
     "revision": "760a66bb681e70c53f74",
@@ -25,7 +25,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   },
   {
     "revision": "3c38e6038c272d277ab4ed6cb57c7eb1",
-    "url": "/ace-v2/static/media/ColorCube-intro.3c38e603.png"
+    "url": "/ace-v2/static/media/PaletteColor-intro.3c38e603.png"
   },
   {
     "revision": "9f24ed5670fb495795ef49e8a4530de0",
