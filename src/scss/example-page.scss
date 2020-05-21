@@ -103,6 +103,7 @@
         }
       }
       a{
+        font-size: 14pt;
         text-decoration: underline;
       }
       button{
@@ -127,9 +128,11 @@
       position: sticky;
       bottom: 0;
       width: 100%;
-      height: $footer-height;
+      min-height: $footer-height;
       //margin-bottom: $footer-height;
+      padding: 0.5em 0;
       color: white;
+      font-size: 14pt;
       text-align: center;
       background-color: black;
     }

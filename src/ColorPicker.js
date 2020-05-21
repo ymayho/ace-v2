@@ -66,23 +66,23 @@ class ColorPicker extends React.Component{
     finalBlue = pixels[finalIndex + 2];
     triColor = "rgb(" + finalRed + ", " + finalGreen + ", " + finalBlue +")"
     if(finalRed != null && finalGreen != null && finalBlue != null){
-      if(this.props.selectedColorCube.type === "foreground"){
+      if(this.props.selectedPaletteColor.type === "foreground"){
         this.props.dispatch({type: "UPDATE_FOREGROUND_CVD",
-          index: this.props.selectedColorCube.index,
+          index: this.props.selectedPaletteColor.index,
           cvdColors: {protan: proColor, deutan: deuColor, tritan: triColor}});
       }else{
         this.props.dispatch({type: "UPDATE_BACKGROUND_CVD",
-          index: this.props.selectedColorCube.index,
+          index: this.props.selectedPaletteColor.index,
           cvdColors: {protan: proColor, deutan: deuColor, tritan: triColor}});
       }
     }
     console.log(7);
   }
   updateColor(newColor){
-    if(this.props.selectedColorCube.type === "foreground"){
-      this.props.dispatch({type: "EDIT_FOREGROUND_COLOR", newColor: newColor, index: this.props.selectedColorCube.index});
+    if(this.props.selectedPaletteColor.type === "foreground"){
+      this.props.dispatch({type: "EDIT_FOREGROUND_COLOR", newColor: newColor, index: this.props.selectedPaletteColor.index});
     }else{
-      this.props.dispatch({type: "EDIT_BACKGROUND_COLOR", newColor: newColor, index: this.props.selectedColorCube.index});
+      this.props.dispatch({type: "EDIT_BACKGROUND_COLOR", newColor: newColor, index: this.props.selectedPaletteColor.index});
     }
     this.simulateCVD(newColor);
   }
@@ -95,10 +95,11 @@ class ColorPicker extends React.Component{
   }
   static getDerivedStateFromProps(props, state){
     let result = null;
-    if(props.selectedColorCube.type === "foreground"){
-      result = {...result, pickerColor: props.foregroundColors[props.selectedColorCube.index].color}
+    console.log(props.selectedPaletteColor);
+    if(props.selectedPaletteColor.type === "foreground"){
+      result = {...result, pickerColor: props.foregroundColors[props.selectedPaletteColor.index].color}
     }else{
-      result = {...result, pickerColor: props.backgroundColors[props.selectedColorCube.index].color}
+      result = {...result, pickerColor: props.backgroundColors[props.selectedPaletteColor.index].color}
     }
 
     return result;
@@ -108,10 +109,10 @@ class ColorPicker extends React.Component{
   }
   componentDidMount(){
     console.log("Mount");
-    if(this.props.selectedColorCube.type === "foreground"){
-      this.setState({pickerColor: this.props.foregroundColors[this.props.selectedColorCube.index].color});
+    if(this.props.selectedPaletteColor.type === "foreground"){
+      this.setState({pickerColor: this.props.foregroundColors[this.props.selectedPaletteColor.index].color});
     }else{
-      this.setState({pickerColor: this.props.backgroundColors[this.props.selectedColorCube.index].color});
+      this.setState({pickerColor: this.props.backgroundColors[this.props.selectedPaletteColor.index].color});
     }
 
   }
@@ -130,7 +131,7 @@ function mapStateToProps(state) {
   return ({
     foregroundColors: state.foregroundColors,
     backgroundColors: state.backgroundColors,
-    selectedColorCube: state.selectedColorCube
+    selectedPaletteColor: state.selectedPaletteColor
   });
 }
 export default connect(mapStateToProps)(ColorPicker);

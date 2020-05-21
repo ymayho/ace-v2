@@ -3,15 +3,15 @@ import { connect } from 'react-redux';
 import './scss/palette.scss';
 
 import ColorPicker from './ColorPicker';
-import ColorCube from './ColorCube';
-import ResultCube from './ResultCube';
+import PaletteColor from './PaletteColor';
+import Result from './Result';
 import ProtanImg from './img/lut_protan_medium.png';
 import DeutanImg from './img/lut_deutan_medium.png';
 import TritanImg from './img/lut_tritan_medium.png';
 // import ProtanImg from './img/lut_protan_compressed.png';
 // import DeutanImg from './img/lut_deutan_compressed.png';
 // import TritanImg from './img/lut_tritan_compressed.png';
-import ColorCubeIntro from './img/ColorCube-intro.png';
+import PaletteColorIntro from './img/PaletteColor-intro.png';
 
 class Palette extends React.Component{
   constructor(props) {
@@ -143,7 +143,7 @@ class Palette extends React.Component{
     //console.log("Palette update");
   }
   componentDidMount(){
-    //console.log("Mount");
+    //console.log("Palette Mount");
     this.createColorPaletteObj("pro", ProtanImg);
     this.createColorPaletteObj("deu", DeutanImg);
     this.createColorPaletteObj("tri", TritanImg);
@@ -205,7 +205,7 @@ class Palette extends React.Component{
             <button className={"help-switch " + (this.state.isHelpOpen ? "isOpen" : "isHidden")} onClick={this.handleHelp}>Help</button>
             <div className={"help-wrapper " + (this.state.isHelpOpen ? "visible" : "hidden")}>
               <div className={"help-container"}>
-                <img className="color-cube-intro-img" src={ColorCubeIntro} alt="Introduction to color cube parts." />
+                <img className="color-cube-intro-img" src={PaletteColorIntro} alt="Introduction to color cube parts." />
                 <p>
                   Sorry, Help is still under construction. More details will be provided in the future.
                 </p>
@@ -223,155 +223,155 @@ class Palette extends React.Component{
           <div className="color-row">
             <div className="color-placeholder">QAQ</div>
             <div className="foreground-color-wrapper">
-              <ColorCube colorType={"foreground"} colorNo={0} />
+              <PaletteColor colorType={"foreground"} colorNo={0} />
             </div>
             <div className="foreground-color-wrapper">
-              <ColorCube colorType={"foreground"} colorNo={1} />
+              <PaletteColor colorType={"foreground"} colorNo={1} />
             </div>
             <div className="foreground-color-wrapper">
-              <ColorCube colorType={"foreground"} colorNo={2} />
+              <PaletteColor colorType={"foreground"} colorNo={2} />
             </div>
             <div className="foreground-color-wrapper">
-              <ColorCube colorType={"foreground"} colorNo={3} />
+              <PaletteColor colorType={"foreground"} colorNo={3} />
             </div>
             <div className="foreground-color-wrapper">
-              <ColorCube colorType={"foreground"} colorNo={4} />
+              <PaletteColor colorType={"foreground"} colorNo={4} />
             </div>
             <div className="foreground-color-wrapper">
-              <ColorCube colorType={"foreground"} colorNo={5} />
+              <PaletteColor colorType={"foreground"} colorNo={5} />
             </div>
             <div className="foreground-color-wrapper">
-              <ColorCube colorType={"foreground"} colorNo={6} />
+              <PaletteColor colorType={"foreground"} colorNo={6} />
             </div>
           </div>
           <div className="color-row">
             <div className="background-color-wrapper">
-              <ColorCube colorType={"background"} colorNo={0} />
+              <PaletteColor colorType={"background"} colorNo={0} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={0} backgroundId={0} />
+              <Result foregroundId={0} backgroundId={0} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={1} backgroundId={0} />
+              <Result foregroundId={1} backgroundId={0} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={2} backgroundId={0} />
+              <Result foregroundId={2} backgroundId={0} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={3} backgroundId={0} />
+              <Result foregroundId={3} backgroundId={0} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={4} backgroundId={0} />
+              <Result foregroundId={4} backgroundId={0} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={5} backgroundId={0} />
+              <Result foregroundId={5} backgroundId={0} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={6} backgroundId={0} />
+              <Result foregroundId={6} backgroundId={0} />
             </div>
           </div>
           <div className="color-row">
             <div className="background-color-wrapper">
-              <ColorCube colorType={"background"} colorNo={1} />
+              <PaletteColor colorType={"background"} colorNo={1} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={0} backgroundId={1} />
+              <Result foregroundId={0} backgroundId={1} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={1} backgroundId={1} />
+              <Result foregroundId={1} backgroundId={1} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={2} backgroundId={1} />
+              <Result foregroundId={2} backgroundId={1} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={3} backgroundId={1} />
+              <Result foregroundId={3} backgroundId={1} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={4} backgroundId={1} />
+              <Result foregroundId={4} backgroundId={1} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={5} backgroundId={1} />
+              <Result foregroundId={5} backgroundId={1} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={6} backgroundId={1} />
+              <Result foregroundId={6} backgroundId={1} />
             </div>
           </div>
           <div className="color-row">
             <div className="background-color-wrapper">
-              <ColorCube colorType={"background"} colorNo={2} />
+              <PaletteColor colorType={"background"} colorNo={2} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={0} backgroundId={2} />
+              <Result foregroundId={0} backgroundId={2} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={1} backgroundId={2} />
+              <Result foregroundId={1} backgroundId={2} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={2} backgroundId={2} />
+              <Result foregroundId={2} backgroundId={2} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={3} backgroundId={2} />
+              <Result foregroundId={3} backgroundId={2} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={4} backgroundId={2} />
+              <Result foregroundId={4} backgroundId={2} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={5} backgroundId={2} />
+              <Result foregroundId={5} backgroundId={2} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={6} backgroundId={2} />
+              <Result foregroundId={6} backgroundId={2} />
             </div>
           </div>
           <div className="color-row">
             <div className="background-color-wrapper">
-              <ColorCube colorType={"background"} colorNo={3} />
+              <PaletteColor colorType={"background"} colorNo={3} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={0} backgroundId={3} />
+              <Result foregroundId={0} backgroundId={3} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={1} backgroundId={3} />
+              <Result foregroundId={1} backgroundId={3} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={2} backgroundId={3} />
+              <Result foregroundId={2} backgroundId={3} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={3} backgroundId={3} />
+              <Result foregroundId={3} backgroundId={3} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={4} backgroundId={3} />
+              <Result foregroundId={4} backgroundId={3} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={5} backgroundId={3} />
+              <Result foregroundId={5} backgroundId={3} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={6} backgroundId={3} />
+              <Result foregroundId={6} backgroundId={3} />
             </div>
           </div>
           <div className="color-row">
             <div className="background-color-wrapper">
-              <ColorCube colorType={"background"} colorNo={4} />
+              <PaletteColor colorType={"background"} colorNo={4} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={0} backgroundId={4} />
+              <Result foregroundId={0} backgroundId={4} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={1} backgroundId={4} />
+              <Result foregroundId={1} backgroundId={4} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={2} backgroundId={4} />
+              <Result foregroundId={2} backgroundId={4} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={3} backgroundId={4} />
+              <Result foregroundId={3} backgroundId={4} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={4} backgroundId={4} />
+              <Result foregroundId={4} backgroundId={4} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={5} backgroundId={4} />
+              <Result foregroundId={5} backgroundId={4} />
             </div>
             <div className="result-wrapper">
-              <ResultCube foregroundId={6} backgroundId={4} />
+              <Result foregroundId={6} backgroundId={4} />
             </div>
           </div>
         </div>{/*End div.palette*/}
@@ -396,7 +396,7 @@ function mapStateToProps(state) {
   return ({
     foregroundColors: state.foregroundColors,
     backgroundColors: state.backgroundColors,
-    selectedColorCube: state.selectedColorCube,
+    selectedPaletteColor: state.selectedPaletteColor,
     wcagContrast: state.wcagContrast
   });
 }

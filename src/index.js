@@ -87,7 +87,7 @@ const initialState = {
   },{
     index: 4, protan: "#000000", deutan: "#000000", tritan: "#000000"
   }],
-  selectedColorCube: {
+  selectedPaletteColor: {
     type: "foreground",
     index: 0
   },
@@ -141,12 +141,12 @@ function reducer(state = initialState, action){
       console.log(action.type);
       console.log(action.size);
       return {...state, wcagTextSize: action.size}
-    case "UPDATE_SELECTED_COLOR_CUBE":
+    case "UPDATE_SELECTED_PALETTE_COLOR":
       console.log(action.type);
-      temp = {...state.selectedColorCube};
+      temp = {...state.selectedPaletteColor};
       temp.type = action.newType;
       temp.index = action.newIndex;
-      return {...state, selectedColorCube: temp};
+      return {...state, selectedPaletteColor: temp};
     case "UPDATE_ELEMENT_DISPLAY":
       console.log(action.type);
       console.log(action.name, action.display)

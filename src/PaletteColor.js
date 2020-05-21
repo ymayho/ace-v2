@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-class ColorCube extends React.Component{
+class PaletteColor extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
@@ -27,7 +27,7 @@ class ColorCube extends React.Component{
   return hex;
   };
   handleClickCube(){
-    this.props.dispatch({type: "UPDATE_SELECTED_COLOR_CUBE",
+    this.props.dispatch({type: "UPDATE_SELECTED_PALETTE_COLOR",
       newType: this.props.colorType,
       newIndex: this.props.colorNo});
   }
@@ -54,7 +54,7 @@ class ColorCube extends React.Component{
   }
   static getDerivedStateFromProps(props, state){
     let result = null;
-    let display = ColorCube.shouldDisplay(props.colorType, props.colorNo, props.elementDisplay);
+    let display = PaletteColor.shouldDisplay(props.colorType, props.colorNo, props.elementDisplay);
     if(display){
       result = {...result, display: "display"};
     }else{
@@ -75,7 +75,7 @@ class ColorCube extends React.Component{
         deuColor: props.backgroundCVDs[props.colorNo].deutan,
         triColor: props.backgroundCVDs[props.colorNo].tritan}
     }
-    if(props.selectedColorCube.type === props.colorType && props.selectedColorCube.index === props.colorNo){
+    if(props.selectedPaletteColor.type === props.colorType && props.selectedPaletteColor.index === props.colorNo){
       result = {...result, isSelected: true};
     }else{
       result = {...result, isSelected: false};
@@ -120,8 +120,8 @@ function mapStateToProps(state) {
     backgroundColors: state.backgroundColors,
     foregroundCVDs: state.foregroundCVDs,
     backgroundCVDs: state.backgroundCVDs,
-    selectedColorCube: state.selectedColorCube,
+    selectedPaletteColor: state.selectedPaletteColor,
     elementDisplay: state.elementDisplay
   });
 }
-export default connect(mapStateToProps)(ColorCube);
+export default connect(mapStateToProps)(PaletteColor);

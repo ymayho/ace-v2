@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-class ResultCube extends React.PureComponent{
+class Result extends React.PureComponent{
   constructor(props) {
     super(props);
     this.state = {
@@ -118,7 +118,7 @@ class ResultCube extends React.PureComponent{
   }
   static getDerivedStateFromProps(props, state){
     let result = null;
-    let display = ResultCube.shouldDisplay(props.foregroundId, props.backgroundId, props.elementDisplay);
+    let display = Result.shouldDisplay(props.foregroundId, props.backgroundId, props.elementDisplay);
     if(display){
       result = {display: "display"};
     }
@@ -160,4 +160,4 @@ function mapStateToProps(state) {
   });
 }
 
-export default connect(mapStateToProps)(ResultCube);
+export default connect(mapStateToProps)(Result);
