@@ -10,37 +10,76 @@
   }
   .main{
     height: 100%;
-    header.main-header{
-      position: sticky;
-      top: 0;
-      padding: 8px;
-      background-color: white;
-      border-bottom: 1px solid $theme-color;
-      h1{
-        color: $theme-color;
-        font-size: 14pt;
-        font-weight: 300;
-        text-align: center;
-      }
-    }
   }
 }
 
-.main-container{
-  width: 100%;
-  height: 100%;
-  display: flex;
-  .palette-container{
-    width: 55%;
-    &.full-screen{
-      width: 100%;
-      .palette{
-        max-width: fit-content;
+.main{
+  .main-header{
+    position: relative;
+    padding: 8px 20px;
+    background-color: white;
+    border-bottom: 1px solid $theme-color;
+    display: flex;
+    justify-content: space-between;
+    z-index: 3;
+    h1{
+      color: $theme-color;
+      font-size: 14pt;
+      font-weight: 300;
+      text-align: center;
+      flex: 1 1;
+    }
+    .help-btn{
+      font-weight: 500;
+      cursor: pointer;
+      span{
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        text-align: center;
+        border: $theme-color 1px solid;
+        border-radius: 50%;
+
+      }
+    }
+    .palette-intro{
+      position: fixed;
+      width: 80%;
+      max-width: 1120px;
+      margin: 0 auto;
+      border: $theme-color 1px solid;
+      border-radius: $border-radius;
+      background-color: white;
+      z-index: 1000;
+      display: none;
+      .palette-intro-img{
+        width: 50%;
+      }
+    }
+    .help-status{
+      display: none;
+      &:checked + .palette-intro{
+        display: block;
       }
     }
   }
-  .example-page-container{
-    //z-index: 2;
-    flex: 1;
+
+  .main-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    .palette-container{
+      width: 58%;
+      &.full-screen{
+        width: 100%;
+        .palette{
+          max-width: fit-content;
+        }
+      }
+    }
+    .example-page-container{
+      flex: 1;
+    }
   }
+
 }

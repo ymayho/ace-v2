@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import './scss/example-page.scss';
+
 
 class ExamplePage extends React.Component {
   constructor(props) {
@@ -21,10 +21,10 @@ class ExamplePage extends React.Component {
         buttonBack: "#aaaaaa",
         accentButtonBack: "#000000"
       },
-      regularColorSet: {},
-      protanColorSet: {},
-      deutanColorSet: {},
-      tritanColorSet: {},
+      // regularColorSet: {},
+      // protanColorSet: {},
+      // deutanColorSet: {},
+      // tritanColorSet: {},
       displayAccentHeader: false,
       displayButton: false,
       displayAccentButton: false,
@@ -39,31 +39,27 @@ class ExamplePage extends React.Component {
       //console.log(item.classList);
       item.classList.remove("current-selection");
     });
-    //console.log("QAQ");
-    // this.footer.style.backgroundColor = this.state.currentColorSet.headerBack;
   }
   handleModeSwitch(e){
     let mode = e.target.value;
     console.log(e.target.classList);
     this.resetMode();
-    e.target.classList.add("current-selection");
+    e.target.classList.add("current-selection");//Button style.
     console.log("YO");
     if(mode === "regular"){
-      this.setState({currentColorSet: {...this.state.regularColorSet}, mode: "regular"});
+      this.setState({currentColorSet: {...this.props.regularColorSet}, mode: "regular"});
     }else if(mode === "protan"){
-      this.setState({currentColorSet: {...this.state.protanColorSet}, mode: "protan"});
+      this.setState({currentColorSet: {...this.props.protanColorSet}, mode: "protan"});
     }else if(mode === "deutan"){
-      this.setState({currentColorSet: {...this.state.deutanColorSet}, mode: "deutan"});
+      this.setState({currentColorSet: {...this.props.deutanColorSet}, mode: "deutan"});
     }else if(mode === "tritan"){
-      this.setState({currentColorSet: {...this.state.tritanColorSet}, mode: "tritan"});
+      this.setState({currentColorSet: {...this.props.tritanColorSet}, mode: "tritan"});
     }else if(mode === "grayscale"){
-      //this.resetMode();
       this.container.classList.add("grayscale");
     }
   }
   static getDerivedStateFromProps(props, state){
     console.log("Example: getDerivedStateFromProps");
-    console.log(props);
     let result = null;
 
     let current = {};
@@ -102,16 +98,9 @@ class ExamplePage extends React.Component {
   }
   componentDidUpdate(prevProps, prevState){
     console.log("Example Update");
-    console.log(this.props);
-
   }
   componentDidMount(){
     console.log("Example Mount");
-    // let width = window.getComputedStyle(document.getElementsByClassName("example-page-wrapper")[0]).getPropertyValue("width");
-    // width = parseInt(width);
-    // if(width > 1000){
-    //   alert("Sorry, the full-size example page is still under construction.");
-    // }
   }
   render(){
     let style = {
@@ -128,13 +117,15 @@ class ExamplePage extends React.Component {
     let accentButtonElement = (<button className="btn-accent" style={style["accentButton"]}>Accent Button</button>);
     return (
       <div className="example-page-wrapper">
-        <nav className="simulation-options">
-          <button className="option-btn current-selection" onClick={this.handleModeSwitch} value="regular">Typical Vision</button>
-          <button className="option-btn" onClick={this.handleModeSwitch} value="protan">Red Colorblind <span className="technical-term">Protan</span></button>
-          <button className="option-btn" onClick={this.handleModeSwitch} value="deutan">Green Colorblind <span className="technical-term">Deutan</span></button>
-          <button className="option-btn" onClick={this.handleModeSwitch} value="tritan">Blue Colorblind <span className="technical-term">Tritan</span></button>
-          <button className="option-btn" onClick={this.handleModeSwitch} value="grayscale">Grayscale</button>
-          <button className="new-tab-btn"><Link to="/example" target="_blank">NewTab</Link></button>
+        <nav className="menu">
+          <div className="simulation-options">
+            <button className="option-btn current-selection" onClick={this.handleModeSwitch} value="regular">Typical Vision</button>
+            <button className="option-btn" onClick={this.handleModeSwitch} value="protan">Red Colorblind <span className="technical-term">Protan</span></button>
+            <button className="option-btn" onClick={this.handleModeSwitch} value="deutan">Green Colorblind <span className="technical-term">Deutan</span></button>
+            <button className="option-btn" onClick={this.handleModeSwitch} value="tritan">Blue Colorblind <span className="technical-term">Tritan</span></button>
+            <button className="option-btn" onClick={this.handleModeSwitch} value="grayscale">Grayscale</button>
+          </div>
+          <button className="new-tab-btn"><Link to="/example" target="_blank">Open in New Tab</Link></button>
         </nav>
         <div className="example-container" ref={(div) => this.container = div}>
           <header className="example-header" ref={(header) => this.header = header} style={style["header"]}>

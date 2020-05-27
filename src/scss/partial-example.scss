@@ -1,0 +1,61 @@
+@import "./example-page";
+
+.partial-example-page-wrapper{
+  height: 100%;
+  .example-page-wrapper{
+
+
+    align-items: stretch;
+    background-color: #eee;
+    .menu{
+
+      //box-shadow:  -1px 2px 3px 2px rgba(0, 0, 0, .15);
+      .simulation-options{
+
+        button.option-btn{
+          //color: red;
+          .technical-term{
+
+          }
+          &.current-selection{
+
+          }
+        }
+      }
+      .new-tab-btn{
+
+      }
+    }
+    .example-container{
+
+
+      padding: 8% 10%;
+      width: 300px;
+      height: 70%;
+      &.grayscale{
+
+      }
+      header.example-header{
+
+        .example-title{
+
+        }
+        nav{
+
+          .example-menu{
+
+          }
+        }
+      }
+      .example-body-container{
+
+
+        height: 400px;
+
+
+      }//End .example-body-container
+
+    }
+  }
+
+}

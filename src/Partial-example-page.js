@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import './scss/example-page.scss';
+import './scss/partial-example.scss';
 
 import ExamplePage from './Example-page.js'
 
@@ -138,7 +138,7 @@ class PartialExamplePage extends React.Component {
   }
   render(){
     return (
-      <div className="example-page-wrapper">
+      <div className="partial-example-page-wrapper">
         <ExamplePage regularColorSet={this.state.regularColorSet}
           protanColorSet={this.state.protanColorSet} deutanColorSet={this.state.deutanColorSet}
           tritanColorSet={this.state.tritanColorSet} elementDisplay={this.props.elementDisplay} />

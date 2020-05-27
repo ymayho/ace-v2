@@ -4,89 +4,18 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import {defaultColors} from './utils/attributes';
 import { saveStateToLocalStorage, loadStateFromLocalStorage } from './utils/helper'
 
 const initialState = {
   wcagContrast: "AAA",
   wcagTextSize: "normal",
-  foregroundColors: [{
-    index: 0,
-    color: "#000000",
-    colorName: "Page body text"
-  },{
-    index: 1,
-    color: "#ffffff",
-    colorName: "Header/Footer text"
-  },{
-    index: 2,
-    color: "#0000ee",
-    colorName: "Hyperlink text"
-  },{
-    index: 3,
-    color: "#551a8b",
-    colorName: "Accent hyperlink text"
-  },{
-    index: 4,
-    color: "#000000",
-    colorName: "Accent header text"
-  },{
-    index: 5,
-    color: "#000000",
-    colorName: "Button Text"
-  },{
-    index: 6,
-    color: "#ffffff",
-    colorName: "Accent button text"
-  }],
-  backgroundColors: [{
-    index: 0,
-    color: "#ffffff",
-    colorName: "Page body background"
-  },{
-    index: 1,
-    color: "#000000",
-    colorName: "Header/footer background"
-  },{
-    index: 2,
-    color: "#aaaaaa",
-    colorName: "Accent header background"
-  },{
-    index: 3,
-    color: "#aaaaaa",
-    colorName: "Button background"
-  },{
-    index: 4,
-    color: "#000000",
-    colorName: "Accent button background"
-  }],
-  foregroundCVDs: [{
-    index: 0, protan: "#000000", deutan: "#000000", tritan: "#000000"
-  },{
-    index: 1, protan: "#ffffff", deutan: "#ffffff", tritan: "#ffffff"
-  },{
-    index: 2, protan: "rgb(0, 51, 238)", deutan: "rgb(0, 73, 237)", tritan: "rgb(0, 86, 122)"
-  },{
-    index: 3, protan: "rgb(0, 51, 139)", deutan: "rgb(24, 68, 138)", tritan: "rgb(74, 59, 61)"
-  },{
-    index: 4, protan: "#000000", deutan: "#000000", tritan: "#000000"
-  },{
-    index: 5, protan: "#000000", deutan: "#000000", tritan: "#000000"
-  },{
-    index: 6, protan: "#ffffff", deutan: "#ffffff", tritan: "#ffffff"
-  }],
-  backgroundCVDs: [{
-    index: 0, protan: "#ffffff", deutan: "#ffffff", tritan: "#ffffff"
-  },{
-    index: 1, protan: "#000000", deutan: "#000000", tritan: "#000000"
-  },{
-    index: 2, protan: "#aaaaaa", deutan: "#aaaaaa", tritan: "#aaaaaa"
-  },{
-    index: 3, protan: "#aaaaaa", deutan: "#aaaaaa", tritan: "#aaaaaa"
-  },{
-    index: 4, protan: "#000000", deutan: "#000000", tritan: "#000000"
-  }],
+  foregroundColors: defaultColors.foregroundColors,
+  backgroundColors: defaultColors.backgroundColors,
+  foregroundCVDs: defaultColors.foregroundCVDs,
+  backgroundCVDs: defaultColors.backgroundCVDs,
   selectedPaletteColor: {
     type: "foreground",
     index: 0
@@ -129,6 +58,19 @@ function reducer(state = initialState, action){
       tempCVDArr[action.index].deutan = action.cvdColors.deutan;
       tempCVDArr[action.index].tritan = action.cvdColors.tritan;
       return {...state, backgroundCVDs: tempCVDArr}
+    case "RESET_PALETTE_SETTING":
+      console.log(action.type);
+      return {...state,
+        foregroundColors: JSON.parse(JSON.stringify(defaultColors.foregroundColors)), backgroundColors: JSON.parse(JSON.stringify(defaultColors.backgroundColors)),
+        foregroundCVDs: JSON.parse(JSON.stringify(defaultColors.foregroundCVDs)), backgroundCVDs: JSON.parse(JSON.stringify(defaultColors.backgroundCVDs)),
+        wcagContrast: "AAA", wcagTextSize: "normal", elementDisplay: [{
+          foreIndex: 4, backIndex: 2, name: "accent-header", display: false
+        },{
+          foreIndex: 5, backIndex: 3, name: "regular-button", display: false
+        },{
+          foreIndex: 6, backIndex: 4, name: "accent-button", display: false
+        }]
+      };
     case "UPDATE_WCAG_CONTRAST_CHECK":
       console.log(action.type);
       console.log(action.standard);
@@ -168,6 +110,8 @@ else {
   store = createStore(reducer, persistedState);
 }
 store.subscribe(() => saveStateToLocalStorage( store.getState() ))
+
+
 
 ReactDOM.render(
   <Provider store={store}>

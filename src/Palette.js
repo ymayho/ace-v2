@@ -8,10 +8,6 @@ import Result from './Result';
 import ProtanImg from './img/lut_protan_medium.png';
 import DeutanImg from './img/lut_deutan_medium.png';
 import TritanImg from './img/lut_tritan_medium.png';
-// import ProtanImg from './img/lut_protan_compressed.png';
-// import DeutanImg from './img/lut_deutan_compressed.png';
-// import TritanImg from './img/lut_tritan_compressed.png';
-import PaletteColorIntro from './img/PaletteColor-intro.png';
 
 class Palette extends React.Component{
   constructor(props) {
@@ -28,6 +24,7 @@ class Palette extends React.Component{
     this.handlePaletteScroll = this.handlePaletteScroll.bind(this);
     this.storeSimulationData = this.storeSimulationData.bind(this);
     this.createColorPaletteObj = this.createColorPaletteObj.bind(this);
+    this.handleReset = this.handleReset.bind(this);
     this.handleHelp = this.handleHelp.bind(this);
     this.handleElementDisplay = this.handleElementDisplay.bind(this);
     this.handleTextSize = this.handleTextSize.bind(this);
@@ -80,6 +77,10 @@ class Palette extends React.Component{
     else{
       this.setState({canvasTritan: pixels});
     }
+  }
+  handleReset(){
+    console.log("handleReset");
+    this.props.dispatch({type: "RESET_PALETTE_SETTING"});
   }
   handleHelp(){
     this.setState({isHelpOpen: !this.state.isHelpOpen});
@@ -183,7 +184,7 @@ class Palette extends React.Component{
               <div className="wcag-inputs option-inputs">
                 <span className="toggle-text-label">Normal</span>
                 <label className="toggle-switch">
-                  <input type="checkbox" name="textSize" value="large" onChange={this.handleTextSize}  />
+                  <input type="checkbox" name="textSize" value="large" onChange={this.handleTextSize} checked={this.props.wcagTextSize === "large"} />
                   <span className="slider"></span>
                 </label>
                 <span className="toggle-text-label">Large</span>
@@ -202,15 +203,7 @@ class Palette extends React.Component{
             </div>
           </div>{/*End div.palette-function-setting*/}
           <div className="help">
-            <button className={"help-switch " + (this.state.isHelpOpen ? "isOpen" : "isHidden")} onClick={this.handleHelp}>Help</button>
-            <div className={"help-wrapper " + (this.state.isHelpOpen ? "visible" : "hidden")}>
-              <div className={"help-container"}>
-                <img className="color-cube-intro-img" src={PaletteColorIntro} alt="Introduction to color cube parts." />
-                <p>
-                  Sorry, Help is still under construction. More details will be provided in the future.
-                </p>
-              </div>
-            </div>
+            <button className="reset-btn" onClick={this.handleReset}>Reset</button>
           </div>
 
         </div>{/*End div.palette-options-container*/}
@@ -397,7 +390,8 @@ function mapStateToProps(state) {
     foregroundColors: state.foregroundColors,
     backgroundColors: state.backgroundColors,
     selectedPaletteColor: state.selectedPaletteColor,
-    wcagContrast: state.wcagContrast
+    wcagContrast: state.wcagContrast,
+    wcagTextSize: state.wcagTextSize
   });
 }
 export default connect(mapStateToProps)(Palette);

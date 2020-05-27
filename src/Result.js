@@ -135,7 +135,6 @@ class Result extends React.PureComponent{
   componentDidMount(){
     console.log("Result Mount");
     this.displayContrastRatio(this.props.foregroundColors[this.props.foregroundId].color, this.props.backgroundColors[this.props.backgroundId].color);
-    console.log(this.state.contrast)
     this.checkWCAG(this.state.contrast);
   }
   render(){

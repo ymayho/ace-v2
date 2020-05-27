@@ -10,18 +10,44 @@
 
   // align-items: center;
   // background-color: #dddddd;
-  .simulation-options{
+  .menu{
+    height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     color: $theme-color;
     background-color: white;
-    box-shadow: -1px 2px 3px 2px rgba(0, 0, 0, .25);
+    box-shadow: -1px 2px 3px 2px rgba(0, 0, 0, .15);
     z-index: 3;
 
     // position: absolute;
     // right: 0;
-
-    button.option-btn, button.new-tab-btn{
+    .simulation-options{
+      display: flex;
+      flex-direction: column;
+      button.option-btn{
+        position: relative;
+        width: 80px;
+        padding: 15px 10px;
+        color: $theme-color;
+        font-size: 13px;
+        font-weight: 500;
+        background-color: white;
+        border-bottom: 1px dashed $theme-color;
+        .technical-term{
+          display: inline-block;
+          font-size: 12px;
+          font-weight: normal;
+          transform: scale(0.8);
+        }
+        &.current-selection{
+          color: white;
+          background-color: $theme-color;
+        }
+      }
+    }
+    .new-tab-btn{
+      bottom: 40px;
       position: relative;
       width: 80px;
       padding: 15px 10px;
@@ -30,16 +56,6 @@
       font-weight: 500;
       background-color: white;
       border-bottom: 1px dashed $theme-color;
-      .technical-term{
-        display: inline-block;
-        font-size: 12px;
-        font-weight: normal;
-        transform: scale(0.8);
-      }
-      &.current-selection{
-        color: white;
-        background-color: $theme-color;
-      }
     }
   }
   .example-container{
@@ -123,7 +139,7 @@
           background-color: black;
         }
       }
-    }
+    }//End .example-body-container
     footer{
       position: sticky;
       bottom: 0;

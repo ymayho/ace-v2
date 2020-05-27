@@ -95,7 +95,7 @@ class ColorPicker extends React.Component{
   }
   static getDerivedStateFromProps(props, state){
     let result = null;
-    console.log(props.selectedPaletteColor);
+    //console.log(props.selectedPaletteColor);
     if(props.selectedPaletteColor.type === "foreground"){
       result = {...result, pickerColor: props.foregroundColors[props.selectedPaletteColor.index].color}
     }else{
@@ -105,7 +105,7 @@ class ColorPicker extends React.Component{
     return result;
   }
   componentDidUpdate(prevProps){
-    console.log("ColorPicker update");
+    //console.log("ColorPicker update");
   }
   componentDidMount(){
     console.log("Mount");

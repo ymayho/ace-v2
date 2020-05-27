@@ -3,7 +3,7 @@ export const saveStateToLocalStorage = (state) => {
     const serialzeState = JSON.stringify(state);
     if( typeof window !== 'undefined' ) {
       localStorage.setItem('state', serialzeState);
-      console.log("saveStateToLocalStorage\n", serialzeState);
+      console.log("saveStateToLocalStorage");
     }
   }//End try.
   catch(error) {
@@ -15,7 +15,7 @@ export const loadStateFromLocalStorage = () => {
   try {
     if( typeof window !== 'undefined' ){
       const serialzeState = localStorage.getItem('state');
-      console.log("loadStateFromLocalStorage\n", JSON.parse( serialzeState ))
+      console.log("loadStateFromLocalStorage")
       if(serialzeState === null){
         return undefined;
       }else{

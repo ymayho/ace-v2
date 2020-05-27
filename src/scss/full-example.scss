@@ -1,0 +1,68 @@
+@import "./example-page";
+//@import "./attributes";
+
+.full-example-page-wrapper{
+  height: 100%;
+  .example-page-wrapper{
+
+
+    // align-items: center;
+    // background-color: #dddddd;
+    .menu{
+
+
+      // position: absolute;
+      // right: 0;
+      .simulation-options{
+        height: 100%;
+        // display: flex;
+        // flex-direction: column;
+        //flex: 1 1;
+        button.option-btn{
+          flex: 1 1;
+          //color: green;
+          .technical-term{
+
+          }
+          &.current-selection{
+
+          }
+        }
+      }
+      .new-tab-btn{
+        display: none;
+      }
+    }
+    .example-container{
+
+
+      // margin: auto auto;
+      // width: 70%;
+      // height: auto;
+      &.grayscale{
+
+      }
+      header.example-header{
+
+        .example-title{
+
+        }
+        nav{
+
+          .example-menu{
+
+          }
+        }
+      }
+      .example-body-container{
+
+
+        // height: 400px;
+
+
+      }//End .example-body-container
+
+    }
+  }
+
+}
