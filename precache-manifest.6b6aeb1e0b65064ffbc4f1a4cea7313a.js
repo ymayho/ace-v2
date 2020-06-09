@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "473be68ccb3aeaf4e00b9e2873bdf20e",
+    "revision": "c0cc656b3092d4275ce26292e9912fb3",
     "url": "/ace-v2/index.html"
   },
   {
-    "revision": "4f0e1976556022173a53",
-    "url": "/ace-v2/static/css/main.77affd7f.chunk.css"
+    "revision": "c143cdc33486532dcdec",
+    "url": "/ace-v2/static/css/main.0adf06ce.chunk.css"
   },
   {
     "revision": "528caceff6e175b7c222",
@@ -16,16 +16,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ace-v2/static/js/2.5216d4db.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "4f0e1976556022173a53",
-    "url": "/ace-v2/static/js/main.e7f0d287.chunk.js"
+    "revision": "c143cdc33486532dcdec",
+    "url": "/ace-v2/static/js/main.177a01de.chunk.js"
   },
   {
     "revision": "760a66bb681e70c53f74",
     "url": "/ace-v2/static/js/runtime-main.728c02df.js"
   },
   {
-    "revision": "3c38e6038c272d277ab4ed6cb57c7eb1",
-    "url": "/ace-v2/static/media/PaletteColor-intro.3c38e603.png"
+    "revision": "05ab7ff8a50fa32a0298d9130e4714d2",
+    "url": "/ace-v2/static/media/PaletteInfo.05ab7ff8.png"
   },
   {
     "revision": "9f24ed5670fb495795ef49e8a4530de0",
