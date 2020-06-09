@@ -151,6 +151,9 @@
       font-size: 14pt;
       text-align: center;
       background-color: black;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
     }
   }
 }

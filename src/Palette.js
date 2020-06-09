@@ -19,7 +19,7 @@ class Palette extends React.Component{
       canvasProtan: [],
       canvasDeutan: [],
       canvasTritan: [],
-      colorNum: 8,
+      elementDisplay: [false, false, false]
     }
     this.handlePaletteScroll = this.handlePaletteScroll.bind(this);
     this.storeSimulationData = this.storeSimulationData.bind(this);
@@ -137,11 +137,29 @@ class Palette extends React.Component{
   }
   static getDerivedStateFromProps(props, state){
     let result = null;
-
+    let elementDisplay = [];
+    props.elementDisplay.forEach((element) => {
+      console.log(element.name);
+      switch(element["name"]){
+        case "accent-header":
+          elementDisplay[0] = element.display;
+          break;
+        case "regular-button":
+          elementDisplay[1] = element.display;
+          break;
+        case "accent-button":
+          elementDisplay[2] = element.display;
+          break;
+        default:
+          break;
+      }
+    });
+    result = {...result, elementDisplay};
     return result;
   }
   componentDidUpdate(prevProps){
     //console.log("Palette update");
+    console.log(this.state.elementDisplay);
   }
   componentDidMount(){
     //console.log("Palette Mount");
@@ -193,11 +211,11 @@ class Palette extends React.Component{
             <div className="element-options palette-options">
               <span className="option-name">More Elements: </span>
               <div className="element-inputs option-inputs">
-                <input id="accent-header" className="button-switch" type="checkbox" name="element" value="accent-header" onChange={this.handleElementDisplay} />
+                <input id="accent-header" className="button-switch" type="checkbox" name="element" value="accent-header" onChange={this.handleElementDisplay} checked={this.state.elementDisplay[0]} />
                 <label htmlFor="accent-header" className="button-switch">Accent Header</label>
-                <input id="regular-button" className="button-switch" type="checkbox" name="element" value="regular-button" onChange={this.handleElementDisplay} />
+                <input id="regular-button" className="button-switch" type="checkbox" name="element" value="regular-button" onChange={this.handleElementDisplay} checked={this.state.elementDisplay[1]} />
                 <label htmlFor="regular-button" className="button-switch">Button</label>
-                <input id="accent-button" className="button-switch" type="checkbox" name="element" value="accent-button" onChange={this.handleElementDisplay} />
+                <input id="accent-button" className="button-switch" type="checkbox" name="element" value="accent-button" onChange={this.handleElementDisplay} checked={this.state.elementDisplay[2]} />
                 <label htmlFor="accent-button" className="button-switch">Accent Button</label>
               </div>
             </div>
@@ -391,7 +409,8 @@ function mapStateToProps(state) {
     backgroundColors: state.backgroundColors,
     selectedPaletteColor: state.selectedPaletteColor,
     wcagContrast: state.wcagContrast,
-    wcagTextSize: state.wcagTextSize
+    wcagTextSize: state.wcagTextSize,
+    elementDisplay: state.elementDisplay
   });
 }
 export default connect(mapStateToProps)(Palette);
