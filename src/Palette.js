@@ -139,7 +139,7 @@ class Palette extends React.Component{
     let result = null;
     let elementDisplay = [];
     props.elementDisplay.forEach((element) => {
-      console.log(element.name);
+      //console.log(element.name);
       switch(element["name"]){
         case "accent-header":
           elementDisplay[0] = element.display;
@@ -159,7 +159,6 @@ class Palette extends React.Component{
   }
   componentDidUpdate(prevProps){
     //console.log("Palette update");
-    console.log(this.state.elementDisplay);
   }
   componentDidMount(){
     //console.log("Palette Mount");

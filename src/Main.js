@@ -11,7 +11,8 @@ class Main extends React.Component{
     super(props);
     this.state = {
     }
-
+    this.handleHelp = this.handleHelp.bind(this);
+    this.handlePaletteIntroCloseBtn = this.handlePaletteIntroCloseBtn.bind(this);
   }
   handlePaletteIntroCloseBtn(e){
     console.log(e);
@@ -19,6 +20,8 @@ class Main extends React.Component{
     document.querySelector(".palette-intro-wrapper").style.display = "none";
   }
   handleHelp(e){
+    console.log(e.target.checked);
+    // e.target.checked = !e.target.checked;
       switch(e.target.checked){
         case true:
           document.querySelector(".palette-intro-wrapper").style.display = "block";
@@ -36,7 +39,7 @@ class Main extends React.Component{
         <header className="main-header">
           <h1>ACE 2.0: Accessible Color Evaluator</h1>
           <label htmlFor="help-status" className="help-btn">i</label>
-          <input id="help-status" className="help-status" type="checkbox" checked={true}
+          <input id="help-status" className="help-status" type="checkbox" checked={false}
           onChange={this.handleHelp} />
         </header>
         <div className="main-container">
