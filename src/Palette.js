@@ -19,8 +19,16 @@ class Palette extends React.Component{
       canvasProtan: [],
       canvasDeutan: [],
       canvasTritan: [],
-      elementDisplay: [false, false, false]
+      elementDisplay: [false, false, false],
+      optionIntroDisplay: {
+        cvd: false,
+        contrast: false,
+        textSize: false,
+        moreElements: false
+      },
+
     }
+    this.handleOptionIntroDisplay = this.handleOptionIntroDisplay.bind(this);
     this.handlePaletteScroll = this.handlePaletteScroll.bind(this);
     this.storeSimulationData = this.storeSimulationData.bind(this);
     this.createColorPaletteObj = this.createColorPaletteObj.bind(this);
@@ -33,6 +41,26 @@ class Palette extends React.Component{
     this.handleClickToggle = this.handleClickToggle.bind(this);
 
     this.colorPicker = React.createRef();
+  }
+  handleOptionIntroDisplay(type){
+    console.log(type);
+    switch(type){
+      case "cvd":
+        this.setState({optionIntroDisplay: {...this.state.optionIntroDisplay, cvd: !this.state.optionIntroDisplay.cvd}});
+        break;
+      case "contrast":
+        this.setState({optionIntroDisplay: {...this.state.optionIntroDisplay, contrast: !this.state.optionIntroDisplay.contrast}});
+        break;
+      case "textSize":
+        this.setState({optionIntroDisplay: {...this.state.optionIntroDisplay, textSize: !this.state.optionIntroDisplay.textSize}});
+        break;
+      case "moreElements":
+        this.setState({optionIntroDisplay: {...this.state.optionIntroDisplay, moreElements: !this.state.optionIntroDisplay.moreElements}});
+        break;
+      default:
+        break;
+    }
+    console.log(this.state.optionIntroDisplay);
   }
   handlePaletteScroll(e){
     //console.log(e.target.scrollTop);
@@ -174,7 +202,10 @@ class Palette extends React.Component{
           <ColorPicker pickerId="main-color-picker" canvasProtan={this.state.canvasProtan} canvasDeutan={this.state.canvasDeutan} canvasTritan={this.state.canvasTritan} />
           <div className="palette-function-settings">
             <div className="cvd-options palette-options">
-              <span className="option-name">CVD Simulation: </span>
+              <span className="option-name" onClick={() => {this.handleOptionIntroDisplay("cvd")}}>CVD Simulation<span className="option-help-btn">?</span></span>
+              <div className="option-intro" style={{display: this.state.optionIntroDisplay.cvd ? "block" : "none"}}>
+                Three different types of color vision dificiency (CVD, colorblindness) simulation.
+              </div>
               <div className="cvd-inputs option-inputs">
                 <span className="toggle-text-label">Off</span>
                 <label className="toggle-switch">
@@ -186,7 +217,10 @@ class Palette extends React.Component{
               </div>
             </div>
             <div className="wcag-options palette-options">
-              <span className="option-name">WCAG Contrast Ratio: </span>
+              <span className="option-name" onClick={() => {this.handleOptionIntroDisplay("contrast")}}>WCAG Contrast Ratio<span className="option-help-btn">?</span> </span>
+              <div className="option-intro" style={{display: this.state.optionIntroDisplay.contrast ? "block" : "none"}}>
+                WCAG difines several levels of conformance. To fulfill AA standard, the minimum contrast ratio of a piece of large text (18pt) is 3, normal text (14pt) is 4.5; to fulfill AAA criteria, a piece of large text needs at least 4.5 of contrast ratio, normal text needs 7.
+              </div>
               <div className="wcag-inputs option-inputs">
                 <span className="toggle-text-label">AA</span>
                 <label className="toggle-switch">
@@ -197,7 +231,10 @@ class Palette extends React.Component{
               </div>
             </div>
             <div className="wcag-options palette-options">
-              <span className="option-name">WCAG Text Size: </span>
+              <span className="option-name" onClick={() => {this.handleOptionIntroDisplay("textSize")}}>WCAG Text Size<span className="option-help-btn">?</span></span>
+              <div className="option-intro" style={{display: this.state.optionIntroDisplay.textSize ? "block" : "none"}}>
+                Different sizes of text have different WCAG standard about contrast ratio. It defines large text as 18pt with normal weight or 14pt bold, and normal text as 14pt.
+              </div>
               <div className="wcag-inputs option-inputs">
                 <span className="toggle-text-label">Normal</span>
                 <label className="toggle-switch">
@@ -208,7 +245,10 @@ class Palette extends React.Component{
               </div>
             </div>
             <div className="element-options palette-options">
-              <span className="option-name">More Elements: </span>
+              <span className="option-name" onClick={() => {this.handleOptionIntroDisplay("moreElements")}}>More Elements<span className="option-help-btn">?</span></span>
+              <div className="option-intro" style={{display: this.state.optionIntroDisplay.moreElements ? "block" : "none"}}>
+                Show more elements on the palette below and the example page.
+              </div>
               <div className="element-inputs option-inputs">
                 <input id="accent-header" className="button-switch" type="checkbox" name="element" value="accent-header" onChange={this.handleElementDisplay} checked={this.state.elementDisplay[0]} />
                 <label htmlFor="accent-header" className="button-switch">Accent Header</label>

@@ -46,6 +46,7 @@
         margin-bottom: 10px;
         display: flex;
         .option-name{
+          margin-right: 8px;
           padding: 5px 10px;
           font-weight: 500;
           border: 1px transparent solid;
@@ -53,6 +54,34 @@
           background-color: white;
           display: inline;
           cursor: pointer;
+          .option-help-btn{
+            position: absolute;
+            top: 0;
+            width: 15px;
+            height: 15px;
+            display: inline-block;
+            font-size: 12px;
+            text-align: center;
+            font-weight: bold;
+            line-height: 13px;
+            border: $theme-color 1px solid;
+            border-radius: 50%;
+            transform: scale(.7) translateX(-2px);
+          }
+        }
+        .option-intro{
+          position: absolute;
+          top: 1.7em;
+          left: 8.2em;
+          width: 300px;
+          padding: 1em;
+          color: white;
+          font-weight: 500;
+          line-height: 1.3em;
+          border-radius: $border-radius;
+          background: rgba(89, 89, 89, .9);
+          z-index: 2;
+          display: none;
         }
         .option-inputs{
           display: flex;
