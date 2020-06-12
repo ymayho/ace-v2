@@ -60,6 +60,7 @@ function reducer(state = initialState, action){
       return {...state, backgroundCVDs: tempCVDArr}
     case "RESET_PALETTE_SETTING":
       console.log(action.type);
+      console.log(defaultColors.foregroundColors[0]);
       return {...state,
         foregroundColors: JSON.parse(JSON.stringify(defaultColors.foregroundColors)), backgroundColors: JSON.parse(JSON.stringify(defaultColors.backgroundColors)),
         foregroundCVDs: JSON.parse(JSON.stringify(defaultColors.foregroundCVDs)), backgroundCVDs: JSON.parse(JSON.stringify(defaultColors.backgroundCVDs)),

@@ -1,7 +1,7 @@
 export const defaultColors = {
   foregroundColors: [{
     index: 0,
-    color: "#000000",
+    color: "#6e6e6e",
     colorName: "Page body text"
   },{
     index: 1,
@@ -50,7 +50,7 @@ export const defaultColors = {
     colorName: "Accent button background"
   }],
   foregroundCVDs: [{
-    index: 0, protan: "#000000", deutan: "#000000", tritan: "#000000"
+    index: 0, protan: "#6e6e6e", deutan: "#6e6e6e", tritan: "#6e6e6e"
   },{
     index: 1, protan: "#ffffff", deutan: "#ffffff", tritan: "#ffffff"
   },{

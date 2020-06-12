@@ -69,7 +69,7 @@
             transition: $button-transition;
             &:hover{
               color: white;
-              background-color: $theme-color;
+              background-color: $hover-color;
             }
           }
           input.button-switch{

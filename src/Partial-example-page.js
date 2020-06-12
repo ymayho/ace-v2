@@ -10,7 +10,7 @@ class PartialExamplePage extends React.Component {
     this.state = {
       mode: "regular",
       currentColorSet: {
-        pageBodyText: "#000000",
+        pageBodyText: "#6e6e6e",
         headerText: "#ffffff",
         hyperlinkText: "#0000ee",
         visitedHyperlinkText: "#551a8b",
