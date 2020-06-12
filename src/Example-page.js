@@ -125,7 +125,7 @@ class ExamplePage extends React.Component {
             <button className="option-btn" onClick={this.handleModeSwitch} value="tritan">Blue Colorblind <span className="technical-term">Tritan</span></button>
             <button className="option-btn" onClick={this.handleModeSwitch} value="grayscale">Grayscale</button>
           </div>
-          <button className="new-tab-btn"><Link to="/example" target="_blank">Open in New Tab</Link></button>
+          <button className="new-tab-btn"><Link to="/example" target="_blank">Full-size Example</Link></button>
         </nav>
         <div className="example-container" ref={(div) => this.container = div}>
           <header className="example-header" ref={(header) => this.header = header} style={style["header"]}>

@@ -49,13 +49,22 @@
     .new-tab-btn{
       bottom: 40px;
       position: relative;
-      width: 80px;
+      width: 75px;
+      margin: 0 auto 10px auto;
       padding: 15px 10px;
-      color: $theme-color;
+
       font-size: 13px;
       font-weight: 500;
-      background-color: white;
-      border-bottom: 1px dashed $theme-color;
+      border-radius: $border-radius;
+      background-color: #eee;
+      //border-bottom: 1px dashed $theme-color;
+      &:hover{
+        background-color: $hover-color;
+      }
+      & a{
+        color: $theme-color;
+        font-weight: 600;
+      }
     }
   }
   .example-container{
