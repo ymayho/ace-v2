@@ -12,10 +12,10 @@ import { saveStateToLocalStorage, loadStateFromLocalStorage } from './utils/help
 const initialState = {
   wcagContrast: "AAA",
   wcagTextSize: "normal",
-  foregroundColors: defaultColors.foregroundColors,
-  backgroundColors: defaultColors.backgroundColors,
-  foregroundCVDs: defaultColors.foregroundCVDs,
-  backgroundCVDs: defaultColors.backgroundCVDs,
+  foregroundColors: JSON.parse(JSON.stringify(defaultColors.foregroundColors)),
+  backgroundColors: JSON.parse(JSON.stringify(defaultColors.backgroundColors)),
+  foregroundCVDs: JSON.parse(JSON.stringify(defaultColors.foregroundCVDs)),
+  backgroundCVDs: JSON.parse(JSON.stringify(defaultColors.backgroundCVDs)),
   selectedPaletteColor: {
     type: "foreground",
     index: 0
@@ -38,7 +38,7 @@ function reducer(state = initialState, action){
       console.log(action.type);
       tempColorArr = [...state.foregroundColors];
       tempColorArr[action.index].color = action.newColor;
-      return {...state, foregroundColors: tempColorArr};
+      return {...state, foregroundColors: [...tempColorArr]};
     case "EDIT_BACKGROUND_COLOR":
       console.log(action.type);
       tempColorArr = [...state.backgroundColors];
