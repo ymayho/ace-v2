@@ -24,7 +24,7 @@ class Main extends React.Component{
     // e.target.checked = !e.target.checked;
       switch(e.target.checked){
         case true:
-          document.querySelector(".palette-intro-wrapper").style.display = "block";
+          document.querySelector(".palette-intro-wrapper").style.display = "flex";
           break;
         case false:
           document.querySelector(".palette-intro-wrapper").style.display = "none";

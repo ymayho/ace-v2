@@ -81,7 +81,9 @@
     height: 100vh;
     background-color: rgba(0, 0, 0, .7);
     z-index: 10;
-    display: none;
+    display: none; //flex
+    flex-direction: column;
+    justify-content: space-around;
     .close-intro-btn{
       position: absolute;
       top: 15px;
@@ -94,16 +96,16 @@
       cursor: pointer;
     }
     .palette-intro{
-      width: 900px;
-      max-width: 100%;
+      max-width: 90%;
+      max-height: 90%;
       margin: 15px auto;
       text-align: center;
       border: $theme-color 1px solid;
       border-radius: $border-radius;
       background-color: white;
-      .palette-intro-img{
-        width: auto;
-        height: 95vh;
+      img.palette-intro-img{
+        max-width: 95%;
+        max-height: 95%;
       }
     }
   }
