@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63.1 (92452) - https://sketch.com -->
+    <title>NewTabIcon</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-HD" transform="translate(-596.000000, -128.000000)">
+            <g id="NewTabIcon" transform="translate(596.000000, 128.000000)">
+                <path d="M25,0 L25,5 L13,5 C8.66508574,5 5.13545713,8.44783777 5.00380682,12.7508207 L5,13 L5,37 C5,41.3349143 8.44783777,44.8645429 12.7508207,44.9961932 L13,45 L37,45 C41.3349143,45 44.8645429,41.5521622 44.9961932,37.2491793 L45,37 L45,25 L50,25 L50,42 C50,46.418278 46.418278,50 42,50 L8,50 C3.581722,50 5.41083001e-16,46.418278 0,42 L0,8 C-2.31743984e-15,3.581722 3.581722,8.11624501e-16 8,0 L25,0 Z" id="Combined-Shape" fill="#595959"></path>
+                <g id="Group-3" transform="translate(12.000000, 0.000000)">
+                    <path id="Arrow" d="M0.575757576,39.5455628 L-1.54556277,37.4242424 L-0.484902596,36.3635823 L23.282,12.596 L17.6252526,6.93971861 L37.7777958,0.222204185 L31.0602814,20.3747474 L25.403,14.717 L0.575757576,39.5455628 Z" fill="#595959" fill-rule="nonzero"></path>
+                    <line x1="0.557692308" y1="37.42" x2="28.4423077" y2="9.58" id="Line-6" stroke="#595959" stroke-width="6" stroke-linecap="square"></line>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

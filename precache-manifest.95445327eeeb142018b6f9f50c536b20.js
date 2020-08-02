@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "0d28aaf704dd067fa57389df5cde4721",
+    "revision": "0551d30f2639409e85a2c8ed315c7b0d",
     "url": "/ace-v2/index.html"
   },
   {
-    "revision": "64b05c299b99cad5f169",
-    "url": "/ace-v2/static/css/main.bc7d4c8c.chunk.css"
+    "revision": "23a4f55d2453e1db785b",
+    "url": "/ace-v2/static/css/main.634d747d.chunk.css"
   },
   {
     "revision": "b421dca11b8dc575a5a5",
@@ -16,12 +16,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ace-v2/static/js/2.353026a7.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "64b05c299b99cad5f169",
-    "url": "/ace-v2/static/js/main.4e5ef56c.chunk.js"
+    "revision": "23a4f55d2453e1db785b",
+    "url": "/ace-v2/static/js/main.02a9d086.chunk.js"
   },
   {
     "revision": "760a66bb681e70c53f74",
     "url": "/ace-v2/static/js/runtime-main.728c02df.js"
+  },
+  {
+    "revision": "31522b3f2900e1ce9b602c8afa15e5f4",
+    "url": "/ace-v2/static/media/NewTabIcon.31522b3f.svg"
   },
   {
     "revision": "05ab7ff8a50fa32a0298d9130e4714d2",
