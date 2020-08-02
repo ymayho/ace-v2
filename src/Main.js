@@ -41,6 +41,7 @@ class Main extends React.Component{
           <label htmlFor="help-status" className="help-btn">i</label>
           <input id="help-status" className="help-status" type="checkbox" checked={false}
           onChange={this.handleHelp} />
+          <a className="ace-link" href="http://daprlab.com/ace" target="_blank" rel="noopener noreferrer">ACE 1.0</a>
         </header>
         <div className="main-container">
           <div className="palette-container"><Palette /></div>
