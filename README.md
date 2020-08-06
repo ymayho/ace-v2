@@ -1,3 +1,8 @@
+ACE 2.0 is an improved version of [Accessible Colour Evaluator, ACE](http://daprlab.com/ace).
+On the basis of ACE's design and functionality, it is rebuilt using ReactJS and improved based on the feedback gathered in the [previous study](https://dl.acm.org/doi/10.1145/3014588) and ymayho's analysis toward the system using Nielsen's 10 Heuristics.
+
+This is a part of ymayho's capstone project of her master's degree.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
