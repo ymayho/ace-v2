@@ -2,7 +2,7 @@
   "name": "ace-v2",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://ymayho.github.io/ace-v2",
+  "homepage": "http://兔.tw",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
